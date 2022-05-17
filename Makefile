@@ -14,7 +14,6 @@ OBJ_DIR = objs
 
 SRCS = main.c 
 
-
 MAN_SRCS = \
 	$(addprefix $(SRCS_DIR), $(SRCS))
 
