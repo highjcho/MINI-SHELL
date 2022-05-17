@@ -1,4 +1,4 @@
-#include "../includes/utils.h"
+#include "../../includes/utils.h"
 
 void print_art(void) // 아스키아트 처리
 {
