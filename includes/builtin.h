@@ -3,6 +3,6 @@
 
 # include "minishell.h"
 
-void print_art(void);
+void mini_pwd(void);
 
 #endif
