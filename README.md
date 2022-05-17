@@ -7,8 +7,9 @@ made by [hyunjcho](https://github.com/highjcho) && [jonkim](https://github.com/d
 
 ## History
 ### 5/13
-사용가능 함수 정리 , 기본 이론 공부 
-
+사용가능 함수 정리 , 기본 이론 공부  
+### 5/17
+- 토큰 생성 기초, pwd, Makefile 수정
 
 ## Rule
 ### Commit Rules
