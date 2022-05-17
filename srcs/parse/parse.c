@@ -1,29 +1,31 @@
 #include "../../includes/minishell.h"
 
-int	quote(char *str, int *i, char c)
+void	quote(char *str, int *i, char c)
 {
-	while (str[(*i)])
+	int tmp;
+
+	tmp = *i;
+	while (str[++(*i)])
 	{
-		if (str[*i] == 0)
-			return (-1);
 		if (str[*i] == c)
-			break;
-		(*i)++;
+		{
+			(*i)++;
+			return ;
+		}
 	}
-	return (0);
+	*i = tmp + 1;
 }
 
-int	word(char *str, int *i)
+void	word(char *str, int *i)
 {
 	while (str[(*i)])
 	{
-		if (str[*i] == 0)
-			return (-1);
 		if (str[*i] == ' ')
-			break;
+			return ;
+		if (str[*i] == '\'' || str[*i] == '\"')
+			quote(str, i, str[*i]);
 		(*i)++;
 	}
-	return (0);
 }
 
 int	token_count(char *str)
@@ -32,17 +34,13 @@ int	token_count(char *str)
 	int	i;
 
 	ret = 0;
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
-		if (str[i] == "'" || str[i] == '"')
-		{
-			if (quote(str, &i, str[i]) == -1);
-				return (-1);
-		}
-		else if (str[i] != ' ')
-			if (word(str, &i) == -1)
-				return (-1);
+		if (str[i] == '\'' || str[i] == '\"')
+			quote(str, &i, str[i]);
+		if (str[i] != ' ')
+			word(str, &i);
 		while (str[i] == ' ')
 			i++;
 		ret++;
@@ -50,31 +48,43 @@ int	token_count(char *str)
 	return (ret);
 }
 
+char	**make_token(char *str, char **tokens)
+{
+	int	i;
+	int	j;
+	int tmp;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ')
+			i++;
+		tmp = i;
+		if (str[i] == '\'' || str[i] == '\"')
+			quote(str, &i, str[i]);
+		if (str[i] != ' ')
+			word(str, &i);
+		if (i != tmp)
+		{
+			tokens[j++] = ft_substr(str, tmp, i - tmp);
+	//		if (tokens[j - 1] == NULL) error 시에 배열 해제 필요 
+		}
+	}
+	tokens[token_count(str)] = 0;
+	return (tokens);
+}
+
 char	**tokenize(char *str)
 {
 	char	**tokens;
-	int		i;
+	int		tmp;
 
-	i = -1;
-	if (token_count(str) == -1)
+	if (token_count(str) == 0)
 		return (NULL);
 	tokens = malloc((sizeof(char*) * token_count(str)) + 1);
 	if (!tokens)
 		return (NULL);
-	// while (str[++i])
-	// {
-	// 	if (str[i] == "'" || str[i] == '"')
-	// 	{
-	// 		if (quote(str, &i, str[i]) == -1);
-	// 			return (-1);
-	// 	}
-	// 	else if (str[i] != ' ')
-	// 		if (word(str, &i) == -1)
-	// 			return (-1);
-	// 	//길이 재서 문자열 만들고 붙여주기 
-	// 	while (str[i] == ' ')
-	// 		i++;
-	// }
-	//문자열중에 하나라도 NULL	 다 프리처리해주고 
-	//리턴줄 
+	tokens = make_token(str, tokens);
+	return(tokens);
 }

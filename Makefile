@@ -12,7 +12,7 @@ SRCS_DIR = ./srcs/
 
 OBJ_DIR = objs
 
-SRCS = main.c
+SRCS = main.c 
 
 
 MAN_SRCS = \
