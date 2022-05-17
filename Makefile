@@ -10,8 +10,6 @@ CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 SRCS_DIR = ./srcs/
 
-OBJ_DIR = objs
-
 SRCS = main.c \
 		builtin/mini_pwd.c \
 		# utils/art.c
@@ -33,13 +31,8 @@ $(NAME): $(MAN_OBJS)
 $(LIBFT):
 	@make -C ./libft
 
-$(OBJ_DIR) :
-	@mkdir $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o : %.c $(OBJ_DIR)
-	@$(CC) $(FLAG) -c $< -o $@
 clean:
-	@$(RM) $(OBJ_DIR)
+	@$(RM) $(MAN_OBJS)
 	@make clean -C ./libft
 	@echo "cleaning"
 fclean: clean
