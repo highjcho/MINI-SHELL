@@ -12,13 +12,15 @@ SRCS_DIR = ./srcs/
 
 OBJ_DIR = objs
 
-SRCS = main.c
+SRCS = main.c \
+		builtin/mini_pwd.c \
+		# utils/art.c
 
 
-MAN_SRCS = \
-	$(addprefix $(SRCS_DIR), $(SRCS))
+MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
 
-MAN_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(MAN_SRCS:.c=.o)))
+# MAN_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(MAN_SRCS:.c=.o)))
+MAN_OBJS = $(MAN_SRCS:.c=.o)
 
 vpath %.c $(SRCS_DIR)
 
