@@ -11,7 +11,7 @@ CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 SRCS_DIR = ./srcs/
 
 SRCS = main.c \
-		builtin/mini_pwd.c \
+		builtins/mini_pwd.c \
 		# utils/art.c
 
 
