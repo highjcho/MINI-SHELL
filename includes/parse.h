@@ -24,4 +24,11 @@ typedef struct s_token_list
 	t_token token;
 }	t_token_list;
 
+typedef struct s_ast_tree_node
+{
+	t_ast_tree_node*	left;
+	t_ast_tree_node*	right;
+	t_token				token;
+}	t_ast_tree_node;
+
 #endif
