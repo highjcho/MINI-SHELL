@@ -11,7 +11,11 @@ CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 SRCS_DIR = ./srcs/
 
 SRCS = main.c \
+		init/init_env.c \
 		builtins/mini_pwd.c \
+		builtins/mini_env.c \
+		builtins/mini_echo.c \
+		error/error.c \
 		# utils/art.c
 
 
@@ -25,7 +29,7 @@ vpath %.c $(SRCS_DIR)
 all: $(LIBFT) $(NAME)
 
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAGS) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"
 
 $(LIBFT):

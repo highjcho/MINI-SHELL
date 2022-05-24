@@ -2,8 +2,6 @@
 # define PARSE_H
 
 # include "minishell.h"
-char	**tokenize(char *str);
-t_token_list *make_token_list(char **tokens);
 
 enum e_token_type
 {
@@ -23,5 +21,8 @@ typedef struct s_token_list
 	t_token *next;
 	t_token token;
 }	t_token_list;
+
+char	**tokenize(char *str);
+t_token_list *make_token_list(char **tokens);
 
 #endif
