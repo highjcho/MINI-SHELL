@@ -4,7 +4,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/errno.h>
+# include "struct.h"
 # include "init.h"
 # include "builtins.h"
 # include "utils.h"
