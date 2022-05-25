@@ -10,4 +10,5 @@ void	mini_env(t_env *env)
 		printf("%s=%s\n", cur->key, cur->value);
 		cur = cur->next;
 	}
+	printf("_=%s\n", getenv("_"));
 }
