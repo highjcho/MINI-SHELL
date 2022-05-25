@@ -16,6 +16,9 @@ SRCS = main.c \
 		builtins/mini_env.c \
 		builtins/mini_echo.c \
 		error/error.c \
+		parse/tokenize.c \
+		parse/tokenlist.c \
+		test/test.c \
 		# utils/art.c
 
 

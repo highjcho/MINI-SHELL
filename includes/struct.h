@@ -30,7 +30,7 @@ typedef struct s_token
 
 typedef struct s_token_list
 {
-	t_token *next;
+	struct s_token_list *next;
 	t_token token;
 }	t_token_list;
 
