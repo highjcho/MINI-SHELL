@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 15:12:31 by hyunjcho          #+#    #+#             */
-/*   Updated: 2021/12/06 11:52:47 by hyunjcho         ###   ########.fr       */
+/*   Created: 2021/11/22 10:14:09 by hyunjcho          #+#    #+#             */
+/*   Updated: 2021/12/06 18:55:49 by hyunjcho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*new;
-	size_t	s_len;
-	size_t	i;
+	unsigned const char	*str1;
+	unsigned const char	*str2;
+	size_t				i;
 
-	if (!s)
-		return (NULL);
-	s_len = ft_strlen(s);
-	if (len > s_len)
-		len = s_len;
-	if (start >= s_len)
-		len = 0;
-	new = (char *)ft_calloc((len + 1), sizeof(char));
-	if (!new)
-		return (0);
 	i = 0;
-	while (s[start] && i < len)
-		new[i++] = s[start++];
-	return (new);
+	if (n == 0)
+		return (0);
+	str1 = (unsigned const char *)s1;
+	str2 = (unsigned const char *)s2;
+	while (str1[i] && str2[i] && str1[i] == str2[i] && i + 1 < n)
+		i++;
+	return (str1[i] - str2[i]);
 }
