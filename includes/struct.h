@@ -27,14 +27,6 @@ enum e_token_type
 	PIPE,
 };
 
-enum e_node_type
-{
-	CMD,
-	REDIRECT,
-	PIPELINE,
-	PIPE,
-};
-
 typedef struct s_token
 {
 	char				*str;
@@ -58,7 +50,7 @@ typedef struct s_ast
 	struct s_ast 	*left;
 	struct s_ast 	*right;
 		char 			*data;
-	enum e_node_type type;
+	enum e_token_type type;
 }	t_ast;
 
 #endif

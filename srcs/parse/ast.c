@@ -21,14 +21,18 @@ t_ast *add_ast_node(t_ast *parent, t_ast *child)// parent 에 child 를 추가�
 {
 	t_ast	*root;
 
+	if (!parent || !child)
+		return (NULL);
 	if (parent->type == PIPELINE)
 		root = add_pl_node(parent, child);
 	else if (parent->type == PIPE)
 		root = add_pipe_node(parent, child);
 	else if (parent->type == REDIRECT)
 		root = add_redirect_node(parent, child);
-	else if (parent->type == CMD)
+	else if (parent->type == WORD)
 		root = add_cmd_node(parent, child);
+	else 
+		root = NULL;
 	return (root);
 
 }
@@ -40,7 +44,7 @@ t_ast *make_ast(t_token_list *list) //token_list 를 순회하면서 ast를 생�
 	t_ast *node;
 
 	root = make_ast_node(NULL); // 처음 root 는 PIPELINE
-	cur = cur ->next;  // 연결리스트 head 는 비어 있으므로 한칸 밀어준다.
+	cur = list ->next;  // 연결리스트 head 는 비어 있으므로 한칸 밀어준다.
 	while (cur)
 	{
 		node = make_ast_node(cur); // token에 맞는 node를 생성
