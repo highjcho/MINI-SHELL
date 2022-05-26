@@ -18,6 +18,9 @@ SRCS = main.c \
 		builtins/mini_export.c \
 		builtins/mini_unset.c \
 		error/error.c \
+		parse/tokenize.c \
+		parse/tokenlist.c \
+		test/test.c \
 		# utils/art.c
 
 
