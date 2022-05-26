@@ -22,8 +22,17 @@ typedef struct s_env
 enum e_token_type
 {
 	WORD,
+	REDIRECT,
+	PIPELINE,
 	PIPE,
-	REDIRECT
+};
+
+enum e_node_type
+{
+	CMD,
+	REDIRECT,
+	PIPELINE,
+	PIPE,
 };
 
 typedef struct s_token
@@ -43,5 +52,13 @@ typedef struct s_cmd
 	char	*path;
 	char	**cmd;
 }	t_cmd;
+
+typedef struct s_ast
+{
+	struct s_ast 	*left;
+	struct s_ast 	*right;
+		char 			*data;
+	enum e_node_type type;
+}	t_ast;
 
 #endif
