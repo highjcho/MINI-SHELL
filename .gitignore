@@ -2,3 +2,6 @@
 .vscode
 minishell.dSYM
 a.out
+*.o
+libft.a
+minishell

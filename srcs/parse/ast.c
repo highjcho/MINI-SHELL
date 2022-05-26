@@ -21,6 +21,8 @@ t_ast *add_ast_node(t_ast *parent, t_ast *child)// parent 에 child 를 추가�
 {
 	t_ast	*root;
 
+	if (!parent || !child)
+		return (NULL);
 	if (parent->type == PIPELINE)
 		root = add_pl_node(parent, child);
 	else if (parent->type == PIPE)

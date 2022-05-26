@@ -1,6 +1,15 @@
 #include "../../includes/parse.h"
 
-t_ast *add_pl_node(t_ast *parent, t_ast *child)
+int	redirection_check(t_ast *node)
+{
+	if (node->right)
+		return (redirection_check(node->right));
+	if (node->left)
+		return (1); // 꽉차면 1 반환 
+	return(0);
+}
+
+t_ast	*add_pl_node(t_ast *parent, t_ast *child)
 {
 	if (child->type == REDIRECT)
 	{
@@ -12,10 +21,8 @@ t_ast *add_pl_node(t_ast *parent, t_ast *child)
 	}
 	else if (child->type == WORD)
 	{
-		if (parent->left != NULL)
-		{
+		if (parent->left != NULL && !redirection_check(parent->left))
 			add_ast_node(parent->left, child); // 수정 필요
-		}
 		else if (parent->right == NULL)
 			parent->right = child;
 		else
