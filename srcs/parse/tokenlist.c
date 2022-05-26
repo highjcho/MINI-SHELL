@@ -14,7 +14,10 @@ t_token_list *new_token_node(char *tok)
 	 ||!ft_strncmp(tok, ">>", toklen) || !ft_strncmp(tok, ">", toklen))
 		new_token->token.type = REDIRECT;
 	else if (!ft_strncmp(tok, "|", toklen))
+	{
+		new_token->token.str = ft_strdup("|");
 		new_token->token.type = PIPE;
+	}
 	else
 		new_token->token.type = WORD;
 	new_token->next=NULL;

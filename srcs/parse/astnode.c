@@ -12,8 +12,10 @@ t_ast *add_pl_node(t_ast *parent, t_ast *child)
 	}
 	else if (child->type == WORD)
 	{
-		if (parent->left == NULL)
-			parent->left = child;
+		if (parent->left != NULL)
+		{
+			add_ast_node(parent->left, child); // 수정 필요
+		}
 		else if (parent->right == NULL)
 			parent->right = child;
 		else
@@ -45,9 +47,17 @@ t_ast *add_pipe_node(t_ast *parent, t_ast *child)
 	else
 	{
 		if (parent->right == NULL)
+		{
 			parent->right = child;
+		}
 		else
-			add_ast_node(parent->right, child);
+		{
+			child->left = parent ->left;
+			parent->left = parent ->right;
+			child->right = parent;
+			parent->right = NULL; 
+			return (child);
+		}
 	}
 			return (parent);
 }
@@ -68,7 +78,7 @@ t_ast *add_redirect_node(t_ast *parent, t_ast *child)
 		else
 			add_ast_node(parent->right, child);
 	}
-			return (parent);
+	return (parent);
 }
 
 t_ast *add_cmd_node(t_ast *parent, t_ast *child)
