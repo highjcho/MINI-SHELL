@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar -rcs
 RM = rm -f
 
-SRCS = ft_bzero.c ft_calloc.c ft_strlen.c ft_strjoin.c ft_itoa.c ft_strdup.c ft_strlcpy.c ft_substr.c ft_strncmp.c
+SRCS = ft_bzero.c ft_calloc.c ft_strlen.c ft_strjoin.c ft_itoa.c ft_strdup.c ft_strlcpy.c ft_substr.c ft_strncmp.c ft_split.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)

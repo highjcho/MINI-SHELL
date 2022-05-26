@@ -12,7 +12,7 @@ static int	ft_key_len(char *key)
 	return (i);
 }
 
-static int	add_env(t_env *env, char *key)
+static int	add_env(t_env *env, char *key, char *value)
 {
 	t_env_node	*prev;
 	t_env_node	*new;
@@ -23,9 +23,11 @@ static int	add_env(t_env *env, char *key)
 	prev = &(env->h_node);
 	while (prev->next)
 		prev = prev->next;
-	new->key = key;
-	new->value = getenv(key);
 	prev->next = new;
+	new->key = key; // unset 시 해제 필요
+	new->value = value;
+	new->e_flag = 0;
+	new->export = NULL;
 	new->next = NULL;
 	return (SUCCESS);
 }
@@ -41,13 +43,16 @@ static int	set_env(t_env *env, char **envp)
 	while (envp[++i])
 	{
 		key = ft_substr(envp[i], 0, ft_key_len(envp[i])); // env = 전까지 복제
-		if (!add_env(env, key)) // 추가 실패 시 전체 리스트 free
+		if (!ft_strncmp(key, "_", 2))
+			break;
+		if (!add_env(env, key, getenv(key))) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
 		{
 			cur = env->h_node.next;
 			while (cur)
 			{
 				tmp = cur->next;
-				free(tmp);
+				free(cur->key);
+				free(cur);
 				cur = tmp;
 			}
 			free(env);
@@ -59,9 +64,7 @@ static int	set_env(t_env *env, char **envp)
 	
 int	init_env(t_env *env, char **envp)
 {
-	env = ft_calloc(1, sizeof(t_env));
-	if (!env)
-		return (FAIL);
+	env->h_node.next = NULL;
 	if (!set_env(env, envp))
 		return (FAIL);
 	return (SUCCESS);
