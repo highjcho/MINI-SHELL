@@ -20,6 +20,8 @@ SRCS = main.c \
 		error/error.c \
 		parse/tokenize.c \
 		parse/tokenlist.c \
+		parse/ast.c \
+		parse/astnode.c \
 		test/test.c \
 		# utils/art.c
 

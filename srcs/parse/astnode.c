@@ -10,7 +10,7 @@ t_ast *add_pl_node(t_ast *parent, t_ast *child)
 			add_ast_node(parent->left, child);
 		return (parent);
 	}
-	else if (child->type == CMD)
+	else if (child->type == WORD)
 	{
 		if (parent->left == NULL)
 			parent->left = child;
@@ -32,7 +32,7 @@ t_ast *add_pl_node(t_ast *parent, t_ast *child)
 
 t_ast *add_pipe_node(t_ast *parent, t_ast *child)
 {
-	if (child->type == REDIRECT || child->type == CMD)
+	if (child->type == REDIRECT || child->type == WORD)
 	{
 		if (parent->right == NULL)
 		{

@@ -16,7 +16,9 @@ int main(int ac, char **av, char **envp)
 	// mini_pwd();
 	if (!init_env(&env, envp))
 		error_handler("minishell: allocate fail", errno);
-	printf("%s=%s\n", env.old_pwd->key, env.old_pwd->value);
-	printf("%s=%s", env.pwd->key, env.pwd->value);
+	// printf("%s=%s\n", env.old_pwd->key, env.old_pwd->value);
+	// printf("%s=%s", env.pwd->key, env.pwd->value);
+	t_token_list *list = make_token_list(tokenize("ls -a -l >> a < b > c | grep "" | cat << x > y"));
+	make_ast(list);
 	return (0);
 }
