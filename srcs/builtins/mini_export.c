@@ -1,5 +1,18 @@
 #include "../../includes/builtins.h"
 
+static int	find_c(char *s, char c)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == c)
+			return (1);
+	}
+	return (0);
+}
+
 static int	add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
@@ -20,11 +33,15 @@ static int	add_env(t_env *env, char **export)
 	return (SUCCESS);
 }
 
-void	mini_export(t_env *env, char *export) // env 리스트에 추가하기 key=value 형태로 들어오면 스플릿해서 저장해야 하나?
+void	mini_export(t_env *env, char *export)
 {
 	char	**tmp;
 
+	if (!find_c(export, '=')) // key만 들어오면 아무것도 실행하지 않음
+		return ;
 	tmp = ft_split(export, '=');
+	if (tmp[1] == NULL) // key= 까지 들어오면 뒤에를 공백으로 넣어줌
+		tmp[1] = ft_strdup(""); // split에서 두번째 문장이 할당이 안되니까,, free오류 방지를 위해..
 	if (!add_env(env, tmp))
-		error_handler("minishell: allocate fail", errno);
+		error_handler("minishell: allocate fail", errno); 
 }
