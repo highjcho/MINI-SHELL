@@ -29,6 +29,10 @@ static int	add_env(t_env *env, char *key, char *value)
 	new->e_flag = 0;
 	new->export = NULL;
 	new->next = NULL;
+	if (!ft_strncmp(key, "PWD", 4)) // pwd 위치 저장
+		env->pwd = new;
+	if (!ft_strncmp(key, "OLDPWD", 7)) // old_pwd 위치 저장
+		env->old_pwd = new; 
 	return (SUCCESS);
 }
 
@@ -65,6 +69,8 @@ static int	set_env(t_env *env, char **envp)
 int	init_env(t_env *env, char **envp)
 {
 	env->h_node.next = NULL;
+	env->pwd = NULL;
+	env->old_pwd = NULL;
 	if (!set_env(env, envp))
 		return (FAIL);
 	return (SUCCESS);

@@ -19,7 +19,7 @@ void	mini_echo(t_cmd *cmd) // 각 빌트인 들어오기 전에 트리에서 cmd
 	flag = check_opt(cmd->cmd[i], &i); // cmd[0] = echo,  cmd[1]이 -n인지 검사
 	while(cmd->cmd[i])
 	{
-		printf("%s", cmd->cmd[i]); // "" 안에서 환경변수는 parse 시에 치환? (pipe_x에서는 이미 치환되어 들어왔음)
+		printf("%s", cmd->cmd[i]); // "" 안에서 환경변수는 parse 시에 치환?
 		if (cmd->cmd[++i]) // 다음 cmd가 존재하면 공백 출력
 			printf(" ");
 	}
