@@ -78,11 +78,10 @@ char	**make_token(char *str, char **tokens)
 char	**tokenize(char *str)
 {
 	char	**tokens;
-	int		tmp;
 
-	if (token_count(str) == 0)
+	if (token_count(str) == 0) // 빈 문자열일 경우
 		return (NULL);
-	tokens = malloc((sizeof(char*) * token_count(str)) + 1);
+	tokens = malloc((sizeof(char*) * token_count(str)) + 1); //문자열 뱅열을 token_count 만큼 
 	if (!tokens)
 		return (NULL);
 	tokens = make_token(str, tokens);

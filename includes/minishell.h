@@ -13,6 +13,7 @@
 # include "parse.h"
 # include "error.h"
 # include "../libft/libft.h"
+# include "test.h"
 
 # define SUCCESS 1
 # define FAIL 0

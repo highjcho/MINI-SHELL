@@ -1,5 +1,6 @@
 #include "../../includes/builtins.h"
 
+<<<<<<< HEAD
 static int	find_c(char *s, char c)
 {
 	int	i;
@@ -15,6 +16,10 @@ static int	find_c(char *s, char c)
 
 static int	add_env(t_env *env, char **export)
 {
+=======
+static int	add_env(t_env *env, char **export)
+{
+>>>>>>> ac3c595393aed7cd14313fdbac845de4a8c6c3ee
 	t_env_node	*prev;
 	t_env_node	*new;
 
@@ -33,6 +38,7 @@ static int	add_env(t_env *env, char **export)
 	return (SUCCESS);
 }
 
+<<<<<<< HEAD
 void	mini_export(t_env *env, char *export)
 {
 	char	**tmp;
@@ -44,4 +50,13 @@ void	mini_export(t_env *env, char *export)
 		tmp[1] = ft_strdup(""); // split에서 두번째 문장이 할당이 안되니까,, free오류 방지를 위해..
 	if (!add_env(env, tmp))
 		error_handler("minishell: allocate fail", errno); 
+=======
+void	mini_export(t_env *env, char *export) // env 리스트에 추가하기 key=value 형태로 들어오면 스플릿해서 저장해야 하나?
+{
+	char	**tmp;
+
+	tmp = ft_split(export, '=');
+	if (!add_env(env, tmp))
+		error_handler("minishell: allocate fail", errno);
+>>>>>>> ac3c595393aed7cd14313fdbac845de4a8c6c3ee
 }
