@@ -16,12 +16,7 @@ int main(int ac, char **av, char **envp)
 	// mini_pwd();
 	if (!init_env(&env, envp))
 		error_handler("minishell: allocate fail", errno);
-	mini_export(&env, "a=333");
-	mini_export(&env, "b=555");
-	mini_export(&env, "c=111");
-	mini_env(&env);
-	mini_unset(&env, "b");
-	printf("\n==========================================\n\n");
-	mini_env(&env);
+	printf("%s=%s\n", env.old_pwd->key, env.old_pwd->value);
+	printf("%s=%s", env.pwd->key, env.pwd->value);
 	return (0);
 }
