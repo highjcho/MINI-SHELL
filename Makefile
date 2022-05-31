@@ -12,14 +12,18 @@ SRCS_DIR = ./srcs/
 
 SRCS = main.c \
 		init/init_env.c \
-		builtins/mini_pwd.c \
-		builtins/mini_env.c \
 		builtins/mini_echo.c \
+		builtins/mini_cd.c \
+		builtins/mini_pwd.c \
 		builtins/mini_export.c \
 		builtins/mini_unset.c \
+		builtins/mini_env.c \
+		builtins/mini_exit.c \
 		error/error.c \
 		parse/tokenize.c \
 		parse/tokenlist.c \
+		utils/env_utils.c \
+		utils/free.c \
 		test/test.c \
 		# utils/art.c
 

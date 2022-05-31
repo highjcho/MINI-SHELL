@@ -15,7 +15,9 @@
 # include "../libft/libft.h"
 # include "test.h"
 
-# define SUCCESS 1
-# define FAIL 0
+# define SUCCESS 0
+# define FAIL 1
+# define TRUE 1
+# define FALSE 0
 
 #endif

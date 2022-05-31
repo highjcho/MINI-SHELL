@@ -10,11 +10,8 @@ void	free_env(t_env *env)
 	{
 		tmp = cur->next;
 		free(cur->key);
-		if (cur->e_flag)
-		{
-			free(cur->value);
-			free(cur->export);
-		}
+		free(cur->value);
+		free(cur->export);
 		free(cur);
 		cur = tmp;
 	}
