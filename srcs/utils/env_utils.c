@@ -4,6 +4,7 @@ t_env_node	*get_key_node(t_env *env, char *key)
 {
 	t_env_node	*ret;
 	
+	ret = env->h_node.next;
 	while (ret)
 	{
 		if (!ft_strcmp(key, ret->key))

@@ -55,7 +55,48 @@ int quote_check(char *str)
 	return (0);
 }
 
-int env_sub(t_token_list *list)
+char	*substitution(char *str, int pos, t_env *env)
+{
+	int tmp;
+	char *sub;
+	char *ret;
+
+	tmp = pos + 1;
+	while (ft_isalnum(str[pos]) || str[pos] == '_')
+		pos++;
+	sub = get_key_node(env, ft_substr(str, tmp, pos - tmp))->value;
+	ret = ft_calloc(ft_strlen(sub) + ft_strlen(str) - pos + tmp, sizeof(char));
+	printf("env = %s ", sub);
+	// free (str);	
+	// return (sub);
+	return (str);
+}
+
+int env_check(char *str, t_env *env)
+{
+	int	i;
+	int	tmp;
+
+	i = -1;
+	tmp = 0;
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+		{
+			tmp = i;
+			while (str[++tmp])
+			{
+				if (str[tmp] == str[i])
+					i = tmp;
+			}
+		}
+		if (str[i] == '$')
+			str = substitution(str, i, env);
+	}
+	return (0);
+}
+
+int env_sub(t_token_list *list, t_env *env)
 {
 	t_token_list *cur;
 
@@ -63,7 +104,10 @@ int env_sub(t_token_list *list)
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)
+		{
+			env_check(cur->token.str, env);
 			quote_check(cur->token.str);	
+		}
 		cur = cur->next;
 	}
 	return (0);

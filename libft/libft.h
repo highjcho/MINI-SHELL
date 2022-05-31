@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:45 by hyunjcho          #+#    #+#             */
-/*   Updated: 2021/11/25 15:32:28 by hyunjcho         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:09:20 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,10 @@ size_t	ft_strlcpy(char	*dst, const char *src, size_t dstsize);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
+int		ft_isdigit(int	c);
+int		ft_isalpha(int	c);
+int		ft_isalnum(int	c);
+
+
 
 #endif

@@ -12,7 +12,7 @@ t_ast			*add_cmd_node(t_ast *parent, t_ast *child);
 t_ast			*add_ast_node(t_ast *parent, t_ast *child);
 t_ast			*make_ast(t_token_list *list);
 t_ast			*make_ast_node(t_token_list *list);
-int				env_sub(t_token_list *list);
+int env_sub(t_token_list *list, t_env *env);
 
 
 #endif

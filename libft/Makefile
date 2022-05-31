@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+         #
+#    By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/26 16:57:26 by hyunjcho          #+#    #+#              #
-#    Updated: 2021/12/06 15:35:58 by hyunjcho         ###   ########.fr        #
+#    Updated: 2022/05/31 19:09:13 by jonkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar -rcs
 RM = rm -f
 
-SRCS = ft_bzero.c ft_calloc.c ft_strlen.c ft_strjoin.c ft_itoa.c ft_strdup.c ft_strlcpy.c ft_substr.c ft_strncmp.c ft_split.c
+SRCS = ft_bzero.c ft_calloc.c ft_strlen.c ft_strjoin.c ft_itoa.c ft_strdup.c ft_strlcpy.c ft_substr.c ft_strncmp.c ft_split.c ft_isalpha.c ft_isdigit.c ft_isalnum.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
