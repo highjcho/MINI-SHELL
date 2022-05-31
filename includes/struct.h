@@ -5,10 +5,9 @@
 
 typedef struct s_env_node
 {
+	char				**export;
 	char				*key;
 	char				*value;
-	int					e_flag;
-	char				**export;
 	struct s_env_node	*next;
 }	t_env_node;
 

@@ -1,65 +1,46 @@
 #include "../../includes/init.h"
 
-static int	ft_key_len(char *key)
-{
-	int	i;
-
-	i = 0;
-	while (key[i] && key[i] != '=')
-		i++;
-	// if (key[i] == 0) // = 이 없는 환경변수는 없으니 예외처리 안해도 되겠지?
-	// 	return (-1);
-	return (i);
-}
-
-static int	add_env(t_env *env, char *key, char *value)
+static int	init_add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
 	t_env_node	*new;
 
 	new = malloc(sizeof(t_env_node));
 	if (!new)
-		return (FAIL);
+	{
+		double_free(export);
+		return (FALSE);
+	}
 	prev = &(env->h_node);
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
-	new->key = key; // unset 시 해제 필요
-	new->value = value;
-	new->e_flag = 0;
-	new->export = NULL;
+	new->key = export[0]; // unset 시 해제 필요
+	new->value = export[1]; // unset 시 해제 필요
+	new->export = export;
 	new->next = NULL;
-	if (!ft_strncmp(key, "PWD", 4)) // pwd 위치 저장
+	if (!ft_strcmp(export[0], "PWD")) // pwd 위치 저장
 		env->pwd = new;
-	if (!ft_strncmp(key, "OLDPWD", 7)) // old_pwd 위치 저장
-		env->old_pwd = new; 
-	return (SUCCESS);
+	if (!ft_strcmp(export[0], "OLDPWD")) // old_pwd 위치 저장
+		env->old_pwd = new;
+	return (TRUE);
 }
+
 
 static int	set_env(t_env *env, char **envp)
 {
-	t_env_node	*cur;
-	t_env_node	*tmp;
-	char		*key;
+	char		**export;
 	int			i;
 
 	i = -1;
 	while (envp[++i])
 	{
-		key = ft_substr(envp[i], 0, ft_key_len(envp[i])); // env = 전까지 복제
-		if (!ft_strncmp(key, "_", 2))
-			break;
-		if (!add_env(env, key, getenv(key))) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
+		export = ft_split(envp[i], '=');
+		if (!export)
+			return (FAIL);
+		if (!init_add_env(env, export)) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
 		{
-			cur = env->h_node.next;
-			while (cur)
-			{
-				tmp = cur->next;
-				free(cur->key);
-				free(cur);
-				cur = tmp;
-			}
-			free(env);
+			free_env(env);
 			return (FAIL);
 		}
 	}
