@@ -16,6 +16,8 @@ static int	find_c(char *s, char c)
 int	mini_export(t_env *env, char *new_env)
 {
 	char	**export;
+	t_env_node	*prev;
+	t_env_node	*new;
 
 	if (!find_c(new_env, '=')) // key만 들어오면 아무것도 실행하지 않음 오류아님
 		return (SUCCESS);

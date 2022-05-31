@@ -24,6 +24,8 @@ SRCS = main.c \
 		parse/tokenlist.c \
 		utils/env_utils.c \
 		utils/free.c \
+		parse/ast.c \
+		parse/astnode.c \
 		test/test.c \
 		# utils/art.c
 
