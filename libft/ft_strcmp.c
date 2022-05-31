@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/22 16:13:39 by hyunjcho          #+#    #+#             */
-/*   Updated: 2021/12/17 15:33:48 by hyunjcho         ###   ########.fr       */
+/*   Created: 2021/11/22 10:14:09 by hyunjcho          #+#    #+#             */
+/*   Updated: 2021/12/06 18:55:49 by hyunjcho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
-	size_t	j;
-	char	*new;
+	unsigned const char	*str1;
+	unsigned const char	*str2;
+	size_t				i;
 
-	new = (char *)ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
-	if (!new)
-		return (NULL);
-	i = -1;
-	while (++i < ft_strlen(s1))
-		new[i] = s1[i];
-	j = -1;
-	while (++j < ft_strlen(s2))
-		new[i + j] = s2[j];
-	return (new);
+	i = 0;
+	str1 = (unsigned const char *)s1;
+	str2 = (unsigned const char *)s2;
+	while (str1[i] && str2[i] && str1[i] == str2[i])
+		i++;
+	return (str1[i] - str2[i]);
 }
