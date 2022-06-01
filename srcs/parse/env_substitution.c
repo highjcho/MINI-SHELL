@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_substitution.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/01 15:51:10 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parse.h"
 
-char *quote_trim(char *str, int pos1, int pos2)
+char	*quote_trim(char *str, int pos1, int pos2)
 {
 	char	*ret;
 	int		i;
@@ -24,10 +36,10 @@ char *quote_trim(char *str, int pos1, int pos2)
 	return (ret);
 }
 
-char *quote_check(char *str)
+char	*quote_check(char *str)
 {
 	int	i;
-	int tmp;
+	int	tmp;
 
 	if (!str)
 		return (NULL);
@@ -50,7 +62,7 @@ char *quote_check(char *str)
 	return (str);
 }
 
-char *ret_sub(char *str, char *sub, int pos1, int pos2)
+char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 {
 	char	*ret;
 	int		i;
@@ -70,25 +82,18 @@ char *ret_sub(char *str, char *sub, int pos1, int pos2)
 		if (i <= pos2 && i >= pos1)
 		{
 			while (sub[j])
-			{
-				ret[idx] = sub[j];
-				j++;
-				idx++;
-			}
+				ret[idx++] = sub[j++];
 		}
 		else
-		{
-			ret[idx] = str[i];
-			idx++;
-		}
+			ret[idx++] = str[i];
 	}
 	return (ret);
 }
 
-char *substitution(char *str, int pos, t_env *env)
+char	*substitution(char *str, int pos, t_env *env)
 {
-	int tmp;
-	char *sub;
+	int		tmp;
+	char	*sub;
 
 	tmp = pos + 1;
 	pos++;
@@ -98,14 +103,13 @@ char *substitution(char *str, int pos, t_env *env)
 	return (ret_sub(str, sub, tmp - 1, pos - 1));
 }
 
-char *env_check(char *str, t_env *env)
+char	*env_check(char *str, t_env *env)
 {
 	int	i;
 	int	tmp;
 
 	i = -1;
 	tmp = 0;
-	(void)env;
 	while (str[++i])
 	{
 		if (str[i] == '\'')
@@ -123,12 +127,11 @@ char *env_check(char *str, t_env *env)
 	return (str);
 }
 
-int env_sub(t_token_list *list, t_env *env)
+int	env_sub(t_token_list *list, t_env *env)
 {
-	t_token_list *cur;
+	t_token_list	*cur;
 
 	cur = list;
-	(void)env;
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   astnode.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 15:49:49 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/01 15:54:29 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parse.h"
 
 int	redirection_check(t_ast *node)
@@ -6,7 +18,7 @@ int	redirection_check(t_ast *node)
 		return (redirection_check(node->right));
 	if (node->left)
 		return (1); // 꽉차면 1 반환 
-	return(0);
+	return (0);
 }
 
 t_ast	*add_pl_node(t_ast *parent, t_ast *child)
@@ -27,7 +39,7 @@ t_ast	*add_pl_node(t_ast *parent, t_ast *child)
 		else
 			add_ast_node(parent->right, child);
 	}
-	else 
+	else
 	{
 		if (child->left == NULL)
 			child->left = parent;
@@ -38,7 +50,7 @@ t_ast	*add_pl_node(t_ast *parent, t_ast *child)
 	return (parent);
 }
 
-t_ast *add_pipe_node(t_ast *parent, t_ast *child)
+t_ast	*add_pipe_node(t_ast *parent, t_ast *child)
 {
 	if (child->type == REDIRECT || child->type == WORD)
 	{
@@ -59,14 +71,14 @@ t_ast *add_pipe_node(t_ast *parent, t_ast *child)
 			child->left = parent ->left;
 			parent->left = parent ->right;
 			child->right = parent;
-			parent->right = NULL; 
+			parent->right = NULL;
 			return (child);
 		}
 	}
-			return (parent);
+	return (parent);
 }
 
-t_ast *add_redirect_node(t_ast *parent, t_ast *child)
+t_ast	*add_redirect_node(t_ast *parent, t_ast *child)
 {
 	if (child->type == REDIRECT)
 	{
@@ -85,7 +97,7 @@ t_ast *add_redirect_node(t_ast *parent, t_ast *child)
 	return (parent);
 }
 
-t_ast *add_cmd_node(t_ast *parent, t_ast *child)
+t_ast	*add_cmd_node(t_ast *parent, t_ast *child)
 {
 	if (parent->right == NULL)
 		parent->right = child;
