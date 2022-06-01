@@ -29,10 +29,9 @@ int main(int ac, char **av, char **envp)
 	// mini_env(&env);
 	// t_env_node *tmp = get_key_node(&env, "hyunjcho");
 	// printf("%p", tmp);
-	t_token_list *list = make_token_list(tokenize("\'$USEER"));
+	t_token_list *list = make_token_list(tokenize(">>> | >>>>"));
 	test_token_list(list);
 	env_sub(list, &env);
-	test_token_list(list);
-
+	printf("%d\n",syntax_check(make_ast(list)));
 	return (0);
 }

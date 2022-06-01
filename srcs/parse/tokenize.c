@@ -20,12 +20,19 @@ void	word(char *str, int *i)
 {
 	while (str[(*i)])
 	{
-		if (str[*i] == ' ')
+		if (str[*i] == ' ' || str[*i] == '|' || str[*i] == '>' || str[*i] == '<')
 			return ;
 		if (str[*i] == '\'' || str[*i] == '\"')
 			quote(str, i, str[*i]);
 		(*i)++;
 	}
+}
+
+void	redirection(char *str, int *i)
+{
+	if (str[(*i) + 1] == str[*i])
+		(*i)++;
+	(*i)++;
 }
 
 int	token_count(char *str)
@@ -37,9 +44,19 @@ int	token_count(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '|')
+		{
+			ret++;
+			i++;
+		}
+		if (str[i] == '<' || str[i] == '>')
+		{
+			redirection(str, &i);
+			ret++;
+		}
 		if (str[i] == '\'' || str[i] == '\"')
 			quote(str, &i, str[i]);
-		if (str[i] != ' ' && str[i] != '\'' && str[i] != '\"')
+		if (str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && str[i] != '|' && str[i] != '>' && str[i] != '<')
 			word(str, &i);
 		while (str[i] == ' ')
 			i++;
@@ -61,9 +78,21 @@ char	**make_token(char *str, char **tokens)
 		while (str[i] == ' ')
 			i++;
 		tmp = i;
+		if (str[i] == '|')
+		{
+			tokens[j++] = ft_strdup("|");
+			i++;
+			tmp++;
+		}
+		if (str[i] == '<' || str[i] == '>')
+		{
+			redirection(str, &i);
+			tokens[j++] = ft_substr(str, tmp, i - tmp);
+			tmp = i;
+		}
 		if (str[i] == '\'' || str[i] == '\"')
 			quote(str, &i, str[i]);
-		if (str[i] != ' '&& str[i] != '\'' && str[i] != '\"')
+		if (str[i] != ' '&& str[i] != '\'' && str[i] != '\"' && str[i] != '|' && str[i] != '>' && str[i] != '<')
 			word(str, &i);
 		if (i != tmp)
 		{

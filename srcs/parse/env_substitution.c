@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_substitution.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/01 18:27:55 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parse.h"
 
-char *quote_trim(char *str, int pos1, int pos2)
+char	*quote_trim(char *str, int pos1, int pos2)
 {
 	char	*ret;
 	int		i;
@@ -22,12 +34,12 @@ char *quote_trim(char *str, int pos1, int pos2)
 	ret[tmp] = 0;
 	free(str);
 	return (ret);
+}
 
-
-int quote_check(char *str)
+char	*quote_check(char *str)
 {
 	int	i;
-	int tmp;
+	int	tmp;
 
 	if (!str)
 		return (NULL);
@@ -50,7 +62,7 @@ int quote_check(char *str)
 	return (str);
 }
 
-char *ret_sub(char *str, char *sub, int pos1, int pos2)
+char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 {
 	char	*ret;
 	int		i;
@@ -62,7 +74,7 @@ char *ret_sub(char *str, char *sub, int pos1, int pos2)
 	idx = 0;
 	ret = ft_calloc(ft_strlen(str) - pos2 + pos1 + ft_strlen(sub) + 1, 1);
 	if (!sub)
-		sub = ft_strdup("");
+		sub = ft_strdup(""); // free 생각
 	if (!ret)
 		return (NULL);
 	while (str[++i])
@@ -70,25 +82,19 @@ char *ret_sub(char *str, char *sub, int pos1, int pos2)
 		if (i <= pos2 && i >= pos1)
 		{
 			while (sub[j])
-			{
-				ret[idx] = sub[j];
-				j++;
-				idx++;
-			}
+				ret[idx++] = sub[j++];
 		}
 		else
-		{
-			ret[idx] = str[i];
-			idx++;
-		}
+			ret[idx++] = str[i];
 	}
+	free(str);
 	return (ret);
 }
 
-char *substitution(char *str, int pos, t_env *env)
+char	*substitution(char *str, int pos, t_env *env)
 {
-	int tmp;
-	char *sub;
+	int		tmp;
+	char	*sub;
 
 	tmp = pos + 1;
 	pos++;
@@ -98,7 +104,11 @@ char *substitution(char *str, int pos, t_env *env)
 	return (ret_sub(str, sub, tmp - 1, pos - 1));
 }
 
+<<<<<<< HEAD
+char	*env_check(char *str, t_env *env)
+=======
 char *env_check(char *str, t_env *env)
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 {
 	int	i;
 	int	tmp;
@@ -120,12 +130,15 @@ char *env_check(char *str, t_env *env)
 			return (substitution(str, i, env));
 	}
 	return (str);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 }
 
-int env_sub(t_token_list *list, t_env *env)
+int	env_sub(t_token_list *list, t_env *env)
 {
-	t_token_list *cur;
+	t_token_list	*cur;
 
 	cur = list;
 	while (cur)
@@ -134,7 +147,10 @@ int env_sub(t_token_list *list, t_env *env)
 		{
 			cur->token.str = env_check(cur->token.str, env);
 			cur->token.str = quote_check(cur->token.str);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 		}
 		cur = cur->next;
 	}
