@@ -28,8 +28,6 @@ SRCS = main.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
 		test/test.c \
-		utils/env_utils.c \
-		utils/free.c
 		# utils/art.c
 
 

@@ -23,7 +23,7 @@ static int	change_dir(t_env *env, char *new_dir)
 	int		check;
 
 	if (!new_dir)
-		check = chdir(get_key_node(env, "HOME")->value);
+		check = chdir(get_env_value(env, "HOME"));
 	else
 		check = chdir(new_dir);
 	if (check == FAIL)
