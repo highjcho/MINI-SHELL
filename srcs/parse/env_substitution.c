@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 15:51:10 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/01 16:05:23 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 	idx = 0;
 	ret = ft_calloc(ft_strlen(str) - pos2 + pos1 + ft_strlen(sub) + 1, 1);
 	if (!sub)
-		sub = ft_strdup("");
+		sub = ft_strdup(""); // free 생각
 	if (!ret)
 		return (NULL);
 	while (str[++i])
@@ -87,6 +87,7 @@ char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 		else
 			ret[idx++] = str[i];
 	}
+	free(str);
 	return (ret);
 }
 
