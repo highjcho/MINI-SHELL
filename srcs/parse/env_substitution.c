@@ -22,9 +22,9 @@ char *quote_trim(char *str, int pos1, int pos2)
 	ret[tmp] = 0;
 	free(str);
 	return (ret);
-}
 
-char *quote_check(char *str)
+
+int quote_check(char *str)
 {
 	int	i;
 	int tmp;
@@ -105,7 +105,6 @@ char *env_check(char *str, t_env *env)
 
 	i = -1;
 	tmp = 0;
-	(void)env;
 	while (str[++i])
 	{
 		if (str[i] == '\'')
@@ -121,6 +120,7 @@ char *env_check(char *str, t_env *env)
 			return (substitution(str, i, env));
 	}
 	return (str);
+
 }
 
 int env_sub(t_token_list *list, t_env *env)
@@ -128,13 +128,13 @@ int env_sub(t_token_list *list, t_env *env)
 	t_token_list *cur;
 
 	cur = list;
-	(void)env;
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)
 		{
 			cur->token.str = env_check(cur->token.str, env);
 			cur->token.str = quote_check(cur->token.str);
+
 		}
 		cur = cur->next;
 	}
