@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 16:05:23 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/01 18:27:55 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ char	*substitution(char *str, int pos, t_env *env)
 	return (ret_sub(str, sub, tmp - 1, pos - 1));
 }
 
+<<<<<<< HEAD
 char	*env_check(char *str, t_env *env)
+=======
+char *env_check(char *str, t_env *env)
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 {
 	int	i;
 	int	tmp;
@@ -126,6 +130,10 @@ char	*env_check(char *str, t_env *env)
 			return (substitution(str, i, env));
 	}
 	return (str);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 }
 
 int	env_sub(t_token_list *list, t_env *env)
@@ -139,6 +147,10 @@ int	env_sub(t_token_list *list, t_env *env)
 		{
 			cur->token.str = env_check(cur->token.str, env);
 			cur->token.str = quote_check(cur->token.str);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 682b0b97190da6ad2aed69b022ef277249188e38
 		}
 		cur = cur->next;
 	}
