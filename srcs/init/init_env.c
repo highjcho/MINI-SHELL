@@ -1,5 +1,16 @@
 #include "../../includes/init.h"
 
+static int	set_path(t_env *env)
+{
+	env->path = ft_split(get_key_node(env, "PATH")->value, ':');
+	if (!env->path)
+	{
+		error_handler("pipex: allocate failed", errno);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
 static int	init_add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
@@ -26,7 +37,6 @@ static int	init_add_env(t_env *env, char **export)
 	return (TRUE);
 }
 
-
 static int	set_env(t_env *env, char **envp)
 {
 	char		**export;
@@ -37,14 +47,14 @@ static int	set_env(t_env *env, char **envp)
 	{
 		export = ft_split(envp[i], '=');
 		if (!export)
-			return (FAIL);
+			return (FALSE);
 		if (!init_add_env(env, export)) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
 		{
 			free_env(env);
-			return (FAIL);
+			return (FALSE);
 		}
 	}
-	return (SUCCESS);
+	return (TRUE);
 }
 	
 int	init_env(t_env *env, char **envp)
@@ -53,6 +63,8 @@ int	init_env(t_env *env, char **envp)
 	env->pwd = NULL;
 	env->old_pwd = NULL;
 	if (!set_env(env, envp))
+		return (FAIL);
+	if (!set_path(env))
 		return (FAIL);
 	return (SUCCESS);
 }

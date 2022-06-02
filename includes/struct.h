@@ -16,6 +16,7 @@ typedef struct s_env
 	t_env_node	h_node;
 	t_env_node	*pwd; // 필요한 게 맞는 지 사실 아직 감이 잘 안옴;
 	t_env_node	*old_pwd;
+	char		**path;
 } t_env;
 
 enum e_token_type
@@ -41,7 +42,9 @@ typedef struct s_token_list
 typedef struct s_cmd
 {
 	char	*path;
-	char	**cmd;
+	char	**cmd; // 트리에서 돌기
+	int		in_fd;
+	int		out_fd;
 }	t_cmd;
 
 typedef struct s_ast
