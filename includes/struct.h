@@ -5,10 +5,9 @@
 
 typedef struct s_env_node
 {
+	char				**export;
 	char				*key;
 	char				*value;
-	int					e_flag;
-	char				**export;
 	struct s_env_node	*next;
 }	t_env_node;
 
@@ -30,13 +29,13 @@ enum e_token_type
 typedef struct s_token
 {
 	char				*str;
-	enum e_token_type 	type;
+	enum e_token_type	type;
 }	t_token;
 
 typedef struct s_token_list
 {
-	struct s_token_list *next;
-	t_token token;
+	struct s_token_list	*next;
+	t_token				token;
 }	t_token_list;
 
 typedef struct s_cmd
@@ -47,10 +46,13 @@ typedef struct s_cmd
 
 typedef struct s_ast
 {
-	struct s_ast 	*left;
-	struct s_ast 	*right;
-		char 			*data;
-	enum e_token_type type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	char			*data;
+	int				ac;
+	char			**av;
+	char			*file_name;
+	enum e_token_type	type;
 }	t_ast;
 
 #endif

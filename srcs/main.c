@@ -1,24 +1,40 @@
 #include "../includes/minishell.h"
-#include "../libft/libft.h"
 
 int main(int ac, char **av, char **envp)
 {
 	t_env env;
-	
+	// t_cmd cmd;
+
+
 	if (ac != 1)
 		return (1);
 	(void) av;
-	// (void) envp;
+	init_env(&env, envp);
+	// 	printf("%s=%s\n", env.old_pwd->key, env.old_pwd->value);
+	// printf("%s=%s\n", env.pwd->key, env.pwd->value);
 	// printf("1: ");
 	// mini_pwd();
-	// chdir("..");
+	// cmd.cmd = ft_calloc(sizeof(char *), 2);
+	// cmd.cmd[0] = ft_calloc(sizeof(char), 3);
+	// cmd.cmd[0] = "cd";
+	// cmd.cmd[1] = NULL;
+	// cmd.path = NULL;
+	// mini_cd(&cmd, &env);
 	// printf("2: ");
 	// mini_pwd();
-	if (!init_env(&env, envp))
-		error_handler("minishell: allocate fail", errno);
-	// printf("%s=%s\n", env.old_pwd->key, env.old_pwd->value);
-	// printf("%s=%s", env.pwd->key, env.pwd->value);
-	t_token_list *list = make_token_list(tokenize(">> a ls < b -a -l | echo < b -n a"));
-	test_ast(make_ast(list));
+	// mini_export(&env, "hyunjcho=hyunjcho");
+	// mini_env(&env);
+	// printf("==================\n");
+	// mini_unset(&env, "hyunjcho");
+	// mini_env(&env);
+	// t_env_node *tmp = get_key_node(&env, "hyunjcho");
+	// printf("%p", tmp);
+	t_token_list *list = make_token_list(tokenize("ls -a -l >> a < b > c | grep \"\" | cat << x > y"));
+	// test_token_list(list);
+	env_sub(list, &env);
+	t_ast *ast = make_ast(list);
+	ast_merge(ast);
+	test_ast(ast);
+
 	return (0);
 }

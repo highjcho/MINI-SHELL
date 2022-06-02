@@ -5,12 +5,12 @@ static int	check_opt(char *s, int *i)
 	if (!ft_strncmp(s, "-n", 2)) // echo 이후 첫번째 원소가 -n으로 시작할 경우 (-nnnn 같은 경우도 -n으로 취급)
 	{
 		(*i)++; // i 하나 밀고
-		return (1);
+		return (TRUE);
 	}
-	return (0);
+	return (FALSE);
 }
 
-void	mini_echo(t_cmd *cmd) // 각 빌트인 들어오기 전에 트리에서 cmd 부분만 cmd 구조체에 cmd 저장해 놓기 (echo p"ppp"p 와 같은 경우 mini_echo를 부르는 곳에서 정리를 하고 cmd 구조체를 생성해줘야 할듯)
+int	mini_echo(t_cmd *cmd) // 각 빌트인 들어오기 전에 트리에서 cmd 부분만 cmd 구조체에 cmd 저장해 놓기 (echo p"ppp"p 와 같은 경우 mini_echo를 부르는 곳에서 정리를 하고 cmd 구조체를 생성해줘야 할듯)
 {
 	int flag;
 	int i;
@@ -25,4 +25,5 @@ void	mini_echo(t_cmd *cmd) // 각 빌트인 들어오기 전에 트리에서 cmd
 	}
 	if (!flag) // -n 옵션에 따라 개행 출력
 		printf("\n");
+	return (SUCCESS); // ㅇㅔ코가 실패하는 경우?
 }
