@@ -27,9 +27,9 @@ SRCS = main.c \
 		parse/ast.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
+		redirect/dup_file.c \
+		execute/execve.c \
 		test/test.c \
-		utils/env_utils.c \
-		utils/free.c
 		# utils/art.c
 
 
