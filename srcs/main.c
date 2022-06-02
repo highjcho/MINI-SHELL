@@ -29,12 +29,17 @@ int main(int ac, char **av, char **envp)
 	// mini_env(&env);
 	// t_env_node *tmp = get_key_node(&env, "hyunjcho");
 	// printf("%p", tmp);
-	t_token_list *list = make_token_list(tokenize("ls -a -l >> a < b > c | grep \"\" | cat << x > y"));
-	// test_token_list(list);
-	env_sub(list, &env);
-	t_ast *ast = make_ast(list);
-	ast_merge(ast);
-	test_ast(ast);
 
+	char *line = NULL;
+	t_token_list *list = NULL;
+	t_ast *ast = NULL;
+	while (1)
+	{
+		line = readline("minishell> ");
+		list = make_token_list(tokenize(line));
+		ast = make_ast(list);
+		ast_merge(ast);
+		test_ast(ast);
+	}
 	return (0);
 }

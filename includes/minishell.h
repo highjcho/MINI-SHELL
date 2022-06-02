@@ -6,6 +6,8 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include "struct.h"
 # include "init.h"
 # include "builtins.h"
