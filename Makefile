@@ -6,7 +6,10 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+FLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+
+READLINE_FLAG = -I $(HOME)/.brew/opt/readline/include -lreadline -L${HOME}/.brew/opt/readline/lib
+
 
 SRCS_DIR = ./srcs/
 
@@ -42,12 +45,17 @@ vpath %.c $(SRCS_DIR)
 
 all: $(LIBFT) $(NAME)
 
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAGS) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAGS) $(READLINE_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"
 
 $(LIBFT):
 	@make -C ./libft
+
+
 
 clean:
 	@$(RM) $(MAN_OBJS)
