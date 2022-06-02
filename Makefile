@@ -20,14 +20,15 @@ SRCS = main.c \
 		builtins/mini_env.c \
 		builtins/mini_exit.c \
 		error/error.c \
-		parse/tokenize.c \
-		parse/tokenlist.c \
 		utils/env_utils.c \
 		utils/free.c \
+		parse/tokenize.c \
+		parse/tokenlist.c \
 		parse/ast.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
 		parse/syntaxcheck.c \
+		parse/ast_merge.c \
 		test/test.c \
 		# utils/art.c
 

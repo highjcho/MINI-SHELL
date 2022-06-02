@@ -46,9 +46,12 @@ typedef struct s_cmd
 
 typedef struct s_ast
 {
-	struct s_ast		*left;
-	struct s_ast		*right;
+	struct s_ast	*left;
+	struct s_ast	*right;
 	char			*data;
+	int				ac;
+	char			**av;
+	char			*file_name;
 	enum e_token_type	type;
 }	t_ast;
 
