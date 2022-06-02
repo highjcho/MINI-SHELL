@@ -13,6 +13,8 @@
 # include "builtins.h"
 # include "utils.h"
 # include "parse.h"
+# include "redirect.h"
+# include "execute.h"
 # include "error.h"
 # include "../libft/libft.h"
 # include "test.h"
