@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:55 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 17:20:55 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/02 10:38:16 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_ast	*make_ast(t_token_list *list) //token_list 를 순회하면서 ast를 생�
 		if (!node)
 			return (NULL);
 		root = add_ast_node(root, node); // root 에 node를 추가한다. root를 갱신
-		cur = cur -> next;
+		cur = cur -> next; // token list free  추가 
 	}
 	return (root);
 }
