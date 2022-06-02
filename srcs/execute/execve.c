@@ -27,6 +27,8 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 		if (!cmd->path)
 			return (FALSE);
 		free(tmp);
+		// printf("path: %s, cmd[0]: %s, cmd[1]: %s\n", cmd->path, cmd->cmd[0], cmd->cmd[1]);
+		// check = execve("/bin/echo", cmd->cmd, envp);
 		check = execve(cmd->path, cmd->cmd, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
 		free(cmd->path); // cmd_path 만들어 둔거 프리하고 해야 됨 계속 실행
 	}
@@ -53,7 +55,7 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	{
 		close(fd[0]); // 파이프 읽기 닫기
 		dup_fd(cmd->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
-		printf("in_fd: %d, ??: %d, out_fd: %d\n", cmd->in_fd, fd[0], cmd->out_fd);
+		// printf("in_fd: %d, cur_in_fd: %d, cur_out_fd: %d, out_fd: %d\n", cmd->in_fd, fd[0], fd[1], cmd->out_fd);
 		dup_fd(cmd->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (cmd->cmd[0][0] == '/')
 			check = has_path(cmd, envp);
