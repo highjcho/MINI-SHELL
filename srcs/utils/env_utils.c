@@ -22,15 +22,17 @@ int	add_env(t_env *env, char **export)
 	return (SUCCESS);
 }
 
-t_env_node	*get_key_node(t_env *env, char *key)
+char	*get_env_value(t_env *env, char *key)
 {
 	t_env_node	*ret;
 	
+	if (!key)
+		return (NULL);
 	ret = env->h_node.next;
 	while (ret)
 	{
 		if (!ft_strcmp(key, ret->key))
-			return (ret);
+			return (ret->value);
 		ret = ret->next;
 	}
 	return (NULL);

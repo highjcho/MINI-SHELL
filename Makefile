@@ -6,7 +6,10 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+FLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+
+READLINE_FLAG = -I $(HOME)/.brew/opt/readline/include -lreadline -L${HOME}/.brew/opt/readline/lib
+
 
 SRCS_DIR = ./srcs/
 
@@ -20,14 +23,16 @@ SRCS = main.c \
 		builtins/mini_env.c \
 		builtins/mini_exit.c \
 		error/error.c \
-		parse/tokenize.c \
-		parse/tokenlist.c \
 		utils/env_utils.c \
 		utils/free.c \
+		parse/tokenize.c \
+		parse/tokenlist.c \
 		parse/ast.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
-		redirect/dup_file.c \
+		parse/syntaxcheck.c \
+		parse/ast_merge.c \
+    redirect/dup_file.c \
 		execute/execve.c \
 		test/test.c \
 		# utils/art.c
@@ -42,12 +47,17 @@ vpath %.c $(SRCS_DIR)
 
 all: $(LIBFT) $(NAME)
 
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAGS) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAGS) $(READLINE_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"
 
 $(LIBFT):
 	@make -C ./libft
+
+
 
 clean:
 	@$(RM) $(MAN_OBJS)

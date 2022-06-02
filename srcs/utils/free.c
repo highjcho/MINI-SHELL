@@ -26,3 +26,23 @@ void	double_free(char **str)
 		free(str[i]);
 	free(str);
 }
+
+void	ast_free(t_ast *node)
+{
+	if (node->data)
+	{
+		free(node->data);
+		node->data = NULL;
+	}
+	if (node->av)
+	{
+		double_free(node->av);
+		node->av = NULL;
+	}
+	if (node->file_name)
+	{
+		free(node->file_name);
+		node->file_name = NULL;
+	}
+	free(node);
+}
