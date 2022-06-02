@@ -35,5 +35,6 @@ int main(int ac, char **av, char **envp)
 	t_ast *ast = make_ast(list);
 	ast_merge(ast);
 	test_ast(ast);
+
 	return (0);
 }
