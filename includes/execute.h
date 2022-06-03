@@ -3,7 +3,9 @@
 
 # include "minishell.h"
 
-int	execute_cmd(t_env *env, t_cmd *cmd, char **envp);
-void ast_exec(t_ast *ast, t_env *env, char **envp);
+
+int execute_builtin(t_env *env, t_ast *ast, int kind)
+int	execute_non_builtin(t_env *env, t_ast *ast, char **envp);
+
 
 #endif
