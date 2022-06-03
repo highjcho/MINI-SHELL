@@ -61,4 +61,10 @@ typedef struct s_ast
 	enum e_token_type	type;
 }	t_ast;
 
+typedef struct s_pl_list
+{
+	struct s_ast		*pipeline;
+	struct s_pl_list	*next;
+}	t_pl_list;
+
 #endif
