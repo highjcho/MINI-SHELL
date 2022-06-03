@@ -38,6 +38,7 @@ int main(int ac, char **av, char **envp)
 		execute_cmd(&env, &cmd, envp);
 		free(cmd.cmd[0]);
 		free(cmd.cmd[1]);
+		printf("%d\n", i);
 	}
 	close(cmd.in_fd); // 마지막 pipe_infd 닫아줘야 됨
 	free(cmd.cmd);
