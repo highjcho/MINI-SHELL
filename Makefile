@@ -6,7 +6,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+FLAGS = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
 READLINE_FLAG = -I $(HOME)/.brew/opt/readline/include -lreadline -L${HOME}/.brew/opt/readline/lib
 
@@ -35,6 +35,8 @@ SRCS = main.c \
 		parse/pipelinelist.c \
 	    redirect/dup_file.c \
 		redirect/ast_redirect_process.c \
+		execute/execute.c \
+		execute/builtin.c \
 		execute/execve.c \
 		test/test.c \
 		# utils/art.c
@@ -58,8 +60,6 @@ $(NAME): $(MAN_OBJS)
 
 $(LIBFT):
 	@make -C ./libft
-
-
 
 clean:
 	@$(RM) $(MAN_OBJS)

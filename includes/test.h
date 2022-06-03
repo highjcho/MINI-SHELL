@@ -4,6 +4,7 @@
 # include "minishell.h"
 void test_token_list(t_token_list *list);
 void test_ast(t_ast *ast);
+void test_pl_list(t_pl_list *list);
 
 
 #endif

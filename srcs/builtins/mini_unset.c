@@ -26,10 +26,7 @@ static int	check_error(char *key, int *flag)
 
 	n = ft_strlen(key);
 	if (key[n - 1] == '=') // key 마지막 글자가 '='이면 에러처리
-	{
-		*flag = printf("unset: '%s': not a valid identifier", cmd[i]);
-		break; // exit 1로 빠져나가야 함. bash: 1: command not found
-	}
+		*flag = printf("unset: '%s': not a valid identifier", key); // exit 1로 빠져나가야 함. bash: 1: command not found
 	return (*flag);
 }
 
@@ -43,7 +40,7 @@ int	mini_unset(t_env *env, char **cmd)
 	flag = 0;
 	while (cmd[++i])
 	{
-		if (check_error(cmd[i], flag));
+		if (check_error(cmd[i], &flag))
 			break; // flag만 세우고 다음 턴 넘김 일단 다 실행은 시켜주고 에러메시지 출력됨
 		prev = find_prev_env(env->h_node.next, cmd[i]);
 		if (!prev)

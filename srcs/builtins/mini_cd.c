@@ -2,14 +2,23 @@
 
 static int	set_old_pwd(t_env *env)
 {
-	char	*old_pwd;
+	char	**export;
 
 	if (!env->old_pwd)
 	{
-		old_pwd = ft_strjoin("OLDPWD=", env->pwd->value);
-		if (mini_export(env, old_pwd) == FAIL)
+		export = ft_calloc(3, sizeof(char *));
+		if (!export)
+			return (FALSE);
+		export[0] = ft_strdup("export");
+		export[1] =	ft_strjoin("OLDPWD=", env->pwd->value);
+		if (!export[0] || !export[1])
 		{
-			free(old_pwd);
+			double_free(export);
+			return (FALSE);
+		}
+		if (mini_export(env, export) == FAIL)
+		{
+			double_free(export);
 			return (FALSE);
 		} // export 활용해도 되겠지?
 	}
