@@ -2,7 +2,7 @@
 
 static int	set_path(t_env *env)
 {
-	env->path = ft_split(get_key_node(env, "PATH")->value, ':');
+	env->path = ft_split(get_env_value(env, "PATH"), ':');
 	if (!env->path)
 	{
 		error_handler("pipex: allocate failed", errno);
