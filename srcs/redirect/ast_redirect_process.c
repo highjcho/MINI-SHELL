@@ -51,8 +51,4 @@ void ast_redirect_process(t_ast *ast)
 			redirect_out(ast, ast->left);
 		}
 	}
-	if (ast->left)
-		ast_redirect_process(ast->left);
-	if (ast->right)
-		ast_redirect_process(ast->right);
 }

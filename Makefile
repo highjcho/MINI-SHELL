@@ -32,6 +32,7 @@ SRCS = main.c \
 		parse/env_substitution.c \
 		parse/syntaxcheck.c \
 		parse/ast_merge.c \
+		parse/pipelinelist.c \
 	    redirect/dup_file.c \
 		redirect/ast_redirect_process.c \
 		execute/execve.c \
