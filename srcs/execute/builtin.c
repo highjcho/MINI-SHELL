@@ -2,20 +2,24 @@
 
 static int	do_builtin(t_env *env, t_ast *ast, int kind)
 {
+	int	check;
+
 	if (kind == 1)
-		mini_echo(ast->av);
+		check = mini_echo(ast->av);
 	else if (kind == 2)
-		mini_cd(env, ast->av);
+		check = mini_cd(env, ast->av);
 	else if (kind == 3)
-		mini_pwd();
+		check = mini_pwd();
 	else if (kind == 4)
-		mini_export(env, ast->av);
+		check = mini_export(env, ast->av);
 	else if (kind == 5)
-		mini_unset(env, ast->av);
+		check = mini_unset(env, ast->av);
 	else if (kind == 6)
-		mini_env(env);
+		check = mini_env(env);
 	else
-		mini_env(env, errno);
+		check = mini_env(env, errno);
+	// if (check == FALSE) // 인 경우에 뭘 할 것인가? 파이프가 있을 경우 그냥 다음 cmd를 실행하는데,, 오류메시지를 출력하면 fd[1]에 기록됨,,,, perror 허용함수에 없음.. 우짜지.
+	return (check); // 얘를 어떻게 활용해야 할까,,,, ㅠ
 }
 
 int execute_builtin(t_env *env, t_ast *ast, int kind)

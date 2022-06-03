@@ -11,11 +11,10 @@ static int	has_path(t_cmd *cmd, char **envp)
 	return (FALSE);
 }
 
-static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
+static int need_to_make_path(t_env *env, t_ast *ast, char **envp)
 {
 	char	*tmp;
 	int		i;
-	int check;
 	
 	i = -1;
 	while (env->path[++i]) // 경로 탐색 끝날 때까지
@@ -23,16 +22,15 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 		tmp = ft_strjoin("/", cmd->cmd[0]);
 		if (!tmp)
 			return (FALSE);
-		cmd->path = ft_strjoin(env->path[i], tmp);
+		ast->path = ft_strjoin(env->path[i], tmp);
 		if (!cmd->path)
 			return (FALSE);
 		free(tmp);
-		check = execve(cmd->path, cmd->cmd, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
+		execve(cmd->path, cmd->cmd, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
 		free(cmd->path); // cmd_path 만들어 둔거 프리하고 해야 됨 계속 실행
 	}
 	//free(cmd->path); // path 끝까지 돌았는데 맞는 cmd를 못찾았을 때
 	// double_free(cmd->cmd); //에러처리 커맨드 없움. 종료코드 127
-	printf("check: %d\n", check);
 	return (FALSE);
 }
 

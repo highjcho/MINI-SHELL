@@ -1,6 +1,6 @@
-#include "../../includes/utils.h"
+#include "../../includes/execute.h"
 
-int	isbuiltin(t_cmd *cmd)
+static int	isbuiltin(char	*cmd)
 {
 	if (!ft_strcmp(cmd[0], "echo"))
 		return (1);
@@ -18,4 +18,15 @@ int	isbuiltin(t_cmd *cmd)
 		return (7);
 	else
 		return (0);
+}
+
+int	execute_cmd(t_env *env, t_ast *ast, char **envp)
+{
+	int	kind;
+
+	kind = isbuiltin(ast->av[1]);
+	if (kind)
+		execute_builtin(env, ast, kind);
+	else
+		execute_non_builtin(env, ast, envp);
 }
