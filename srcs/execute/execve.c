@@ -15,7 +15,6 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 {
 	char	*tmp;
 	int		i;
-	int check;
 
 	i = -1;
 	while (env->path[++i]) // 경로 탐색 끝날 때까지
@@ -53,7 +52,6 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	{
 		close(fd[0]); // 파이프 읽기 닫기
 		dup_fd(cmd->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
-		printf("in_fd: %d, ??: %d, out_fd: %d\n", cmd->in_fd, fd[0], cmd->out_fd);
 		dup_fd(cmd->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (cmd->cmd[0][0] == '/')
 			check = has_path(cmd, envp);
