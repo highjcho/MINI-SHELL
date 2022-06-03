@@ -15,7 +15,8 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 {
 	char	*tmp;
 	int		i;
-
+	int check;
+	
 	i = -1;
 	while (env->path[++i]) // 경로 탐색 끝날 때까지
 	{
@@ -43,7 +44,7 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	int		check;
 
 	pipe(fd);
-	if (cmd->out_fd == -1) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
+	if (cmd->out_fd == 0) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
 		cmd->out_fd = fd[1]; 
 	pid = fork();
 	if (pid < 0)
@@ -64,7 +65,7 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	wait(&status);
 	//waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
 	cmd->in_fd = fd[0]; // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
-	cmd->out_fd = -1; // out_fd 초기화
+	cmd->out_fd = 0; // out_fd 초기화
 	return (TRUE);
 }
 

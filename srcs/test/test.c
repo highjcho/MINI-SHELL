@@ -15,6 +15,8 @@ void test_ast(t_ast *ast)
 
 	i = -1;
 	printf("node = %s", ast->data);
+	if (ast->type == PIPELINE)
+		printf("  in_fd = %d, out fd = %d",ast->in_fd, ast->out_fd);
 	if (ast->file_name)
 		printf (", filename = %s",ast->file_name);
 	if (ast->av)
