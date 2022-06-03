@@ -17,7 +17,7 @@ int redirect_files(t_ast *ast, t_cmd *cmd)
 	}
 	else if (rdr_in == true) // ast 돌면서 < infile 있을 경우
 	{
-		if (cmd->in_fd != -1) // infile을 연적이 없거나 || 파이프를 사용한 적이 없을 경우 (? 확실하지 않음)
+		if (cmd->in_fd != 0) // infile을 연적이 없거나 || 파이프를 사용한 적이 없을 경우 (? 확실하지 않음)
 			close(cmd->in_fd); // 직전 파이프 fd[0]이 열려 있으니 닫고, 또 이전 노드에서 다른 infile이 열렸을 수도 있으니까 또 닫음
 		cmd->in_fd = open infile; // 리다이렉션에 맞게 열기
 	}

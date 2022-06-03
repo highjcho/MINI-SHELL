@@ -3,6 +3,7 @@
 
 # include "minishell.h"
 
-int	dup_fd(int from_fd, int to_fd);
+int		dup_fd(int from_fd, int to_fd);
+void	ast_redirect_process(t_ast *ast);
 
 #endif

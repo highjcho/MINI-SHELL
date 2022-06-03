@@ -15,7 +15,8 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 {
 	char	*tmp;
 	int		i;
-
+	int check;
+	
 	i = -1;
 	while (env->path[++i]) // 경로 탐색 끝날 때까지
 	{
@@ -64,3 +65,4 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	//waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
 	return (fd[0]); // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
 }
+
