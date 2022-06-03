@@ -23,7 +23,7 @@ int redirect_files(t_ast *ast, t_cmd *cmd)
 	}
 	else if (rdr_out == true) // outfile 있으면 outfile >, >> 에 따라 다르게 열어주기
 	{
-		if (cmd->out_fd != -1 && cmd->out_fd == 1) // 표준입력이 들어왔을 때 닫으면 안되니까,,? <- 이건 생각 필요
+		if (cmd->out_fd != -1 && cmd->out_fd != 1) // 표준입력이 들어왔을 때 닫으면 안되니까,,? <- 이건 생각 필요
 			close(cmd->out_fd); // 여러개의 아웃이 들어왔을 때 직전 아웃파일 닫기, bash는 아웃파일 여러개 들어오면 마지막 거에만 함
 		cmd->out_fd = open outfile;
 	} // 여기까지는 fork 안해도 똑같

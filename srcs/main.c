@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
 		else
 		{
 			cmd.cmd[0] = ft_strdup("grep");
-			cmd.cmd[1] = ft_strdup("p");
+			cmd.cmd[1] = ft_strdup("e");
 			cmd.cmd[2] = NULL;
 			cmd.out_fd = 1; // 마지막은 out_fd를 1로 초기화한 상태에서 들어가는 것이 중요. 파이프에 써지지 않게. 아웃파일 있으면 아웃파일로 교체 될거임
 		}

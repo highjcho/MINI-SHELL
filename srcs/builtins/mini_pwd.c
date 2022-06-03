@@ -11,7 +11,8 @@ int	mini_pwd(void)
 		return (FAIL);
 	/*
 	if (dir[1025])
-		error_handler("path too long\n"); // size에 대해서 1024byte를 초과할 경우 에러처리??? 파일 최대경로에 대해서 시스템 마다 달라서 디펜스 영역인듯 보임 https://code-examples.net/ko/q/6445ab
+		error_handler("path too long\n"); // size에 대해서 1024byte를 초과할 경우 에러처리???
+	파일 최대경로에 대해서 시스템 마다 달라서 디펜스 영역인듯 보임 https://code-examples.net/ko/q/6445ab
 	*/
 	printf("%s\n", dir);
 	return (SUCCESS);

@@ -29,7 +29,7 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 		free(tmp);
 		// printf("path: %s, cmd[0]: %s, cmd[1]: %s\n", cmd->path, cmd->cmd[0], cmd->cmd[1]);
 		// check = execve("/bin/echo", cmd->cmd, envp);
-		check = execve(cmd->path, cmd->cmd, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
+		check = execve(cmd->path, cmd->cmd, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..? #성훈이 물어보기
 		free(cmd->path); // cmd_path 만들어 둔거 프리하고 해야 됨 계속 실행
 	}
 	//free(cmd->path); // path 끝까지 돌았는데 맞는 cmd를 못찾았을 때
@@ -38,15 +38,14 @@ static int need_to_make_path(t_env *env, t_cmd *cmd, char **envp)
 	return (FALSE);
 }
 
-int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
+int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
 	int		status;
-	int		check;
 
 	pipe(fd);
-	if (cmd->out_fd == -1) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
+	if (cmd->out_fd == 0) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
 		cmd->out_fd = fd[1]; 
 	pid = fork();
 	if (pid < 0)
@@ -55,7 +54,6 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	{
 		close(fd[0]); // 파이프 읽기 닫기
 		dup_fd(cmd->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
-		// printf("in_fd: %d, cur_in_fd: %d, cur_out_fd: %d, out_fd: %d\n", cmd->in_fd, fd[0], fd[1], cmd->out_fd);
 		dup_fd(cmd->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (cmd->cmd[0][0] == '/')
 			check = has_path(cmd, envp);
@@ -67,16 +65,5 @@ int	execute_cmd(t_env *env, t_cmd *cmd, char **envp)
 	close(fd[1]); // 파이프 쓰기 닫기 // 자식 실패하면 뭐 쓰는 거 없겠지????
 	wait(&status);
 	//waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
-	cmd->in_fd = fd[0]; // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
-	cmd->out_fd = -1; // out_fd 초기화
-	return (TRUE);
+	return (fd[0]); // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
 }
-
-/*
-0. pipe(fd);
-1. infile 있으면 넣어준 in_fd가 어차피 쓸모 없음. close하고 infile open
-2. outfile 있으면 out_fd에 open
-3. outfile 없으면 out_fd에 fd[1];
-4. 자식 : dup2(infile, 0), dup2(outfile, 1);, 실행체크
-5. 부모 : close(fd[1]);, return fd[0]해서 오 이걸 걍 구조체에 담아놓을까? in_fd로? 굳이 반환할 필요없잖어?
-*/ 
