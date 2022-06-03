@@ -53,8 +53,11 @@ typedef struct s_ast
 	struct s_ast	*right;
 	char			*data;
 	int				ac;
+	char			*path;
 	char			**av;
 	char			*file_name;
+	int				in_fd;
+	int				out_fd;
 	enum e_token_type	type;
 }	t_ast;
 
