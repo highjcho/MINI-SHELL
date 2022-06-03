@@ -1,19 +1,20 @@
 #include "../includes/minishell.h"
 
-static void	excute_line(t_env *env, t_ast *ast, char **envp)
+static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 {
 	int	i;
 	int	next_in_fd;
 
 	i = -1;
 	next_in_fd = STDIN_FILENO;
-	while(pl)
+	while(list)
 	{
-		ast->in_fd = next_in_fd;
-		if (pl 마지막)
-			ast->out_fd = 1;
-		set_redirect_process(&ast);
-		next_in_fd = execute_cmd(env, ast->right, envp);
+		list->pipeline->in_fd = next_in_fd;
+		if (!list->next)
+			list->pipeline->out_fd = 1;
+		ast_redirect_process(list->pipeline);
+		next_in_fd = execute_cmd(env, list->pipeline, envp);
+		list = list->next;
 	}
 	if (next_in_fd != STDIN_FILENO)
 		close(next_in_fd);
@@ -23,8 +24,9 @@ static void	excute_line(t_env *env, t_ast *ast, char **envp)
 int main(int ac, char **av, char **envp)
 {
 	t_env			env;
-	t_token_list	list;
-	t_ast			ast;
+	t_token_list	*list;
+	t_ast			*ast;
+	t_pl_list		*pl;
 	char			*line;
 
 	if (ac != 1)
@@ -35,9 +37,12 @@ int main(int ac, char **av, char **envp)
 	{
 		line = readline("minishell> ");
 		list = make_token_list(tokenize(line));
-		ast = make_ast(&list);
-		ast_merge(&ast);
-		excute_line(env, ast, envp);
+		env_sub(list,&env);
+		ast = make_ast(list);
+		ast_merge(ast);
+		pl = pl_list(ast);
+		// test_ast(ast);
+		excute_line(&env, pl->next, envp);
 	}
 	return (0);
 }

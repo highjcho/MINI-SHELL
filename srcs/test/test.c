@@ -30,3 +30,18 @@ void test_ast(t_ast *ast)
 	if (ast ->right)
 	test_ast(ast->right);
 }
+
+void test_pl_list(t_pl_list *list)
+{
+	t_pl_list *cur;
+
+	cur = list;
+	while (cur)
+	{
+		if (cur->pipeline)
+		{
+			test_ast(cur->pipeline);
+		}
+		cur = cur->next;
+	}
+}
