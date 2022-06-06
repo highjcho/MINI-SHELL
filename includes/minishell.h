@@ -11,6 +11,7 @@
 # include "struct.h"
 # include "init.h"
 # include "builtins.h"
+# include "signal.h"
 # include "utils.h"
 # include "parse.h"
 # include "redirect.h"
