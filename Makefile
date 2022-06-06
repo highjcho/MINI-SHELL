@@ -6,9 +6,11 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAGS = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
+FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
-READLINE_FLAG = -I $(HOME)/.brew/opt/readline/include -lreadline -L${HOME}/.brew/opt/readline/lib
+COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
+
+LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
 
 
 SRCS_DIR = ./srcs/
@@ -35,6 +37,7 @@ SRCS = main.c \
 		parse/pipelinelist.c \
 	    redirect/dup_file.c \
 		redirect/ast_redirect_process.c \
+		signal/signal.c \
 		execute/execute.c \
 		execute/builtin.c \
 		execute/execve.c \
@@ -52,10 +55,10 @@ vpath %.c $(SRCS_DIR)
 all: $(LIBFT) $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(COMPILE_FLAG) -c $< -o $@
 
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAGS) $(READLINE_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAGS) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"
 
 $(LIBFT):
