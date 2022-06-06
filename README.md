@@ -14,6 +14,10 @@ made by [hyunjcho](https://github.com/highjcho) && [jonkim](https://github.com/d
 - 빌트인 unset export env exit구현
 - AST 구현
 
+### 6/3
+- AST 병합, 실행환경 구축, 리다이렉션 처리
+- 다중 파이프 구현 , 빌트인 인자 예외 수정
+
 ## Rule
 ### Commit Rules
 ```[type] : #(issue) title body  ```  
