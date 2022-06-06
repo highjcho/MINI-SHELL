@@ -30,7 +30,6 @@ char	**ft_split(char const *s, char c);
 int		ft_isdigit(int	c);
 int		ft_isalpha(int	c);
 int		ft_isalnum(int	c);
-
-
+void	ft_putendl_fd(char	*s, int	fd);
 
 #endif

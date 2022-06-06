@@ -54,6 +54,14 @@ static int	set_env(t_env *env, char **envp)
 			return (FALSE);
 		}
 	}
+	export = ft_split("?=0", '=');
+	if (!export)
+		return (FALSE);
+	if (!add_env(env, export))
+	{
+		free_env(env);
+		return (FALSE);
+	}
 	return (TRUE);
 }
 	

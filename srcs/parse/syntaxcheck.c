@@ -19,9 +19,9 @@ int recur_syntax_check(t_ast *ast)
 	if (ast->type == PIPE)
 		if (ast->left == NULL && ast->right ==NULL)
 			return (FAIL);
-	if (ast->type == REDIRECT)
-		if (ast->left == NULL)
-			return (FAIL);
+	// if (ast->type == REDIRECT)
+	// 	if (ast->left == NULL)
+	// 		return (FAIL);
 	if (recur_syntax_check(ast->left))
 		return (FAIL);
 	else if (recur_syntax_check(ast->right))

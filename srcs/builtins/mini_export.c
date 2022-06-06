@@ -34,7 +34,7 @@ int	mini_export(t_env *env, char **cmd)
 	while (cmd[++i]) // [1]부터 존재할 때 까지
 	{
 		if (!find_c(cmd[i], '=')) // key만 들어오면 아무것도 실행하지 않음 오류아님
-			break;
+			continue;
 		export = ft_split(cmd[i], '='); // env 노드에서 각각 주소 관리하기 때문에 여기서 해제 필요 없음
 		if (!export)
 			return (FAIL);
@@ -44,5 +44,5 @@ int	mini_export(t_env *env, char **cmd)
 		if (!add_env(env, export))
 			return (FAIL); // h - 할당 오류에 대한 errno를 넘겨야 할 지 아니면 export에 대한 오류 코드인 -1을 받아야 하는 지?
 	}
-	return (TRUE);
+	return (SUCCESS);
 }

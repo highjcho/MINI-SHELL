@@ -98,6 +98,8 @@ char	*substitution(char *str, int pos, t_env *env)
 
 	tmp = pos + 1;
 	pos++;
+	if (str[pos] == '?')
+	pos++;
 	while (ft_isalnum(str[pos]) || str[pos] == '_')
 		pos++;
 	sub = get_env_value(env, ft_substr(str, tmp, pos - tmp));

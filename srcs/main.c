@@ -13,6 +13,12 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		if (!list->next)
 			list->pipeline->out_fd = 1;
 		ast_redirect_process(list->pipeline);
+		if (list->pipeline->in_fd == -1)
+		{
+			printf("redirect error\n"); // error (char s , int code)
+			list = list->next;
+			continue;
+		}
 		next_in_fd = execute_cmd(env, list->pipeline, envp);
 		list = list->next;
 	}
@@ -37,11 +43,17 @@ int main(int ac, char **av, char **envp)
 	{
 		line = readline("minishell> ");
 		list = make_token_list(tokenize(line));
+		test_token_list(list);
 		env_sub(list,&env);
 		ast = make_ast(list);
+		if(syntax_check(ast) == FAIL)
+		{
+			printf("pipeerror\n");
+			continue;
+		}
 		ast_merge(ast);
 		pl = pl_list(ast);
-		// test_ast(ast);
+		add_history(line);
 		excute_line(&env, pl->next, envp);
 	}
 	return (0);
