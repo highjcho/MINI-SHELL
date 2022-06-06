@@ -2,11 +2,16 @@
 
 int	mini_env(t_env *env)
 {
-	t_env_node	*cur; // env에 인자가 들어오면 fail mini_env를 부르는 시점에 검사를 해야할 듯
+	t_env_node	*cur;
 	
 	cur = env->h_node.next;
 	while (cur)
 	{
+		if (!ft_strcmp(cur->key, "?"))
+		{
+			cur = cur->next;
+			continue;
+		}
 		printf("%s=%s\n", cur->key, cur->value);
 		cur = cur->next;
 	}

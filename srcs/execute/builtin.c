@@ -1,11 +1,17 @@
 #include "../../includes/execute.h"
 
+static int	mini_env_error(char *argument)
+{
+	printf("env: %s: No such file or directory\n", argument);
+	return (SUCCESS);
+}
+
 static int	do_builtin(t_env *env, t_ast *ast, int kind) // 이로직이 조금 조잡함 ㅎ
 {
 	int	check;
 
 	if (kind == 1)
-		check = mini_export(env, ast->av);
+		check = mini_env(env);
 	else if (kind == 2)
 		check = mini_pwd();
 	else
@@ -21,7 +27,8 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 	int		status;
 	int		check;
 
-	pipe(fd);
+	if (pipe(fd) < 0)
+		return (FALSE);
 	if (ast->out_fd == 0)
 		ast->out_fd = fd[1];
 	pid = fork();
@@ -42,20 +49,26 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 
 int	execute_builtin(t_env *env, t_ast *ast)
 {
-	if (!ft_strcmp(ast->right->av[0], "cd"))
-		return (mini_cd(env, ast->av));
-	else if (!ft_strcmp(ast->right->av[0], "export"))
-		return (mini_export(env, ast->av));
-	else if (!ft_strcmp(ast->right->av[0], "unset"))
-		return (mini_unset(env, ast->av));
-	else if (!ft_strcmp(ast->right->av[0], "exit"))
-		return (mini_exit(env, errno));
-	else if (!ft_strcmp(ast->right->av[0], "env"))
-		return (write_pipe(env, ast, 1));
-	else if (!ft_strcmp(ast->right->av[0], "pwd"))
-		return (write_pipe(env, ast, 2));
-	else if (!ft_strcmp(ast->right->av[0], "echo"))
-		return (write_pipe(env, ast, 3));
-	else
-		return (-1);
+	if (ast->right)
+	{
+		if (!ft_strcmp(ast->right->av[0], "cd"))
+			return (mini_cd(env, ast->right->av));
+		else if (!ft_strcmp(ast->right->av[0], "export"))
+			return (mini_export(env, ast->right->av));
+		else if (!ft_strcmp(ast->right->av[0], "unset"))
+			return (mini_unset(env, ast->right->av));
+		else if (!ft_strcmp(ast->right->av[0], "exit"))
+			return (mini_exit(env, errno));
+		else if (!ft_strcmp(ast->right->av[0], "env"))
+		{
+			if (ast->right->ac != 1)
+				return (mini_env_error(ast->right->av[1]));
+			return (write_pipe(env, ast, 1));
+		}
+		else if (!ft_strcmp(ast->right->av[0], "pwd"))
+			return (write_pipe(env, ast, 2));
+		else if (!ft_strcmp(ast->right->av[0], "echo"))
+			return (write_pipe(env, ast, 3));
+	}
+	return (-1);
 }

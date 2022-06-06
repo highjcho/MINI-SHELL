@@ -31,7 +31,7 @@ static int	change_dir(t_env *env, char *new_dir)
 {
 	int		check;
 
-	if (!new_dir)
+	if (!new_dir || !ft_strcmp(new_dir, "~"))
 		check = chdir(get_env_value(env, "HOME")); // cd만 들어올 경우 home으로
 	else
 		check = chdir(new_dir); //cd 뒤에 경로가 들어올 경우 해당 주소로 chdir실행

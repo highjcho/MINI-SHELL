@@ -9,7 +9,7 @@ int	add_env(t_env *env, char **export)
 	if (!new)
 	{
 		double_free(export);
-		return (FAIL);
+		return (FALSE);
 	}
 	prev = &(env->h_node);
 	while (prev->next)
@@ -19,7 +19,7 @@ int	add_env(t_env *env, char **export)
 	new->value = export[1]; // unset 시 해제
 	new->export = export; // 나중에 unset 시 해제를 위해 저장
 	new->next = NULL;
-	return (SUCCESS);
+	return (TRUE);
 }
 
 char	*get_env_value(t_env *env, char *key)

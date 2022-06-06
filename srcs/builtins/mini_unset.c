@@ -20,14 +20,24 @@ static void	disconnect_node(t_env_node *prev, t_env_node *cur)
 	free_env_node(cur);
 }
 
-static int	check_error(char *key, int *flag)
+static int	check_error(char *key)
 {
+	int	flag;
 	int	n;
+	int	i;
 
+	flag = 0;
 	n = ft_strlen(key);
-	if (key[n - 1] == '=') // key 마지막 글자가 '='이면 에러처리
-		*flag = printf("unset: '%s': not a valid identifier", key); // exit 1로 빠져나가야 함. bash: 1: command not found
-	return (*flag);
+	i = -1;
+	while (++i < n)
+	{
+		if (key[i] == '=') // key에 '='이 포함되어 있으면 에러 처리
+		{
+			flag = printf("unset: '%s': not a valid identifier\n", key); // exit 1로 빠져나가야 함. bash: 1: command not found
+			break;
+		}
+	}
+	return (flag);
 }
 
 int	mini_unset(t_env *env, char **cmd)
@@ -40,17 +50,20 @@ int	mini_unset(t_env *env, char **cmd)
 	flag = 0;
 	while (cmd[++i])
 	{
-		if (check_error(cmd[i], &flag))
-			break; // flag만 세우고 다음 턴 넘김 일단 다 실행은 시켜주고 에러메시지 출력됨
+		if (check_error(cmd[i]))
+		{
+			flag = 1;
+			continue; // flag만 세우고 다음 턴 넘김 일단 다 실행은 시켜주고 에러메시지 출력됨
+		}
 		prev = find_prev_env(env->h_node.next, cmd[i]);
 		if (!prev)
-			break; // 노드 없을 때 오류 아님
+			continue; // 노드 없을 때 오류 아님
 		disconnect_node(prev, prev->next);
 	}
-	if (flag)
-	{
-		printf("bash 1: command not found");
-		return (FALSE); // exit code 1로 종료 되어야 함
-	}
+	// if (flag) // 얘는 출력값은 아니고 $? 나와야 하는 결과임.
+	// {
+	// 	printf("bash 1: command not found\n");
+	// 	return (FALSE); // exit code 1로 종료 되어야 함
+	// }
 	return (SUCCESS);
 }
