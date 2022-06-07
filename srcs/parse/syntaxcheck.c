@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:58 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 17:59:22 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/07 15:40:52 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ int recur_syntax_check(t_ast *ast)
 	if (ast->type == PIPE)
 		if (ast->left == NULL && ast->right ==NULL)
 			return (FAIL);
-	// if (ast->type == REDIRECT)
-	// 	if (ast->left == NULL)
-	// 		return (FAIL);
+	if (ast->type == REDIRECT)
+		if (ast->left == NULL)
+			return (FAIL);
+	if (ast->type == PIPELINE)
+		if (ast->left == NULL && ast ->right == NULL)
+			return (FAIL);
 	if (recur_syntax_check(ast->left))
 		return (FAIL);
 	else if (recur_syntax_check(ast->right))

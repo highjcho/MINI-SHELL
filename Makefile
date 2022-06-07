@@ -6,7 +6,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
+FLAG = -Wall -Wextra -Werror -fsanitize=address -g3 -I $(INCLUDE_DIR)
 
 COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
 
@@ -56,10 +56,10 @@ vpath %.c $(SRCS_DIR)
 all: $(LIBFT) $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) $(COMPILE_FLAG) -c $< -o $@
+	$(CC) $(FLAG) $(COMPILE_FLAG) -c $< -o $@
 
 $(NAME): $(MAN_OBJS)
-	@$(CC) $(FLAGS) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
+	@$(CC) $(FLAG) $(COMPILE_FLAG) $(LINK_FLAG) $(LIBFT) -o $@ $(MAN_OBJS)
 	@echo "making minishell"
 
 $(LIBFT):

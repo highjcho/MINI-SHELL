@@ -25,7 +25,7 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 	pid_t	pid;
 	int		fd[2];
 	int		status;
-	int		check;
+	// int		check;
 
 	if (pipe(fd) < 0)
 		return (FALSE);
