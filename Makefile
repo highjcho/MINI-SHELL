@@ -37,12 +37,12 @@ SRCS = main.c \
 		parse/pipelinelist.c \
 		redirect/dup_file.c \
 		redirect/ast_redirect_process.c \
-		signal/signal.c \
 		execute/execute.c \
 		execute/builtin.c \
 		execute/execve.c \
+		utils/utils.c \
 		test/test.c \
-		# utils/art.c
+		# signal/signal.c utils/art.c 
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))

@@ -30,12 +30,22 @@ static int	set_old_pwd(t_env *env)
 static int	change_dir(t_env *env, char *new_dir)
 {
 	int		check;
+	char	*tmp;
 
 	if (!new_dir || !ft_strcmp(new_dir, "~"))
 		check = chdir(get_env_value(env, "HOME")); // cd만 들어올 경우 home으로
+	else if (!ft_strncmp("~/", new_dir, 2)) // ~/desktop ㅇㅣ런식으로 들어올 경우 ~치환
+	{
+		tmp = ft_strjoin(get_env_value(env, "HOME"), &new_dir[1]);
+		if (!tmp)
+			return (FALSE);
+		free(new_dir);
+		new_dir = tmp;
+		check = chdir(new_dir);
+	}
 	else
 		check = chdir(new_dir); //cd 뒤에 경로가 들어올 경우 해당 주소로 chdir실행
-	if (check == FAIL)
+	if (check == -1)
 		return (FALSE);
 	return (TRUE);
 }
