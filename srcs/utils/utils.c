@@ -12,3 +12,12 @@ int	find_c(char *s, char c)
 	}
 	return (FALSE);
 }
+
+int	update_exit_code(t_env *env, char *exit_code)
+{
+	free(env->exit_code);
+	env->exit_code = ft_strdup(exit_code);
+	if (!env->exit_code)
+		return (FALSE);
+	return (TRUE);
+}
