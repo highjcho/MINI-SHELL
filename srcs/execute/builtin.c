@@ -39,8 +39,8 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 		close(fd[0]);
 		dup_fd(ast->in_fd, STDIN_FILENO);
 		dup_fd(ast->out_fd, STDOUT_FILENO);
-		check = do_builtin(env, ast->right, kind); // cmd가 /bin/cd 이렇게 들어올 경우 어떻게 처리할 지?
-		exit(check); // status를 활용해야 하는가? status 처리 알아야겠다..둪'
+		status = do_builtin(env, ast->right, kind); // cmd가 /bin/cd 이렇게 들어올 경우 어떻게 처리할 지?
+		exit(status); // status를 활용해야 하는가? status 처리 알아야겠다..둪'
 	}
 	close(fd[1]);
 	wait(&status);

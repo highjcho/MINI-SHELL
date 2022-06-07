@@ -51,7 +51,6 @@ int main(int ac, char **av, char **envp)
 		else if (!*line)
 			continue ;
 		list = make_token_list(tokenize(line));
-		test_token_list(list);
 		env_sub(list,&env);
 		ast = make_ast(list);
 		if(syntax_check(ast) == FAIL)

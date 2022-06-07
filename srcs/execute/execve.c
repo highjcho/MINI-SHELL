@@ -52,7 +52,7 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		close(fd[0]); // 파이프 읽기 닫기
 		dup_fd(ast->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
 		dup_fd(ast->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
-		if (ast->right->av[0][0] == '/')
+		if (find_c(ast->right->av[0], '/'))
 			has_path(ast->right, envp);
 		else
 			need_to_make_path(env, ast->right, envp);
