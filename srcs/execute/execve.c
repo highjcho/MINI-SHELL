@@ -1,6 +1,10 @@
 #include "../../includes/execute.h"
 
+<<<<<<< HEAD
 static int	have_path(t_env *env, t_ast *ast, char **envp)
+=======
+static int	has_path(t_env *env, t_ast *ast, char **envp)
+>>>>>>> d590fd6f08c4a8cd087ebf03a9b460ef77a5fa5f
 {
 	if (!ft_strncmp("~/", ast->av[0], 2))
 	{
@@ -62,7 +66,11 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		dup_fd(ast->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
 		dup_fd(ast->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (find_c(ast->right->av[0], '/'))
+<<<<<<< HEAD
 			have_path(env, ast->right, envp);
+=======
+			has_path(env, ast->right, envp);
+>>>>>>> d590fd6f08c4a8cd087ebf03a9b460ef77a5fa5f
 		else
 			need_to_make_path(env, ast->right, envp);
 	}
