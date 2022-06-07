@@ -18,6 +18,8 @@ void	quote(char *str, int *i, char c)
 
 void	word(char *str, int *i)
 {
+	if (!str[*i])
+		return ;
 	while (str[(*i)])
 	{
 		if (str[*i] == ' ' || str[*i] == '|' || str[*i] == '>' || str[*i] == '<')
@@ -50,10 +52,7 @@ int	token_count(char *str)
 			i++;
 		}
 		if (str[i] == '<' || str[i] == '>')
-		{
 			redirection(str, &i);
-			ret++;
-		}
 		if (str[i] == '\'' || str[i] == '\"')
 			quote(str, &i, str[i]);
 		if (str[i] != ' ' && str[i] != '\'' && str[i] != '\"' && str[i] != '|' && str[i] != '>' && str[i] != '<')
@@ -110,7 +109,7 @@ char	**tokenize(char *str)
 
 	if (token_count(str) == 0) // 빈 문자열일 경우
 		return (NULL);
-	tokens = malloc((sizeof(char*) * token_count(str)) + 1); //문자열 	배열을 token_count 만큼 
+	tokens = malloc((sizeof(char*) * (token_count(str) + 1))); //문자열 	배열을 token_count 만큼
 	if (!tokens)
 		return (NULL);
 	tokens = make_token(str, tokens);
