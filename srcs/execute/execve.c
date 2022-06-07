@@ -1,10 +1,19 @@
 #include "../../includes/execute.h"
 
-static int	has_path(t_ast *ast, char **envp)
+static int	has_path(t_env *env, t_ast *ast, char **envp)
 {
-	ast->path = ft_strdup(ast->av[0]);
-	if (!ast->path)
-		return (FALSE); // free.. 뭐뭐 해야하남..
+	if (!ft_strncmp("~/", ast->av[0], 2))
+	{
+		ast->path = ft_strjoin(get_env_value(env, "HOME"), &ast->av[0][1]);
+		if (!ast->path)
+			return (FALSE);
+	}
+	else
+	{
+		ast->path = ft_strdup(ast->av[0]);
+		if (!ast->path)
+			return (FALSE); // free.. 뭐뭐 해야하남..
+	}
 	execve(ast->path, ast->av, envp);
 	free(ast->path); // 실패 시 이쪽으로 넘어 옴. 뭐뭐,, 프리해야하지..?
 	// err code 127, minishell: cmd->cmd : command not found 띄우기
@@ -52,7 +61,7 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		dup_fd(ast->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
 		dup_fd(ast->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (find_c(ast->right->av[0], '/'))
-			has_path(ast->right, envp);
+			has_path(env, ast->right, envp);
 		else
 			need_to_make_path(env, ast->right, envp);
 		// if (check == FALSE)
