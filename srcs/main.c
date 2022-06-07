@@ -39,14 +39,19 @@ int main(int ac, char **av, char **envp)
 		return (0);
 	(void) av;
 	init_env(&env, envp);
-	sig_init();
+	set_signal();
+
 
 	line = NULL;
 	while (1)
 	{
 		line = readline("minishell> ");
+		if (!line)
+			exit(1);
+		else if (!*line)
+			continue ;
 		list = make_token_list(tokenize(line));
-		// test_token_list(list);
+		test_token_list(list);
 		env_sub(list,&env);
 		ast = make_ast(list);
 		if(syntax_check(ast) == FAIL)

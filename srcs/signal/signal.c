@@ -1,31 +1,46 @@
 #include "../../includes/signal.h"
 
 
-void sig_handler(int sig)
+static void	handle_sigint(pid_t pid)
 {
-	if (sig == SIGINT)
-	{	
+	if (pid == -1)
+	{
+		printf("\b\b  \b\b\n");
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		printf("  \b\b\n");
-		rl_on_new_line();
-		rl_redisplay();
-		rl_replace_line("", 1);
 	}
-	else if (sig == SIGTERM)
+	else
 	{
-
+		printf("\n");
 	}
-	else if (sig == SIGQUIT)
-	{
-
-	}
-
 }
 
-void sig_init(void)
+static void	handle_sigquit(pid_t pid)
 {
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
-	signal(SIGTERM, sig_handler);
+	if (pid == -1)
+		printf("\b\b  \b\b");
+	else
+	{
+		printf("Quit: 3\n");
+	}
+}
+
+void	handle_signal(int signum)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(-1, &status, WNOHANG);
+	if (signum == SIGINT)
+		handle_sigint(pid);
+	else if (signum == SIGQUIT)
+		handle_sigquit(pid);
+}
+
+
+void	set_signal(void)
+{
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
 }
