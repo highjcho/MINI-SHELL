@@ -40,6 +40,7 @@ static int need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	}
 	//free(cmd->path); // path 끝까지 돌았는데 맞는 cmd를 못찾았을 때
 	// double_free(cmd->cmd); //에러처리 커맨드 없움. 종료코드 127
+	exit(1);
 	return (FALSE);
 }
 

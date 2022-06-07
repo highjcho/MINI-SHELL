@@ -39,9 +39,17 @@ int main(int ac, char **av, char **envp)
 		return (0);
 	(void) av;
 	init_env(&env, envp);
+	signal_init();
+
+
+	line = NULL;
 	while (1)
 	{
 		line = readline("minishell> ");
+		if (!line)
+			exit(1);
+		else if (!*line)
+			continue ;
 		list = make_token_list(tokenize(line));
 		env_sub(list,&env);
 		ast = make_ast(list);
