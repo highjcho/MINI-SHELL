@@ -6,7 +6,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -fsanitize=address -g3 -I $(INCLUDE_DIR)
+FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
 COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
 

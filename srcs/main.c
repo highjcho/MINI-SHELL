@@ -41,7 +41,6 @@ int main(int ac, char **av, char **envp)
 	init_env(&env, envp);
 	signal_init();
 
-
 	line = NULL;
 	while (1)
 	{
