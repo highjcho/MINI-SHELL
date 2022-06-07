@@ -2,7 +2,7 @@
 # define SIGNAL_H
 
 # include "minishell.h"
-void	set_signal(void);
+void	signal_init(void);
 
 
 

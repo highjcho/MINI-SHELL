@@ -42,7 +42,8 @@ SRCS = main.c \
 		execute/execve.c \
 		utils/utils.c \
 		test/test.c \
-		# signal/signal.c utils/art.c 
+		signal/signal.c \
+		# utils/art.c 
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))

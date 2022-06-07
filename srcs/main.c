@@ -39,7 +39,7 @@ int main(int ac, char **av, char **envp)
 		return (0);
 	(void) av;
 	init_env(&env, envp);
-	set_signal();
+	signal_init();
 
 
 	line = NULL;
