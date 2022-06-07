@@ -1,18 +1,5 @@
 #include "../../includes/builtins.h"
 
-static int	find_c(char *s, char c)
-{
-	int	i;
-
-	i = -1;
-	while (s[++i])
-	{
-		if (s[i] == c)
-			return (TRUE);
-	}
-	return (FALSE);
-}
-
 static int	empty_value(char	**export)
 {
 	export[1] = ft_strdup(""); // split에서 두번째 문장이 할당이 안되니까,, free오류 방지를 위해..
