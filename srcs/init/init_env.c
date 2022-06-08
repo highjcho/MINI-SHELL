@@ -31,9 +31,9 @@ static int	init_add_env(t_env *env, char **export)
 	new->export = export;
 	new->next = NULL;
 	if (!ft_strcmp(export[0], "PWD")) // pwd 위치 저장
-		env->pwd = new->value;
+		env->pwd = new;
 	if (!ft_strcmp(export[0], "OLDPWD")) // old_pwd 위치 저장
-		env->old_pwd = new->value;
+		env->old_pwd = new;
 	return (TRUE);
 }
 
@@ -62,7 +62,7 @@ static int	set_env(t_env *env, char **envp)
 		free_env(env);
 		return (FALSE);
 	}
-	env->exit_code = export[1];
+	env->exit_code = get_env_node(env, "?");
 	return (TRUE);
 }
 	
@@ -71,6 +71,7 @@ int	init_env(t_env *env, char **envp)
 	env->h_node.next = NULL;
 	env->pwd = NULL;
 	env->old_pwd = NULL;
+	env->exit_code = NULL;
 	if (!set_env(env, envp))
 		return (FAIL);
 	if (!set_path(env))

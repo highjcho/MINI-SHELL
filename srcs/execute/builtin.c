@@ -39,7 +39,6 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 		return (FAIL);
 	else if (status >> 8 == COMMAND_FAIL)
 		return (COMMAND_FAIL);
-
 	return (fd[0]);
 }
 

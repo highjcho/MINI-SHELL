@@ -50,7 +50,6 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	int		fd[2];
 	int		status;
 	
-
 	pipe(fd);
 	if (ast->out_fd == 0) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
 		ast->out_fd = fd[1]; 

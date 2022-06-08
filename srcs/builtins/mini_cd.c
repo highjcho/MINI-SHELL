@@ -64,7 +64,6 @@ int	mini_cd(t_env *env, char **cmd)
 
 	if (!change_dir(env, cmd[1])) 
 		return (FAIL);
-
 	ft_bzero(dir, 4096);
 	check = getcwd(dir, 4096);
 	if (!check)

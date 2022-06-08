@@ -20,7 +20,7 @@ static void	disconnect_node(t_env_node *prev, t_env_node *cur)
 	free_env_node(cur);
 }
 
-static int	check_error(t_env *env, char *key)
+static int	check_error(char *key)
 {
 	int	flag;
 	int	i;
@@ -48,7 +48,7 @@ int	mini_unset(t_env *env, char **cmd)
 	flag = 0;
 	while (cmd[++i])
 	{
-		if (check_error(env, cmd[i]))
+		if (check_error(cmd[i]))
 		{
 			flag = 1;
 			continue; // flag만 세우고 다음 턴 넘김 일단 다 실행은 시켜주고 에러메시지 출력됨
