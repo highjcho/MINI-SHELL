@@ -27,6 +27,8 @@ static int	here_doc(t_ast *pipeline, t_ast *node)
 	if (pipe(fd) < 0)
 		return (FALSE);
 	pid = fork();
+	signal(SIGINT, handle_signal_heredoc);
+	signal(SIGQUIT, handle_signal_heredoc);
 	if (pid < 0)
 		return (FALSE);
 	if (pid == 0)

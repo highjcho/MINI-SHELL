@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 18:47:38 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/08 11:16:51 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ char	*env_check(char *str, t_env *env)
 			}
 		}
 		if (str[i] == '$')
-			return (substitution(str, i, env));
+		{
+			str = substitution(str, i, env);
+			i = -1;
+		}
 	}
 	return (str);
 }
