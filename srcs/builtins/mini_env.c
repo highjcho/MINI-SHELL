@@ -11,7 +11,7 @@ static int	env_error_print(char *argument)
 int	mini_env(t_env *env, t_ast *ast)
 {
 	t_env_node	*cur;
-	
+
 	if (ast->ac != 1)
 		return (env_error_print(ast->av[1]));
 	cur = env->h_node.next;
@@ -20,7 +20,7 @@ int	mini_env(t_env *env, t_ast *ast)
 		if (cur->value == env->exit_code->value)
 		{
 			cur = cur->next;
-			continue;
+			continue ;
 		}
 		printf("%s=%s\n", cur->key, cur->value);
 		cur = cur->next;

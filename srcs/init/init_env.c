@@ -26,13 +26,13 @@ static int	init_add_env(t_env *env, char **export)
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
-	new->key = export[0]; // unset 시 해제 필요
-	new->value = export[1]; // unset 시 해제 필요
+	new->key = export[0];
+	new->value = export[1];
 	new->export = export;
 	new->next = NULL;
-	if (!ft_strcmp(export[0], "PWD")) // pwd 위치 저장
+	if (!ft_strcmp(export[0], "PWD"))
 		env->pwd = new;
-	if (!ft_strcmp(export[0], "OLDPWD")) // old_pwd 위치 저장
+	if (!ft_strcmp(export[0], "OLDPWD"))
 		env->old_pwd = new;
 	return (TRUE);
 }
@@ -48,7 +48,7 @@ static int	set_env(t_env *env, char **envp)
 		export = ft_split(envp[i], '=');
 		if (!export)
 			return (FALSE);
-		if (!init_add_env(env, export)) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
+		if (!init_add_env(env, export))
 		{
 			free_env(env);
 			return (FALSE);
@@ -65,7 +65,7 @@ static int	set_env(t_env *env, char **envp)
 	env->exit_code = get_env_node(env, "?");
 	return (TRUE);
 }
-	
+
 int	init_env(t_env *env, char **envp)
 {
 	env->h_node.next = NULL;

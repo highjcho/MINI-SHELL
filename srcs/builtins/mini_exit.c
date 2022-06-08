@@ -18,5 +18,5 @@ int	mini_exit(t_env *env, t_ast *ast)
 	if (ast->ac == 1)
 		exit(EXIT_SUCCESS);
 	exit(ft_atol(ast->av[1]));
-	return (FALSE); // 오류?? 리턴??
+	return (FALSE);
 }

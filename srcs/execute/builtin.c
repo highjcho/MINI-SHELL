@@ -1,6 +1,6 @@
 #include "../../includes/execute.h"
 
-static int	do_builtin(t_env *env, t_ast *ast, int kind) // 이로직이 조금 조잡함 ㅎ
+static int	do_builtin(t_env *env, t_ast *ast, int kind)
 {
 	int	check;
 
@@ -29,7 +29,7 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		dup_fd(ast->in_fd, STDIN_FILENO); // dup 에러처리,,,,,?
+		dup_fd(ast->in_fd, STDIN_FILENO);
 		dup_fd(ast->out_fd, STDOUT_FILENO);
 		exit(do_builtin(env, ast->right, kind));
 	}
