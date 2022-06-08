@@ -2,7 +2,7 @@
 
 static t_env_node	*find_prev_env(t_env_node *node, char *key)
 {
-	if (!node)
+	if (!node || !(node->next))
 		return (NULL);
 	while (ft_strcmp(node->next->key, key)) // 다음 노드의 키와 인자로 받은 key가 일치하기 직전까지 prev 돌리기
 	{
@@ -23,18 +23,15 @@ static void	disconnect_node(t_env_node *prev, t_env_node *cur)
 static int	check_error(t_env *env, char *key)
 {
 	int	flag;
-	int	n;
 	int	i;
 
 	flag = 0;
-	n = ft_strlen(key);
 	i = -1;
-	while (++i < n)
+	while (key[++i])
 	{
 		if (key[i] == '=') // key에 '='이 포함되어 있으면 에러 처리
 		{
 			flag = printf("unset: '%s': not a valid identifier\n", key);
-			update_exit_code(env, "1");
 			break;
 		}
 	}
