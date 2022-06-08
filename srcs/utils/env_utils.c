@@ -38,6 +38,15 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
+int	update_exit_code(t_env *env, char *exit_code)
+{
+	free(env->exit_code->value);
+	env->exit_code->value = ft_strdup(exit_code);
+	if (!env->exit_code->value)
+		return (FALSE);
+	return (TRUE);
+}
+
 void	free_env_node(t_env_node *node)
 {
 	free(node->key); // export[0] free

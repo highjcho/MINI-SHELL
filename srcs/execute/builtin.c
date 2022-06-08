@@ -18,7 +18,6 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 	pid_t	pid;
 	int		fd[2];
 	int		status;
-	// int		check;
 
 	if (pipe(fd) < 0)
 		return (FALSE);
@@ -32,12 +31,14 @@ static int	write_pipe(t_env *env, t_ast *ast, int kind)
 		close(fd[0]);
 		dup_fd(ast->in_fd, STDIN_FILENO); // dup 에러처리,,,,,?
 		dup_fd(ast->out_fd, STDOUT_FILENO);
-		status = do_builtin(env, ast->right, kind);
-		exit(status);
+		exit(do_builtin(env, ast->right, kind));
 	}
 	close(fd[1]);
 	wait(&status);
-	update_exit_code(env, "1"); // 종료 메시지 뭐라고 줄까.. atoi status >> 8로 바꿔야 함
+	if (status >> 8 == FAIL)
+		return (FAIL);
+	else if (status >> 8 == COMMAND_FAIL)
+		return (COMMAND_FAIL);
 	return (fd[0]);
 }
 
