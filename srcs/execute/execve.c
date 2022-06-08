@@ -17,7 +17,6 @@ static int	have_path(t_env *env, t_ast *ast, char **envp)
 	execve(ast->path, ast->av, envp);
 	ft_putstr_fd(ast->av[0], 2);
 	ft_putendl_fd(": command not found\n", 2);
-	update_exit_code(env, "127");
 	exit(COMMAND_FAIL); 	// 실패 시 이쪽으로 넘어 옴. 뭐뭐,, 프리해야하지..? // err code 127, minishell: cmd->cmd : command not found 띄우기
 }
 
