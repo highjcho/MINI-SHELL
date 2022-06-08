@@ -10,15 +10,14 @@ void	handle_signal(int signum)
 	{
 		if (pid == -1)
 		{	
-	write(STDOUT_FILENO, "\n", 1);
-rl_on_new_line();
-rl_replace_line("", 0);
-rl_redisplay();
+
+			rl_on_new_line();
+			printf("\n");
+			rl_replace_line("", 0);
+			rl_redisplay();
 		}
 		else
-		{
-			printf("\n");
-		}
+			printf("^C\n");
 	}
 	else if (signum == SIGQUIT)
 	{
@@ -26,12 +25,9 @@ rl_redisplay();
 		{
 			rl_on_new_line();
 			rl_redisplay();
-			printf("  \b\b");
 		}
 		else
-		{
 			printf("Quit: 3\n");
-		}
 	}
 }
 
@@ -49,13 +45,12 @@ void	handle_signal_heredoc(int signum)
 		{
 			rl_on_new_line();
 			rl_redisplay();
-			printf("  \b\b");
 		}
 	}
 	else
 	{
 		if (signum == SIGINT)
-			printf("\b\b  \b\b\n");
+			printf("\n");
 		else if (signum == SIGQUIT)
 		{
 		}
@@ -66,5 +61,4 @@ void	signal_init(void)
 {
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
-	// signal(SIGTERM, handle_signal);
 }
