@@ -24,8 +24,8 @@ static int	set_old_pwd(t_env *env)
 		}
 		return (TRUE);
 	}
-	free(env->old_pwd->value); // 기존 old_pwd가 이미 존재했으면 기존 old_pwd 해제하고
-	env->old_pwd->value = env->pwd->value; // old_pwd에 기존 pwd value 연결
+	free(env->old_pwd); // 기존 old_pwd가 이미 존재했으면 기존 old_pwd 해제하고
+	env->old_pwd = env->pwd; // old_pwd에 기존 pwd value 연결
 	return (TRUE);
 }
 
