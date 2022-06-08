@@ -12,12 +12,12 @@ static int	check_opt(char *s, int *i)
 
 int	mini_echo(char **cmd)
 {
-	int flag;
-	int i;
+	int	flag;
+	int	i;
 
 	i = 1;
 	flag = check_opt(cmd[i], &i);
-	while(cmd[i])
+	while (cmd[i])
 	{
 		printf("%s", cmd[i]);
 		if (cmd[++i])

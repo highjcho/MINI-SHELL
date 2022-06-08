@@ -20,7 +20,7 @@ int	mini_export(t_env *env, char **cmd)
 	while (cmd[++i])
 	{
 		if (!find_c(cmd[i], '='))
-			continue;
+			continue ;
 		export = ft_split(cmd[i], '=');
 		if (!export)
 			return (FAIL);

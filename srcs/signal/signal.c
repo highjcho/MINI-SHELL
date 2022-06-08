@@ -10,17 +10,10 @@ void	handle_signal(int signum)
 	{
 		if (pid == -1)
 		{	
-<<<<<<< HEAD
-		printf("\b\b  \b\b\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-=======
-			printf("\b\b  \b\b\n");
-			rl_on_new_line();
-			// rl_replace_line("", 0);
-			rl_redisplay();
->>>>>>> 8c7550c8398fd00d10668746a6a398f6e0e8200c
+	write(STDOUT_FILENO, "\n", 1);
+rl_on_new_line();
+rl_replace_line("", 0);
+rl_redisplay();
 		}
 		else
 		{

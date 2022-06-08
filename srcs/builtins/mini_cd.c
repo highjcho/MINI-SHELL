@@ -10,7 +10,7 @@ static int	set_old_pwd(t_env *env)
 		if (!export)
 			return (FALSE);
 		export[0] = ft_strdup("export");
-		export[1] =	ft_strjoin("OLDPWD=", env->pwd->value);
+		export[1] = ft_strjoin("OLDPWD=", env->pwd->value);
 		free(env->pwd->value);
 		if (!export[0] || !export[1])
 		{
@@ -62,7 +62,7 @@ int	mini_cd(t_env *env, char **cmd)
 	char	dir[4096];
 	char	*check;
 
-	if (!change_dir(env, cmd[1])) 
+	if (!change_dir(env, cmd[1]))
 		return (FAIL);
 	ft_bzero(dir, 4096);
 	check = getcwd(dir, 4096);
