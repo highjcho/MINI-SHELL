@@ -52,7 +52,7 @@ void	redirect_in(t_ast *pipeline, t_ast *node) // 파일 오픈 오류처리 필
 	}
 	else if (!ft_strcmp("<", node->data))
 	{
-		if (pipeline->in_fd != 0)
+		if (pipeline->in_fd != STDIN_FILENO)
 			close(pipeline->in_fd);
 		pipeline->in_fd = open(node->file_name, O_RDONLY);
 		printf("filename : %s, fd = %d\n",node->file_name,  pipeline->in_fd);
@@ -64,14 +64,14 @@ void	redirect_out(t_ast *pipeline, t_ast *node)
 {
 	if (!ft_strncmp(">",node->data, ft_strlen(node->data)))
 	{
-		if (pipeline->out_fd != 1 && pipeline->out_fd != 0)
+		if (pipeline->out_fd != STDOUT_FILENO && pipeline->out_fd != 0)
 			close(pipeline->out_fd);
 		pipeline->out_fd = open(node->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		printf("filename : %s, fd = %d\n",node->file_name,  pipeline->out_fd);
 	}
 	else if (!ft_strncmp(">>", node->data, ft_strlen(node->data)))
 	{
-		if (pipeline->out_fd != 1 && pipeline->out_fd != 0)
+		if (pipeline->out_fd != STDOUT_FILENO && pipeline->out_fd != 0)
 			close(pipeline->out_fd);
 		pipeline->out_fd = open(node->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
 	}

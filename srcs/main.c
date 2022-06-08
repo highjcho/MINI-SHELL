@@ -49,6 +49,7 @@ int main(int ac, char **av, char **envp)
 			exit(1);
 		else if (!*line)
 			continue ;
+		add_history(line);
 		list = make_token_list(tokenize(line));
 		env_sub(list,&env);
 		ast = make_ast(list);
@@ -59,7 +60,6 @@ int main(int ac, char **av, char **envp)
 		}
 		ast_merge(ast);
 		pl = pl_list(ast);
-		add_history(line);
 		excute_line(&env, pl->next, envp);
 	}
 	return (0);

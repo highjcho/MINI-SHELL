@@ -58,9 +58,9 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		return (FALSE); // fork 오류
 	if (pid == 0) // 자식 프로세스 25줄 넘으면 자식프로세스 따로 빼기
 	{
-		close(fd[0]); // 파이프 읽기 닫기
-		dup_fd(ast->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
-		dup_fd(ast->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
+		close(fd[0]); 
+		dup_fd(ast->in_fd, STDIN_FILENO);
+		dup_fd(ast->out_fd, STDOUT_FILENO);
 		if (find_c(ast->right->av[0], '/'))
 			have_path(env, ast->right, envp);
 		else

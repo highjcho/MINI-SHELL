@@ -51,11 +51,11 @@ int	mini_unset(t_env *env, char **cmd)
 		if (check_error(cmd[i]))
 		{
 			flag = 1;
-			continue; // flag만 세우고 다음 턴 넘김 일단 다 실행은 시켜주고 에러메시지 출력됨
+			continue;
 		}
 		prev = find_prev_env(env->h_node.next, cmd[i]);
 		if (!prev)
-			continue; // 노드 없을 때 오류 아님
+			continue;
 		disconnect_node(prev, prev->next);
 	}
 	if (flag)

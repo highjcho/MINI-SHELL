@@ -11,7 +11,7 @@ static int	set_old_pwd(t_env *env)
 			return (FALSE);
 		export[0] = ft_strdup("export");
 		export[1] =	ft_strjoin("OLDPWD=", env->pwd->value);
-		free(env->pwd->value); // 기존 pwd 해제 새로 oldpwd 생성하니까 여기 다시 생각
+		free(env->pwd->value);
 		if (!export[0] || !export[1])
 		{
 			double_free(export);
@@ -24,8 +24,8 @@ static int	set_old_pwd(t_env *env)
 		}
 		return (TRUE);
 	}
-	free(env->old_pwd); // 기존 old_pwd가 이미 존재했으면 기존 old_pwd 해제하고
-	env->old_pwd = env->pwd; // old_pwd에 기존 pwd value 연결
+	free(env->old_pwd->value);
+	env->old_pwd->value = env->pwd->value;
 	return (TRUE);
 }
 
@@ -35,8 +35,8 @@ static int	change_dir(t_env *env, char *new_dir)
 	char	*tmp;
 
 	if (!new_dir || !ft_strcmp(new_dir, "~"))
-		check = chdir(get_env_value(env, "HOME")); // cd만 들어올 경우 home으로
-	else if (!ft_strncmp("~/", new_dir, 2)) // ~/desktop ㅇㅣ런식으로 들어올 경우 ~치환
+		check = chdir(get_env_value(env, "HOME"));
+	else if (!ft_strncmp("~/", new_dir, 2))
 	{
 		tmp = ft_strjoin(get_env_value(env, "HOME"), &new_dir[1]);
 		if (!tmp)
@@ -46,7 +46,7 @@ static int	change_dir(t_env *env, char *new_dir)
 		check = chdir(new_dir);
 	}
 	else
-		check = chdir(new_dir); //cd 뒤에 경로가 들어올 경우 해당 주소로 chdir실행
+		check = chdir(new_dir);
 	if (check == -1)
 	{
 		ft_putstr_fd("cd: ", 2);
