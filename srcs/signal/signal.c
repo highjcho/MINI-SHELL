@@ -14,9 +14,13 @@ void	handle_signal(int signum)
 			printf("\n");
 			rl_replace_line("", 0);
 			rl_redisplay();
+			update_exit_code(g_env, "1");
 		}
 		else
+		{
+			update_exit_code(g_env, "130");
 			printf("^C\n");
+		}
 	}
 	else if (signum == SIGQUIT)
 	{
@@ -26,7 +30,10 @@ void	handle_signal(int signum)
 			rl_redisplay();
 		}
 		else
+		{
+			update_exit_code(g_env, "131");
 			printf("Quit: 3\n");
+		}
 	}
 }
 
@@ -39,7 +46,10 @@ void	handle_signal_heredoc(int signum)
 	if (pid == -1)
 	{
 		if (signum == SIGINT)
+		{
+			update_exit_code(g_env, "1");
 			exit(1);
+		}
 		else if (signum == SIGQUIT)
 		{
 			rl_on_new_line();
@@ -50,9 +60,6 @@ void	handle_signal_heredoc(int signum)
 	{
 		if (signum == SIGINT)
 			printf("\n");
-		else if (signum == SIGQUIT)
-		{
-		}
 	}
 }
 
