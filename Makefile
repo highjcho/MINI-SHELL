@@ -41,6 +41,7 @@ SRCS = main.c \
 		execute/builtin.c \
 		execute/execve.c \
 		utils/utils.c \
+		utils/setattr.c \
 		test/test.c \
 		signal/signal.c \
 		# utils/art.c 
