@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:10:45 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/05/31 19:09:20 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/08 18:38:22 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int		ft_isalnum(int	c);
 void	ft_putendl_fd(char	*s, int	fd);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_itoa(int n);
+void	*ft_memset(void	*s, int	c, size_t	len);
 
 #endif
