@@ -38,6 +38,31 @@ char	*get_env_value(t_env *env, char *key)
 	return (NULL);
 }
 
+t_env_node	*get_env_node(t_env *env, char *key)
+{
+	t_env_node	*ret;
+	
+	if (!key)
+		return (NULL);
+	ret = env->h_node.next;
+	while (ret)
+	{
+		if (!ft_strcmp(key, ret->key))
+			return (ret);
+		ret = ret->next;
+	}
+	return (NULL);
+}
+
+int	update_exit_code(t_env *env, char *exit_code)
+{
+	free(env->exit_code->value);
+	env->exit_code->value = ft_strdup(exit_code);
+	if (!env->exit_code->value)
+		return (FALSE);
+	return (TRUE);
+}
+
 void	free_env_node(t_env_node *node)
 {
 	free(node->key); // export[0] free

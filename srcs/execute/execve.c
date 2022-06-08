@@ -15,8 +15,8 @@ static int	have_path(t_env *env, t_ast *ast, char **envp)
 			return (FALSE); // free.. 뭐뭐 해야하남..
 	}
 	execve(ast->path, ast->av, envp);
-	write(2, "command not found\n", 18);
-	update_exit_code(env, "127");
+	ft_putstr_fd(ast->av[0], 2);
+	ft_putendl_fd(": command not found\n", 2);
 	exit(COMMAND_FAIL); 	// 실패 시 이쪽으로 넘어 옴. 뭐뭐,, 프리해야하지..? // err code 127, minishell: cmd->cmd : command not found 띄우기
 }
 
@@ -38,8 +38,9 @@ static int need_to_make_path(t_env *env, t_ast *ast, char **envp)
 		execve(ast->path, ast->av, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
 		free(ast->path); // cmd_path 만들어 둔거 프리하고 해야 됨 계속 실행
 	}
-	write(2, "command not found\n", 18);
-	update_exit_code(env, "127");
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(ast->av[0], 2);
+	ft_putendl_fd(": command not found", 2);
 	exit(COMMAND_FAIL);
 }
 
@@ -49,7 +50,6 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	int		fd[2];
 	int		status;
 	
-
 	pipe(fd);
 	if (ast->out_fd == 0) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
 		ast->out_fd = fd[1]; 
@@ -68,6 +68,6 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	}
 	close(fd[1]); // 파이프 쓰기 닫기 // 자식 실패하면 뭐 쓰는 거 없겠지????
 	wait(&status); //waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
+	update_exit_code(env, ft_itoa(status >> 8));
 	return (fd[0]); // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
 }
-
