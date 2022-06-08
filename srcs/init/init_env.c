@@ -1,16 +1,5 @@
 #include "../../includes/init.h"
 
-static int	set_path(t_env *env)
-{
-	env->path = ft_split(get_env_value(env, "PATH"), ':');
-	if (!env->path)
-	{
-		error_handler("pipex: allocate failed", errno);
-		return (FALSE);
-	}
-	return (TRUE);
-}
-
 static int	init_add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
@@ -28,7 +17,7 @@ static int	init_add_env(t_env *env, char **export)
 	prev->next = new;
 	new->key = export[0];
 	new->value = export[1];
-	new->export = export;
+	free(export);
 	new->next = NULL;
 	if (!ft_strcmp(export[0], "PWD"))
 		env->pwd = new;
@@ -73,8 +62,6 @@ int	init_env(t_env *env, char **envp)
 	env->old_pwd = NULL;
 	env->exit_code = NULL;
 	if (!set_env(env, envp))
-		return (FAIL);
-	if (!set_path(env))
 		return (FAIL);
 	return (SUCCESS);
 }

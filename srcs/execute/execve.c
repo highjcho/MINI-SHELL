@@ -1,23 +1,11 @@
 #include "../../includes/execute.h"
 
-static int	have_path(t_env *env, t_ast *ast, char **envp)
+static int	set_path(t_env *env)
 {
-	if (!ft_strncmp("~/", ast->av[0], 2))
-	{
-		ast->path = ft_strjoin(get_env_value(env, "HOME"), &ast->av[0][1]);
-		if (!ast->path)
-			return (FALSE);
-	}
-	else
-	{
-		ast->path = ft_strdup(ast->av[0]);
-		if (!ast->path)
-			return (FALSE);
-	}
-	execve(ast->path, ast->av, envp);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found\n", 2);
-	exit(COMMAND_FAIL);
+	env->path = ft_split(get_env_value(env, "PATH"), ':');
+	if (!env->path)
+		return (FALSE);
+	return (TRUE);
 }
 
 static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
@@ -26,14 +14,16 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	int		i;
 
 	i = -1;
+	if (!set_path(env))
+		exit(FAIL);
 	while (env->path[++i])
 	{
 		tmp = ft_strjoin("/", ast->av[0]);
 		if (!tmp)
-			return (FALSE);
+			exit(FAIL);
 		ast->path = ft_strjoin(env->path[i], tmp);
 		if (!ast->path)
-			return (FALSE);
+			exit(FAIL);
 		free(tmp);
 		execve(ast->path, ast->av, envp);
 		free(ast->path);
@@ -41,6 +31,26 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(ast->av[0], 2);
 	ft_putendl_fd(": command not found", 2);
+	exit(COMMAND_FAIL);
+}
+
+static int	have_path(t_env *env, t_ast *ast, char **envp)
+{
+	if (!ft_strncmp("~/", ast->av[0], 2))
+	{
+		ast->path = ft_strjoin(get_env_value(env, "HOME"), &ast->av[0][1]);
+		if (!ast->path)
+			exit(FAIL);
+	}
+	else
+	{
+		ast->path = ft_strdup(ast->av[0]);
+		if (!ast->path)
+			exit(FAIL);
+	}
+	execve(ast->path, ast->av, envp);
+	ft_putstr_fd(ast->av[0], 2);
+	ft_putendl_fd(": command not found\n", 2);
 	exit(COMMAND_FAIL);
 }
 

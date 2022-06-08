@@ -35,7 +35,7 @@ int	is_long(char *s)
 		ul = (*s - '0') + (ul * 10);
 		if (tmp != ul / 10)
 			return (FALSE);
-		if (ul > LONG_MAX && sign == 1 || ul - 1 > LONG_MAX && sign == -1)
+		if ((ul > LONG_MAX && sign == 1) || (ul - 1 > LONG_MAX && sign == -1))
 			return (FALSE);
 		s++;
 	}

@@ -1,10 +1,23 @@
 #include "../../includes/utils.h"
 
+static int	update_value(t_env *env, char **export)
+{
+	t_env_node	*cur;
+
+	cur = get_env_node(env, export[0]);
+	free(cur->value);
+	free(export[0]);
+	cur->value = export[1];
+	return (TRUE);
+}
+
 int	add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
 	t_env_node	*new;
 
+	if (get_env_node(env, export[0]))
+		return (update_value(env, export));
 	new = malloc(sizeof(t_env_node));
 	if (!new)
 	{
@@ -17,8 +30,17 @@ int	add_env(t_env *env, char **export)
 	prev->next = new;
 	new->key = export[0];
 	new->value = export[1];
-	new->export = export;
+	free(export);
 	new->next = NULL;
+	return (TRUE);
+}
+
+int	update_exit_code(t_env *env, char *exit_code)
+{
+	free(env->exit_code->value);
+	env->exit_code->value = ft_strdup(exit_code);
+	if (!env->exit_code->value)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -52,21 +74,4 @@ t_env_node	*get_env_node(t_env *env, char *key)
 		ret = ret->next;
 	}
 	return (NULL);
-}
-
-int	update_exit_code(t_env *env, char *exit_code)
-{
-	free(env->exit_code->value);
-	env->exit_code->value = ft_strdup(exit_code);
-	if (!env->exit_code->value)
-		return (FALSE);
-	return (TRUE);
-}
-
-void	free_env_node(t_env_node *node)
-{
-	free(node->key);
-	free(node->value);
-	free(node->export);
-	free(node);
 }

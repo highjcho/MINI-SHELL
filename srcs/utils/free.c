@@ -1,5 +1,22 @@
 #include "../../includes/utils.h"
 
+void	double_free(char **str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}
+
+void	free_env_node(t_env_node *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
+}
+
 void	free_env(t_env *env)
 {
 	t_env_node	*cur;
@@ -9,22 +26,9 @@ void	free_env(t_env *env)
 	while (cur)
 	{
 		tmp = cur->next;
-		free(cur->key);
-		free(cur->value);
-		free(cur->export);
-		free(cur);
+		free_env_node(cur);
 		cur = tmp;
 	}
-}
-
-void	double_free(char **str)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
 }
 
 void	ast_free(t_ast *node)
