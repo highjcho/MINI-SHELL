@@ -8,9 +8,9 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
-COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
+COMPILE_FLAG = -I${HOME}/.brew/Cellar/readline/8.1.2/include
 
-LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
+LINK_FLAG = -lreadline -L${HOME}/.brew/Cellar/readline/8.1.2/lib
 
 
 SRCS_DIR = ./srcs/
