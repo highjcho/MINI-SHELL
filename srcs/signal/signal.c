@@ -10,10 +10,17 @@ void	handle_signal(int signum)
 	{
 		if (pid == -1)
 		{	
+<<<<<<< HEAD
 		printf("\b\b  \b\b\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+=======
+			printf("\b\b  \b\b\n");
+			rl_on_new_line();
+			// rl_replace_line("", 0);
+			rl_redisplay();
+>>>>>>> 8c7550c8398fd00d10668746a6a398f6e0e8200c
 		}
 		else
 		{
@@ -31,6 +38,33 @@ void	handle_signal(int signum)
 		else
 		{
 			printf("Quit: 3\n");
+		}
+	}
+}
+
+void	handle_signal_heredoc(int signum)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(-1, &status, WNOHANG);
+	if (pid == -1)
+	{
+		if (signum == SIGINT)
+			exit(1);
+		else if (signum == SIGQUIT)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+			printf("  \b\b");
+		}
+	}
+	else
+	{
+		if (signum == SIGINT)
+			printf("\b\b  \b\b\n");
+		else if (signum == SIGQUIT)
+		{
 		}
 	}
 }
