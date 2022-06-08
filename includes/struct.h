@@ -68,4 +68,5 @@ typedef struct s_pl_list
 	struct s_pl_list	*next;
 }	t_pl_list;
 
+t_env	*g_env;
 #endif

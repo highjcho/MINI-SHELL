@@ -15,7 +15,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		ast_redirect_process(list->pipeline);
 		if (list->pipeline->in_fd == -1)
 		{
-			printf("redirect error\n"); // error (char s , int code)
+			update_exit_code(env, "1");
 			list = list->next;
 			continue;
 		}
@@ -39,6 +39,7 @@ int main(int ac, char **av, char **envp)
 		return (0);
 	(void) av;
 	init_env(&env, envp);
+	g_env = &env;
 	signal_init();
 
 	line = NULL;
@@ -59,7 +60,7 @@ int main(int ac, char **av, char **envp)
 		ast = make_ast(list);
 		if(syntax_check(ast) == FAIL)
 		{
-			printf("pipeerror\n");
+			update_exit_code(&env, "258");
 			continue;
 		}
 		ast_merge(ast);
