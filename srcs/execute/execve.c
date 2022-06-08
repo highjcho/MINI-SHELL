@@ -1,6 +1,6 @@
 #include "../../includes/execute.h"
 
-static int	has_path(t_env *env, t_ast *ast, char **envp)
+static int	have_path(t_env *env, t_ast *ast, char **envp)
 {
 	if (!ft_strncmp("~/", ast->av[0], 2))
 	{
@@ -15,9 +15,9 @@ static int	has_path(t_env *env, t_ast *ast, char **envp)
 			return (FALSE); // free.. 뭐뭐 해야하남..
 	}
 	execve(ast->path, ast->av, envp);
-	free(ast->path); // 실패 시 이쪽으로 넘어 옴. 뭐뭐,, 프리해야하지..?
-	// err code 127, minishell: cmd->cmd : command not found 띄우기
-	return (FALSE);
+	write(2, "command not found\n", 18);
+	update_exit_code(env, "127");
+	exit(COMMAND_FAIL); 	// 실패 시 이쪽으로 넘어 옴. 뭐뭐,, 프리해야하지..? // err code 127, minishell: cmd->cmd : command not found 띄우기
 }
 
 static int need_to_make_path(t_env *env, t_ast *ast, char **envp)
@@ -38,10 +38,9 @@ static int need_to_make_path(t_env *env, t_ast *ast, char **envp)
 		execve(ast->path, ast->av, envp); // 성공하면 걍 빠져나가야 하는 거 아닌지..?
 		free(ast->path); // cmd_path 만들어 둔거 프리하고 해야 됨 계속 실행
 	}
-	//free(cmd->path); // path 끝까지 돌았는데 맞는 cmd를 못찾았을 때
-	// double_free(cmd->cmd); //에러처리 커맨드 없움. 종료코드 127
-	exit(1);
-	return (FALSE);
+	write(2, "command not found\n", 18);
+	update_exit_code(env, "127");
+	exit(COMMAND_FAIL);
 }
 
 int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
@@ -49,6 +48,7 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	pid_t	pid;
 	int		fd[2];
 	int		status;
+	
 
 	pipe(fd);
 	if (ast->out_fd == 0) // outfile 없으면 out_fd에 파이프 쓰기 꽂아주기
@@ -62,15 +62,12 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		dup_fd(ast->in_fd, STDIN_FILENO); // infile || 직전 파이프 읽기로 표준입력 교체
 		dup_fd(ast->out_fd, STDOUT_FILENO); // outfile || 파이프 쓰기로 표준출력 교체
 		if (find_c(ast->right->av[0], '/'))
-			has_path(env, ast->right, envp);
+			have_path(env, ast->right, envp);
 		else
 			need_to_make_path(env, ast->right, envp);
-		// if (check == FALSE)
-			// 에러 핸들러 뭐 프리할 거 프리하고
 	}
 	close(fd[1]); // 파이프 쓰기 닫기 // 자식 실패하면 뭐 쓰는 거 없겠지????
-	wait(&status);
-	//waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
+	wait(&status); //waitpid(pid, &status, WNOHANG); // wnohang 왜 했었지?
 	return (fd[0]); // infile 초기화 하고 다음 루틴에서 점검해서 있으면 인파일 dup, 없으면 read_fd dup
 }
 

@@ -24,5 +24,8 @@
 # define FAIL 1
 # define TRUE 1
 # define FALSE 0
+# define COMMAND_FAIL 127
+# define LONG_MAX 9223372036854775807
+# define LONG_MIN -9223372036854775808
 
 #endif

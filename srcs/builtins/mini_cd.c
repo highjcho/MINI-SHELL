@@ -10,7 +10,8 @@ static int	set_old_pwd(t_env *env)
 		if (!export)
 			return (FALSE);
 		export[0] = ft_strdup("export");
-		export[1] =	ft_strjoin("OLDPWD=", env->pwd->value);
+		export[1] =	ft_strjoin("OLDPWD=", env->pwd);
+		free(env->pwd); // 기존 pwd 해제 새로 oldpwd 생성하니까 여기 다시 생각
 		if (!export[0] || !export[1])
 		{
 			double_free(export);
@@ -20,10 +21,11 @@ static int	set_old_pwd(t_env *env)
 		{
 			double_free(export);
 			return (FALSE);
-		} // export 활용해도 되겠지?
+		}
+		return (TRUE);
 	}
-	free(env->old_pwd->value); // 기존 old_pwd가 이미 존재했으면 기존 old_pwd 해제하고
-	env->old_pwd->value = env->pwd->value; // old_pwd에 기존 pwd value 연결
+	free(env->old_pwd); // 기존 old_pwd가 이미 존재했으면 기존 old_pwd 해제하고
+	env->old_pwd = env->pwd; // old_pwd에 기존 pwd value 연결
 	return (TRUE);
 }
 
@@ -52,19 +54,19 @@ static int	change_dir(t_env *env, char *new_dir)
 
 int	mini_cd(t_env *env, char **cmd)
 {
-	char	dir[1025];
+	char	dir[1024];
 	char	*check;
 
 	if (!change_dir(env, cmd[1])) 
 		return (FAIL);
-	ft_bzero(dir, 1025);
+	ft_bzero(dir, 1024);
 	check = getcwd(dir, 1024);
 	if (!check)
 		return (FAIL);
 	if (!set_old_pwd(env))
 		return (FAIL);
-	env->pwd->value = ft_strdup(dir);
-	if (!env->pwd->value)
+	env->pwd = ft_strdup(dir);
+	if (!env->pwd)
 		return (FAIL);
 	return (SUCCESS);
 }

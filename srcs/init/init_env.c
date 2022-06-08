@@ -31,9 +31,9 @@ static int	init_add_env(t_env *env, char **export)
 	new->export = export;
 	new->next = NULL;
 	if (!ft_strcmp(export[0], "PWD")) // pwd 위치 저장
-		env->pwd = new;
+		env->pwd = new->value;
 	if (!ft_strcmp(export[0], "OLDPWD")) // old_pwd 위치 저장
-		env->old_pwd = new;
+		env->old_pwd = new->value;
 	return (TRUE);
 }
 
@@ -62,6 +62,7 @@ static int	set_env(t_env *env, char **envp)
 		free_env(env);
 		return (FALSE);
 	}
+	env->exit_code = export[1];
 	return (TRUE);
 }
 	

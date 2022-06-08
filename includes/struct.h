@@ -14,8 +14,9 @@ typedef struct s_env_node
 typedef struct s_env
 {
 	t_env_node	h_node;
-	t_env_node	*pwd; // 필요한 게 맞는 지 사실 아직 감이 잘 안옴;
-	t_env_node	*old_pwd;
+	char		*pwd; // 필요한 게 맞는 지 사실 아직 감이 잘 안옴;
+	char		*old_pwd;
+	char		*exit_code;
 	char		**path;
 } t_env;
 
