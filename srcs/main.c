@@ -42,11 +42,15 @@ int main(int ac, char **av, char **envp)
 	signal_init();
 
 	line = NULL;
+	setechoctl(1);
 	while (1)
 	{
 		line = readline("minishell> ");
 		if (!line)
+		{
+			printf("minishell> exit\n");
 			exit(1);
+		}
 		else if (!*line)
 			continue ;
 		list = make_token_list(tokenize(line));
