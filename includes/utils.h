@@ -16,6 +16,7 @@ int			update_exit_code(t_env *env, char *exit_code);
 int			is_long(char *s);
 long long	ft_atol(char *s);
 void		setechoctl(int flag);
-
+int 		main_init(char *line, t_info *info);
+int			set_init(t_env *env, char **envp, char **av);
 
 #endif
