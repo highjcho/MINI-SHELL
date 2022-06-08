@@ -5,6 +5,7 @@
 
 int			add_env(t_env *env, char **export);
 char		*get_env_value(t_env *env, char *key);
+t_env_node	*get_env_node(t_env *env, char *key);
 void		free_env_node(t_env_node *node);
 void		free_env(t_env *env);
 void		double_free(char **str);
