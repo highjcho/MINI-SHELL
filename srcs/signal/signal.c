@@ -10,6 +10,7 @@ void	handle_signal(int signum)
 	{
 		if (pid == -1)
 		{	
+
 			rl_on_new_line();
 			printf("\n");
 			rl_replace_line("", 0);
