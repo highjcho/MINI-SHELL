@@ -68,6 +68,7 @@ typedef struct s_pl_list
 	struct s_pl_list	*next;
 }	t_pl_list;
 
+
 typedef struct s_info
 {
 	struct s_token_list	*list;
@@ -75,6 +76,7 @@ typedef struct s_info
 	struct s_ast		*ast;
 	struct s_pl_list	*pl;
 }	t_info;
+
 
 t_env	*g_env;
 #endif
