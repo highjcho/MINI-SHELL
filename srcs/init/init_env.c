@@ -1,16 +1,5 @@
 #include "../../includes/init.h"
 
-static int	set_path(t_env *env)
-{
-	env->path = ft_split(get_env_value(env, "PATH"), ':');
-	if (!env->path)
-	{
-		error_handler("pipex: allocate failed", errno);
-		return (FALSE);
-	}
-	return (TRUE);
-}
-
 static int	init_add_env(t_env *env, char **export)
 {
 	t_env_node	*prev;
@@ -26,14 +15,14 @@ static int	init_add_env(t_env *env, char **export)
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
-	new->key = export[0]; // unset 시 해제 필요
-	new->value = export[1]; // unset 시 해제 필요
-	new->export = export;
+	new->key = export[0];
+	new->value = export[1];
+	free(export);
 	new->next = NULL;
-	if (!ft_strcmp(export[0], "PWD")) // pwd 위치 저장
-		env->pwd = new->value;
-	if (!ft_strcmp(export[0], "OLDPWD")) // old_pwd 위치 저장
-		env->old_pwd = new->value;
+	if (!ft_strcmp(export[0], "PWD"))
+		env->pwd = new;
+	if (!ft_strcmp(export[0], "OLDPWD"))
+		env->old_pwd = new;
 	return (TRUE);
 }
 
@@ -48,7 +37,7 @@ static int	set_env(t_env *env, char **envp)
 		export = ft_split(envp[i], '=');
 		if (!export)
 			return (FALSE);
-		if (!init_add_env(env, export)) // 추가 실패 시 전체 리스트 free, getenv도 할당인가? 해제를 해줘야 하나?
+		if (!init_add_env(env, export))
 		{
 			free_env(env);
 			return (FALSE);
@@ -62,18 +51,17 @@ static int	set_env(t_env *env, char **envp)
 		free_env(env);
 		return (FALSE);
 	}
-	env->exit_code = export[1];
+	env->exit_code = get_env_node(env, "?");
 	return (TRUE);
 }
-	
+
 int	init_env(t_env *env, char **envp)
 {
 	env->h_node.next = NULL;
 	env->pwd = NULL;
 	env->old_pwd = NULL;
+	env->exit_code = NULL;
 	if (!set_env(env, envp))
-		return (FAIL);
-	if (!set_path(env))
 		return (FAIL);
 	return (SUCCESS);
 }

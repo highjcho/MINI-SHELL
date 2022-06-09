@@ -3,9 +3,8 @@
 
 # include "minishell.h"
 
-# define BUFFER_SIZE 1024
-
-int		dup_fd(int from_fd, int to_fd);
 void	ast_redirect_process(t_ast *ast);
+int		here_doc(t_ast *pipeline, t_ast *node);
+int		dup_fd(int from_fd, int to_fd);
 
 #endif

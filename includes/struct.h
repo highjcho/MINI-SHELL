@@ -3,23 +3,6 @@
 
 # include "minishell.h"
 
-typedef struct s_env_node
-{
-	char				**export;
-	char				*key;
-	char				*value;
-	struct s_env_node	*next;
-}	t_env_node;
-
-typedef struct s_env
-{
-	t_env_node	h_node;
-	char		*pwd; // 필요한 게 맞는 지 사실 아직 감이 잘 안옴;
-	char		*old_pwd;
-	char		*exit_code;
-	char		**path;
-} t_env;
-
 enum e_token_type
 {
 	WORD,
@@ -40,22 +23,14 @@ typedef struct s_token_list
 	t_token				token;
 }	t_token_list;
 
-typedef struct s_cmd
-{
-	char	*path;
-	char	**cmd; // 트리에서 돌기
-	int		in_fd;
-	int		out_fd;
-}	t_cmd;
-
 typedef struct s_ast
 {
 	struct s_ast	*left;
 	struct s_ast	*right;
 	char			*data;
 	int				ac;
-	char			*path;
 	char			**av;
+	char			*path;
 	char			*file_name;
 	int				in_fd;
 	int				out_fd;
@@ -67,5 +42,31 @@ typedef struct s_pl_list
 	struct s_ast		*pipeline;
 	struct s_pl_list	*next;
 }	t_pl_list;
+
+typedef struct s_env_node
+{
+	char				*key;
+	char				*value;
+	struct s_env_node	*next;
+}	t_env_node;
+
+typedef struct s_env
+{
+	t_env_node	h_node;
+	t_env_node	*pwd;
+	t_env_node	*old_pwd;
+	t_env_node	*exit_code;
+	char		**path;
+} t_env;
+
+typedef struct s_info
+{
+	struct s_token_list	*list;
+	struct s_env		*env;
+	struct s_ast		*ast;
+	struct s_pl_list	*pl;
+}	t_info;
+
+t_env	*g_env;
 
 #endif

@@ -13,21 +13,12 @@ int	find_c(char *s, char c)
 	return (FALSE);
 }
 
-int	update_exit_code(t_env *env, char *exit_code)
-{
-	free(env->exit_code);
-	env->exit_code = ft_strdup(exit_code);
-	if (!env->exit_code)
-		return (FALSE);
-	return (TRUE);
-}
-
-int is_long(char *s)
+int	is_long(char *s)
 {
 	unsigned long long	ul;
 	int					sign;
-	int tmp;
-	
+	int					tmp;
+
 	ul = 0;
 	sign = 1;
 	if (*s == '-' || *s == '+')
@@ -44,21 +35,19 @@ int is_long(char *s)
 		ul = (*s - '0') + (ul * 10);
 		if (tmp != ul / 10)
 			return (FALSE);
-		if (ul > LONG_MAX && sign == 1)
-			return (FALSE);
-		else if (ul - 1 > LONG_MAX && sign == -1)
+		if ((ul > LONG_MAX && sign == 1) || (ul - 1 > LONG_MAX && sign == -1))
 			return (FALSE);
 		s++;
 	}
-	return (TRUE);	
+	return (TRUE);
 }
 
-long long ft_atol(char *s)
+long long	ft_atol(char *s)
 {
 	long long	ul;
-	int					sign;
-	int tmp;
-	
+	int			sign;
+	int			tmp;
+
 	ul = 0;
 	sign = 1;
 	if (*s == '-' || *s == '+')

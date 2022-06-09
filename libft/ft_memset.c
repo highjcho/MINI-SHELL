@@ -6,13 +6,13 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:34:47 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/08 18:37:45 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 11:12:10 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void	*s, int	c, size_t	len)
+void	*ft_memset(void	*s, int c, size_t len)
 {
 	unsigned char	*ptr;
 
