@@ -5,7 +5,6 @@
 
 typedef struct s_env_node
 {
-	char				**export;
 	char				*key;
 	char				*value;
 	struct s_env_node	*next;
@@ -39,14 +38,6 @@ typedef struct s_token_list
 	struct s_token_list	*next;
 	t_token				token;
 }	t_token_list;
-
-typedef struct s_cmd
-{
-	char	*path;
-	char	**cmd; // 트리에서 돌기
-	int		in_fd;
-	int		out_fd;
-}	t_cmd;
 
 typedef struct s_ast
 {
