@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 12:50:16 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 12:53:59 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 13:59:12 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,46 +76,6 @@ int	token_count(char *str)
 		ret++;
 	}
 	return (ret);
-}
-
-char	**make_token(char *str, char **tokens)
-{
-	int	i;
-	int	j;
-	int	tmp;
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		while (str[i] == ' ')
-			i++;
-		tmp = i;
-		if (str[i] == '|')
-		{
-			tokens[j++] = ft_strdup("|");
-			i++;
-			tmp++;
-		}
-		if (str[i] == '<' || str[i] == '>')
-		{
-			redirection(str, &i);
-			tokens[j++] = ft_substr(str, tmp, i - tmp);
-			tmp = i;
-		}
-		if (str[i] == '\'' || str[i] == '\"')
-			quote(str, &i, str[i]);
-		if (str[i] != ' ' && str[i] != '\'' && str[i] != '\"' \
-		&& str[i] != '|' && str[i] != '>' && str[i] != '<')
-			word(str, &i);
-		if (i != tmp)
-		{
-			tokens[j++] = ft_substr(str, tmp, i - tmp);
-	//		if (tokens[j - 1] == NULL) error 시에 배열 해제 필요 
-		}
-	}
-	tokens[token_count(str)] = 0;
-	return (tokens);
 }
 
 char	**tokenize(char *str)

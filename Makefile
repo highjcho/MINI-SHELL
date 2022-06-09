@@ -25,6 +25,7 @@ SRCS = main.c \
 		signal/signal.c \
 		parse/tokenize.c \
 		parse/tokenlist.c \
+		parse/make_token.c \
 		parse/ast.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
