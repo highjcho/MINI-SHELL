@@ -21,6 +21,7 @@ SRCS_DIR = ./srcs/
 
 SRCS = main.c \
 		init/init_env.c \
+		init/init.c \
 		signal/signal.c \
 		parse/tokenize.c \
 		parse/tokenlist.c \

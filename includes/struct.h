@@ -11,22 +11,6 @@ enum e_token_type
 	PIPE,
 };
 
-typedef struct s_env_node
-{
-	char				*key;
-	char				*value;
-	struct s_env_node	*next;
-}	t_env_node;
-
-typedef struct s_env
-{
-	t_env_node	h_node;
-	t_env_node	*pwd;
-	t_env_node	*old_pwd;
-	t_env_node	*exit_code;
-	char		**path;
-} t_env;
-
 typedef struct s_token
 {
 	char				*str;
@@ -59,6 +43,21 @@ typedef struct s_pl_list
 	struct s_pl_list	*next;
 }	t_pl_list;
 
+typedef struct s_env_node
+{
+	char				*key;
+	char				*value;
+	struct s_env_node	*next;
+}	t_env_node;
+
+typedef struct s_env
+{
+	t_env_node	h_node;
+	t_env_node	*pwd;
+	t_env_node	*old_pwd;
+	t_env_node	*exit_code;
+	char		**path;
+} t_env;
 
 typedef struct s_info
 {
