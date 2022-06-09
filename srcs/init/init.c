@@ -6,7 +6,7 @@ int main_init(char *line, t_info *info)
 	info->list = make_token_list(tokenize(line));
 	env_sub(info->list, g_env);
 	info->ast = make_ast(info->list);
-	if(syntax_check(info->ast) == FAIL)
+	if (syntax_check(info->ast) == FAIL)
 		{
 			update_exit_code(g_env, "258");
 			return (FAIL);

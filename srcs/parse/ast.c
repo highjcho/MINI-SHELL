@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:55 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/02 10:38:16 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 12:12:04 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_ast	*make_ast_node(t_token_list *list)// ast node들을 생성하는 함수
 		node->type = PIPELINE;
 	else
 	{
-		node->data = list->token.str;
+		node->data = ft_strdup(list->token.str);
 		node->type = list->token.type;
 	}
 	return (node);

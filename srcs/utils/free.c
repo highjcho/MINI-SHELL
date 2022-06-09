@@ -50,18 +50,3 @@ void	free_ast(t_ast *node)
 	}
 	free(node);
 }
-
-void	free_token_list(t_token_list *list)
-{
-	t_token_list *cur;
-
-	cur = list;
-	while (cur)
-	{
-		if (cur->token.str)
-		{
-			free(cur->token.str);
-			cur->token.str = NULL;
-		}
-	}
-}

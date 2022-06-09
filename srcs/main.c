@@ -50,6 +50,7 @@ int main(int ac, char **av, char **envp)
 		add_history(line);
 		main_init(line, &info);
 		excute_line(&env, info.pl->next, envp);
+		all_free(&info);
 	}
 	return (0);
 }
