@@ -6,61 +6,15 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/08 11:16:51 by jonkim           ###   ########.fr       */
+=======
+/*   Updated: 2022/06/09 12:47:02 by jonkim           ###   ########.fr       */
+>>>>>>> fb16f4c8de0f89d75dad9c2f6f04fc484060bdb6
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parse.h"
-
-char	*quote_trim(char *str, int pos1, int pos2)
-{
-	char	*ret;
-	int		i;
-	int		tmp;
-
-	i = -1;
-	tmp = 0;
-	ret = malloc(ft_strlen(str) - 1);
-	if (!ret)
-		return (NULL);
-	while (str[++i])
-	{
-		if (i != pos1 && i != pos2)
-		{
-			ret[tmp] = str[i];
-			tmp++;
-		}
-	}
-	ret[tmp] = 0;
-	free(str);
-	return (ret);
-}
-
-char	*quote_check(char *str)
-{
-	int	i;
-	int	tmp;
-
-	if (!str)
-		return (NULL);
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			tmp = i;
-			while (str[++tmp])
-			{
-				if (str[tmp] == str[i])
-				{
-					str = quote_trim(str, i, tmp);
-					i = -1;
-				}
-			}
-		}
-	}
-	return (str);
-}
 
 char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 {
@@ -74,7 +28,7 @@ char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 	idx = 0;
 	ret = ft_calloc(ft_strlen(str) - pos2 + pos1 + ft_strlen(sub) + 1, 1);
 	if (!sub)
-		sub = ft_strdup(""); // free 생각
+		sub = ft_strdup("");
 	if (!ret)
 		return (NULL);
 	while (str[++i])

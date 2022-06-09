@@ -15,7 +15,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		ast_redirect_process(list->pipeline);
 		if (list->pipeline->in_fd == -1)
 		{
-			printf("redirect error\n"); // error (char s , int code)
+			update_exit_code(env, "1");
 			list = list->next;
 			continue;
 		}
@@ -30,37 +30,32 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 int main(int ac, char **av, char **envp)
 {
 	t_env			env;
-	t_token_list	*list;
-	t_ast			*ast;
-	t_pl_list		*pl;
 	char			*line;
+	t_info			info;
 
 	if (ac != 1)
 		return (0);
-	(void) av;
-	init_env(&env, envp);
-	signal_init();
-
 	line = NULL;
+	set_init(&env, envp, av);
 	while (1)
 	{
 		line = readline("minishell> ");
 		if (!line)
+		{
+			printf("minishell> exit\n");
 			exit(1);
+		}
 		else if (!*line)
 			continue ;
-		list = make_token_list(tokenize(line));
-		env_sub(list,&env);
-		ast = make_ast(list);
-		if(syntax_check(ast) == FAIL)
+		add_history(line);
+		if (main_init(line, &info) == FAIL)
 		{
-			printf("pipeerror\n");
+			free(line);
 			continue;
 		}
-		ast_merge(ast);
-		pl = pl_list(ast);
-		add_history(line);
-		excute_line(&env, pl->next, envp);
+		excute_line(&env, info.pl->next, envp);
+		all_free(&info);
+		free(line);
 	}
 	return (0);
 }

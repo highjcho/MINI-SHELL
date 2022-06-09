@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 11:11:16 by hyunjcho          #+#    #+#             */
+/*   Updated: 2022/06/09 11:11:17 by hyunjcho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/execute.h"
 
 int	execute_cmd(t_env *env, t_ast *ast, char **envp)
@@ -5,12 +17,16 @@ int	execute_cmd(t_env *env, t_ast *ast, char **envp)
 	int	result;
 
 	result = execute_builtin(env, ast);
-	if (result == FAIL) // 빌트인 함수에서 실행 오류가 난 경우
-	{
-		update_exit_code(env, "1");
-		result = STDIN_FILENO;
-	}
-	if (result == -1) // 빌트인 함수가 아닐 경우
+	if (result == -1)
 		return (execute_non_builtin(env, ast, envp));
+	if (result == FAIL || result == COMMAND_FAIL)
+	{
+		if (result == FAIL)
+			update_exit_code(env, "1");
+		else
+			update_exit_code(env, "127");
+		return (STDIN_FILENO);
+	}
+	update_exit_code(env, "0");
 	return (result);
 }

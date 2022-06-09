@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   setattr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/17 13:34:47 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/09 13:56:06 by jonkim           ###   ########.fr       */
+/*   Created: 2022/06/09 12:40:51 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:41:08 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/utils.h"
 
-void	*ft_memset(void	*s, int c, size_t len)
+void	setechoctl(int flag)
 {
-	unsigned char	*ptr;
+	struct termios	new_term;
 
-	ptr = s;
-	while (len-- > 0)
-		*ptr++ = (unsigned char)c;
-	return (s);
+	tcgetattr(STDIN_FILENO, &new_term);
+	if (flag)
+		new_term.c_lflag &= ~(ECHOCTL);
+	else
+		new_term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
 }

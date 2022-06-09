@@ -1,22 +1,5 @@
 #include "../../includes/utils.h"
 
-void	free_env(t_env *env)
-{
-	t_env_node	*cur;
-	t_env_node	*tmp;
-
-	cur = env->h_node.next;
-	while (cur)
-	{
-		tmp = cur->next;
-		free(cur->key);
-		free(cur->value);
-		free(cur->export);
-		free(cur);
-		cur = tmp;
-	}
-}
-
 void	double_free(char **str)
 {
 	int	i;
@@ -27,7 +10,28 @@ void	double_free(char **str)
 	free(str);
 }
 
-void	ast_free(t_ast *node)
+void	free_env_node(t_env_node *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
+}
+
+void	free_env(t_env *env)
+{
+	t_env_node	*cur;
+	t_env_node	*tmp;
+
+	cur = env->h_node.next;
+	while (cur)
+	{
+		tmp = cur->next;
+		free_env_node(cur);
+		cur = tmp;
+	}
+}
+
+void	free_ast(t_ast *node)
 {
 	if (node->data)
 	{

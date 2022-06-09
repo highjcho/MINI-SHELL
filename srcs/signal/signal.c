@@ -1,4 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 12:34:16 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:37:38 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/signal.h"
+
+static void	handle_sigint(pid_t pid)
+{
+	if (pid == -1)
+	{	
+		rl_on_new_line();
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_redisplay();
+		update_exit_code(g_env, "1");
+	}
+	else
+	{
+		update_exit_code(g_env, "130");
+		printf("^C\n");
+	}
+}
+
+static void	handle_sigquit(pid_t pid)
+{
+	if (pid == -1)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+	{
+		update_exit_code(g_env, "131");
+		printf("Quit: 3\n");
+	}
+}
 
 void	handle_signal(int signum)
 {
@@ -7,33 +50,34 @@ void	handle_signal(int signum)
 
 	pid = waitpid(-1, &status, WNOHANG);
 	if (signum == SIGINT)
+		handle_sigint(pid);
+	else if (signum == SIGQUIT)
+		handle_sigquit(pid);
+}
+
+void	handle_signal_heredoc(int signum)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(-1, &status, WNOHANG);
+	if (pid == -1)
 	{
-		if (pid == -1)
-		{	
-			rl_on_new_line();
-			rl_redisplay();
-			printf("  \b\b\n");
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-		else
+		if (signum == SIGINT)
 		{
-			printf("\n");
+			update_exit_code(g_env, "1");
+			exit(1);
+		}
+		else if (signum == SIGQUIT)
+		{
+			rl_on_new_line();
+			rl_redisplay();
 		}
 	}
-	else if (signum == SIGQUIT)
+	else
 	{
-		if (pid == -1)
-		{
-			rl_on_new_line();
-			rl_redisplay();
-			printf("  \b\b");
-		}
-		else
-		{
-			printf("Quit: 3\n");
-		}
+		if (signum == SIGINT)
+			printf("\n");
 	}
 }
 
@@ -41,5 +85,4 @@ void	signal_init(void)
 {
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
-	// signal(SIGTERM, handle_signal);
 }

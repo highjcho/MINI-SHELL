@@ -7,5 +7,4 @@ int	execute_cmd(t_env *env, t_ast *ast, char **envp);
 int execute_builtin(t_env *env, t_ast *ast);
 int	execute_non_builtin(t_env *env, t_ast *ast, char **envp);
 
-
 #endif
