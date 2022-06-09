@@ -23,7 +23,7 @@ static void	get_line(char *delimiter, char *line, int out_fd)
 		}
 		ft_putendl_fd(line, out_fd);
 		free(line);
-		line = readline("heredoc> ");
+		line = readline("> ");
 	}
 }
 
@@ -44,7 +44,7 @@ int	here_doc(t_ast *pipeline, t_ast *node)
 	if (pid == 0)
 	{
 		close(fd[0]);
-		line = readline("heredoc> ");
+		line = readline("> ");
 		get_line(node->file_name, line, fd[1]);
 		exit(EXIT_SUCCESS);
 	}

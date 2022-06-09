@@ -18,6 +18,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		{
 			update_exit_code(env, "1");
 			list = list->next;
+			next_in_fd = fork_process();
 			continue;
 		}
 		next_in_fd = execute_cmd(env, list->pipeline, envp);
@@ -54,9 +55,9 @@ int main(int ac, char **av, char **envp)
 			free(line);
 			continue;
 		}
-		test_ast(info.ast);
+		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
-		all_free(&info);
+		// all_free(&info);
 		free(line);
 	}
 	return (0);

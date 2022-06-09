@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int	find_c(char const s, char	c)
+static int	find_c(char const s, char c)
 {
 	if (s == c)
 		return (0);
@@ -34,7 +34,7 @@ static void	make_str(char *new_strs, char const *s, char c)
 	new_strs[i] = 0;
 }
 
-static int	ft_free(char	**new_strs, int	j)
+static int	ft_free(char **new_strs, int j)
 {
 	int	i;
 
