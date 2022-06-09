@@ -17,6 +17,7 @@ SRCS_DIR = ./srcs/
 
 SRCS = main.c \
 		init/init_env.c \
+		init/init.c \
 		builtins/mini_echo.c \
 		builtins/mini_cd.c \
 		builtins/mini_pwd.c \
@@ -43,7 +44,6 @@ SRCS = main.c \
 		execute/execve.c \
 		utils/utils.c \
 		utils/setattr.c \
-		utils/init.c \
 		test/test.c \
 		signal/signal.c \
 		# utils/art.c 
