@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:49 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 15:54:29 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 12:44:45 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	redirection_check(t_ast *node)
 	if (node->right)
 		return (redirection_check(node->right));
 	if (node->left)
-		return (1); // 꽉차면 1 반환 
+		return (1);
 	return (0);
 }
 
