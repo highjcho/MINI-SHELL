@@ -47,7 +47,7 @@ char	*substitution(char *str, int pos, t_env *env)
 	char	*sub;
 
 	sub = NULL;
-	tmp = pos + 1; // tmp ? pos 0  $? 
+	tmp = pos + 1;
 	pos++;
 	if (str[pos] == '?')
 	{
@@ -95,6 +95,7 @@ char	*env_check(char *str, t_env *env)
 			str = substitution(str, i, env);
 			i = j - 1;
 			j++;
+
 		}
 	}
 	return (str);
