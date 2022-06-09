@@ -26,7 +26,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 	}
 	if (next_in_fd != STDIN_FILENO)
 		close(next_in_fd);
-	// all_free(); 한 텀 끝내는 로직 필요
+	//all_free(); 한 텀 끝내는 로직 필요
 }
 
 int main(int ac, char **av, char **envp)
@@ -57,7 +57,7 @@ int main(int ac, char **av, char **envp)
 		}
 		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
-		// all_free(&info);
+		all_free(&info);
 		free(line);
 	}
 	return (0);
