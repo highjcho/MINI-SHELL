@@ -48,7 +48,10 @@ int main(int ac, char **av, char **envp)
 			exit(1);
 		}
 		else if (!*line)
+		{
+			free(line);
 			continue ;
+		}
 		add_history(line);
 		if (main_init(line, &info) == FAIL)
 		{
