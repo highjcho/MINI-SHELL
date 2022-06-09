@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 11:11:19 by hyunjcho          #+#    #+#             */
+/*   Updated: 2022/06/09 11:11:20 by hyunjcho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/execute.h"
 
 static int	set_path(t_env *env)
@@ -14,7 +26,6 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	int		i;
 
 	i = -1;
-
 	if (!set_path(env))
 		exit(FAIL);
 	while (env->path[++i])
