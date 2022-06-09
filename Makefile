@@ -17,6 +17,7 @@ SRCS_DIR = ./srcs/
 
 SRCS = main.c \
 		init/init_env.c \
+		init/init.c \
 		builtins/mini_echo.c \
 		builtins/mini_cd.c \
 		builtins/mini_pwd.c \
