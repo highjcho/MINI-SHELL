@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   all_free.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 12:39:30 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:40:03 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/utils.h"
 
 static void	free_token_list(t_token_list *list)
 {
-	t_token_list *cur;
-	t_token_list *tmp;
+	t_token_list	*cur;
+	t_token_list	*tmp;
 
 	cur = list;
 	while (cur)
@@ -21,9 +33,8 @@ static void	free_token_list(t_token_list *list)
 
 static void	free_pl_list(t_pl_list *pl_list)
 {
-	(void)pl_list;
-	t_pl_list *cur;
-	t_pl_list *tmp;
+	t_pl_list	*cur;
+	t_pl_list	*tmp;
 
 	cur = pl_list;
 	while (cur)
@@ -36,7 +47,6 @@ static void	free_pl_list(t_pl_list *pl_list)
 
 static void	free_ast_all_free(t_ast	*ast)
 {
-	(void) ast;
 	if (ast->left)
 		free_ast_all_free(ast->left);
 	if (ast->right)
