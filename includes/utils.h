@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 15:41:24 by hyunjcho          #+#    #+#             */
+/*   Updated: 2022/06/09 15:41:25 by hyunjcho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 
@@ -16,7 +28,7 @@ void		free_env(t_env *env);
 void		free_ast(t_ast *node);
 void		all_free(t_info *info);
 void		setechoctl(int flag);
-int 		main_init(char *line, t_info *info);
+int			main_init(char *line, t_info *info);
 int			set_init(t_env *env, char **envp, char **av);
 void		print_art(void);
 

@@ -37,15 +37,15 @@ typedef struct s_token_list
 
 typedef struct s_ast
 {
-	struct s_ast	*left;
-	struct s_ast	*right;
-	char			*data;
-	int				ac;
-	char			**av;
-	char			*path;
-	char			*file_name;
-	int				in_fd;
-	int				out_fd;
+	struct s_ast		*left;
+	struct s_ast		*right;
+	char				*data;
+	int					ac;
+	char				**av;
+	char				*path;
+	char				*file_name;
+	int					in_fd;
+	int					out_fd;
 	enum e_token_type	type;
 }	t_ast;
 
@@ -69,7 +69,7 @@ typedef struct s_env
 	t_env_node	*old_pwd;
 	t_env_node	*exit_code;
 	char		**path;
-} t_env;
+}	t_env;
 
 typedef struct s_info
 {

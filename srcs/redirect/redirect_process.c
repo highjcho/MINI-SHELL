@@ -12,6 +12,11 @@
 
 #include "../../includes/redirect.h"
 
+static void	print_error(char *str)
+{
+	printf("minishell: %s: No such file or directory\n", str);
+}
+
 void	redirect_in(t_ast *pipeline, t_ast *node)
 {
 	if (!ft_strcmp("<<", node->data))
@@ -25,6 +30,8 @@ void	redirect_in(t_ast *pipeline, t_ast *node)
 		if (pipeline->in_fd != STDIN_FILENO)
 			close(pipeline->in_fd);
 		pipeline->in_fd = open(node->file_name, O_RDONLY);
+		if (pipeline->in_fd == -1)
+			print_error(node->file_name);
 	}
 }
 
@@ -48,9 +55,9 @@ void	redirect_out(t_ast *pipeline, t_ast *node)
 
 void	redirect_process(t_ast *ast, t_ast *node)
 {
-	if (node -> data && node->data[0] == '<')
+	if (node -> data && node->data[0] == '<' && ast->in_fd != -1)
 		redirect_in(ast, node);
-	else if (node -> data && node->data[0] == '>')
+	else if (node -> data && node->data[0] == '>' && ast->in_fd != -1)
 		redirect_out(ast, node);
 	if (node->right)
 		redirect_process(ast, node->right);
