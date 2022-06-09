@@ -23,6 +23,19 @@ static int	empty_value(char	**export)
 	return (TRUE);
 }
 
+static int	check_key(char *key)
+{
+	int	i;
+	
+	if (!(ft_isalpha(key[0]) || key[0] == '_'))
+		return (FALSE);
+	i = 0;
+	while (key[++i])
+		if (!(ft_isalnum(key[i]) || key[i] == '_'))
+			return (FALSE);
+	return (TRUE);
+}
+
 int	mini_export(t_env *env, char **cmd)
 {
 	char	**export;
@@ -36,6 +49,12 @@ int	mini_export(t_env *env, char **cmd)
 		export = ft_split(cmd[i], '=');
 		if (!export)
 			return (FAIL);
+		if (!check_key(export[0]))
+		{
+			printf("minishell: export '%s': not a valid identifier\n", cmd[1]);
+			double_free(export);
+			continue ;
+		}
 		if (export[1] == NULL)
 			if (!empty_value(export))
 				return (FAIL);
