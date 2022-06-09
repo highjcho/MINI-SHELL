@@ -83,6 +83,8 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 		close(fd[0]);
 		dup_fd(ast->in_fd, STDIN_FILENO);
 		dup_fd(ast->out_fd, STDOUT_FILENO);
+		if (ast->right->av[0][0] == 0)
+			exit(EXIT_SUCCESS);
 		if (find_c(ast->right->av[0], '/'))
 			have_path(env, ast->right, envp);
 		else
