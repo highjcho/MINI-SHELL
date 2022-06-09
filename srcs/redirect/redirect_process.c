@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect_process.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 12:42:10 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:42:37 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/redirect.h"
 
 void	redirect_in(t_ast *pipeline, t_ast *node)
@@ -22,13 +34,15 @@ void	redirect_out(t_ast *pipeline, t_ast *node)
 	{
 		if (pipeline->out_fd > STDOUT_FILENO)
 			close(pipeline->out_fd);
-		pipeline->out_fd = open(node->file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		pipeline->out_fd = open(node->file_name, O_RDWR \
+		| O_CREAT | O_TRUNC, 0644);
 	}
 	else if (!ft_strncmp(">>", node->data, ft_strlen(node->data)))
 	{
 		if (pipeline->out_fd > STDOUT_FILENO)
 			close(pipeline->out_fd);
-		pipeline->out_fd = open(node->file_name, O_RDWR | O_CREAT | O_APPEND, 0644);
+		pipeline->out_fd = open(node->file_name, O_RDWR | \
+		O_CREAT | O_APPEND, 0644);
 	}
 }
 
