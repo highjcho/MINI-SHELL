@@ -31,7 +31,7 @@ void	free_env(t_env *env)
 	}
 }
 
-void	ast_free(t_ast *node)
+void	free_ast(t_ast *node)
 {
 	if (node->data)
 	{

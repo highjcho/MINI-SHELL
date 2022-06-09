@@ -1,6 +1,6 @@
 NAME = minishell
 
-INCLUDE_DIR = ./incudes/
+INCLUDE_DIR = ./includes/
 
 RM = rm -rf
 
@@ -8,25 +8,20 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
-COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
+# COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
 
-LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
+# LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
+
+COMPILE_FLAG = -I/goinfre/hyunjcho/homebrew/opt/readline/include
+
+LINK_FLAG = -lreadline -L/goinfre/hyunjcho/homebrew/opt/readline/lib
 
 
 SRCS_DIR = ./srcs/
 
 SRCS = main.c \
 		init/init_env.c \
-		builtins/mini_echo.c \
-		builtins/mini_cd.c \
-		builtins/mini_pwd.c \
-		builtins/mini_export.c \
-		builtins/mini_unset.c \
-		builtins/mini_env.c \
-		builtins/mini_exit.c \
-		error/error.c \
-		utils/env_utils.c \
-		utils/free.c \
+		signal/signal.c \
 		parse/tokenize.c \
 		parse/tokenlist.c \
 		parse/ast.c \
@@ -35,23 +30,28 @@ SRCS = main.c \
 		parse/syntaxcheck.c \
 		parse/ast_merge.c \
 		parse/pipelinelist.c \
-		redirect/dup_file.c \
 		redirect/redirect_process.c \
 		redirect/here_doc.c \
+		redirect/dup_file.c \
+		builtins/mini_echo.c \
+		builtins/mini_cd.c \
+		builtins/mini_pwd.c \
+		builtins/mini_export.c \
+		builtins/mini_unset.c \
+		builtins/mini_env.c \
+		builtins/mini_exit.c \
 		execute/execute.c \
 		execute/builtin.c \
 		execute/execve.c \
-		utils/utils.c \
 		utils/setattr.c \
-		utils/init.c \
-		test/test.c \
-		signal/signal.c \
-		# utils/art.c 
+		utils/env_utils.c \
+		utils/utils.c \
+		utils/free.c \
+		#test/test.c \
+		#utils/art.c 
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
-
-# MAN_OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(MAN_SRCS:.c=.o)))
 MAN_OBJS = $(MAN_SRCS:.c=.o)
 
 vpath %.c $(SRCS_DIR)

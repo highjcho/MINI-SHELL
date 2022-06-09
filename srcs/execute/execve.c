@@ -6,22 +6,6 @@ static int	set_path(t_env *env)
 	if (!env->path)
 		return (FALSE);
 	return (TRUE);
-	if (!ft_strncmp("~/", ast->av[0], 2))
-	{
-		ast->path = ft_strjoin(get_env_value(env, "HOME"), &ast->av[0][1]);
-		if (!ast->path)
-			return (FALSE);
-	}
-	else
-	{
-		ast->path = ft_strdup(ast->av[0]);
-		if (!ast->path)
-			return (FALSE);
-	}
-	execve(ast->path, ast->av, envp);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found\n", 2);
-	exit(COMMAND_FAIL);
 }
 
 static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
