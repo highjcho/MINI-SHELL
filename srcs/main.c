@@ -13,6 +13,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		if (!list->next)
 			list->pipeline->out_fd = 1;
 		ast_redirect_process(list->pipeline);
+		// test_ast(list->pipeline);
 		if (list->pipeline->in_fd == -1)
 		{
 			update_exit_code(env, "1");
@@ -53,6 +54,7 @@ int main(int ac, char **av, char **envp)
 			free(line);
 			continue;
 		}
+		test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
 		all_free(&info);
 		free(line);
