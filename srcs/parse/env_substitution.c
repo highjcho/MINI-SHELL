@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 19:29:04 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 19:52:11 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*substitution(char *str, int pos, t_env *env)
 		sub = get_env_value(env, ft_substr(str, tmp, pos - tmp));
 		return (ret_sub(str, sub, tmp - 1, pos - 1));
 	}
-	if (!ft_isalpha(str[pos]) && str[pos] != '_' && str[pos])
+	if (!ft_isalpha(str[pos]) && str[pos] != '_' && str[pos] != '\'' && str[pos])
 	{
 		sub = get_env_value(env, ft_substr(str, tmp, pos + 1 - tmp));
 		return (ret_sub(str, sub, tmp - 1, pos));
@@ -91,7 +91,7 @@ char	*env_check(char *str, t_env *env)
 			single_quote_check(str, &i, &tmp);
 		if (str[i] == '$')
 		{
-			if (str[i + 1] == '$' || str[i + 1] == 0)
+			if (str[i + 1] == '$' || str[i + 1] == 0 || str[i + 1] == '\"')
 			{
 				j++;
 				i = j - 1;
