@@ -14,6 +14,7 @@ long long	ft_atol(char *s);
 void		free_env_node(t_env_node *node);
 void		free_env(t_env *env);
 void		free_ast(t_ast *node);
+void		all_free(t_info *info);
 void		setechoctl(int flag);
 int 		main_init(char *line, t_info *info);
 int			set_init(t_env *env, char **envp, char **av);

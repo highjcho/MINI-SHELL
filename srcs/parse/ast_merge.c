@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_merge.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 12:44:29 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:44:30 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/parse.h"
 
 void	ast_cmd_merge(t_ast *node, t_ast *right)
@@ -41,7 +53,6 @@ void	ast_merge(t_ast *ast)
 			free_ast(ast->left);
 			ast->left = NULL;
 		}
-
 	}
 	else if (ast->type == WORD)
 		ast_cmd_merge(ast, ast->right);

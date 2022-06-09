@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:50:04 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/01 17:42:32 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 11:10:01 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_token_list	*new_token_node(char *tok)
 	new_token = malloc(sizeof(t_token_list));
 	if (!new_token)
 		return (NULL);
-	new_token->token.str = tok;
+	new_token->token.str = ft_strdup(tok);
 	toklen = ft_strlen(tok);
 	if (!ft_strncmp(tok, "<", toklen) || !ft_strncmp(tok, "<<", toklen) \
 	|| !ft_strncmp(tok, ">>", toklen) || !ft_strncmp(tok, ">", toklen))
@@ -52,5 +52,6 @@ t_token_list	*make_token_list(char **tokens)
 		cur->next = new_token;
 		cur = cur->next;
 	}
+	double_free(tokens);
 	return (start);
 }

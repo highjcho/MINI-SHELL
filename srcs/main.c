@@ -48,8 +48,14 @@ int main(int ac, char **av, char **envp)
 		else if (!*line)
 			continue ;
 		add_history(line);
-		main_init(line, &info);
+		if (main_init(line, &info) == FAIL)
+		{
+			free(line);
+			continue;
+		}
 		excute_line(&env, info.pl->next, envp);
+		all_free(&info);
+		free(line);
 	}
 	return (0);
 }

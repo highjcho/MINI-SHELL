@@ -6,30 +6,30 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:55 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/02 10:38:16 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 12:44:04 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parse.h"
 
-t_ast	*make_ast_node(t_token_list *list)// ast node들을 생성하는 함수
+t_ast	*make_ast_node(t_token_list *list)
 {
 	t_ast	*node;
 
 	node = ft_calloc(1, sizeof(t_ast));
 	if (!node)
 		return (NULL);
-	if (!list) //매개 변수로 NULL 이 들어왔을때는 PIPELINE node를 생성
+	if (!list)
 		node->type = PIPELINE;
 	else
 	{
-		node->data = list->token.str;
+		node->data = ft_strdup(list->token.str);
 		node->type = list->token.type;
 	}
 	return (node);
 }
 
-t_ast	*add_ast_node(t_ast *parent, t_ast *child)// parent 에 child 를 추가할때 parent 의 type을 보고 분기한다.
+t_ast	*add_ast_node(t_ast *parent, t_ast *child)
 {
 	t_ast	*root;
 
@@ -48,21 +48,21 @@ t_ast	*add_ast_node(t_ast *parent, t_ast *child)// parent 에 child 를 추가�
 	return (root);
 }
 
-t_ast	*make_ast(t_token_list *list) //token_list 를 순회하면서 ast를 생성하는 함수
+t_ast	*make_ast(t_token_list *list)
 {
 	t_token_list	*cur;
 	t_ast			*root;
 	t_ast			*node;
 
-	root = make_ast_node(NULL); // 처음 root 는 PIPELINE
-	cur = list ->next;// 연결리스트 head 는 비어 있으므로 한칸 밀어준다.
+	root = make_ast_node(NULL);
+	cur = list ->next;
 	while (cur)
 	{
-		node = make_ast_node(cur); // token에 맞는 node를 생성
+		node = make_ast_node(cur);
 		if (!node)
 			return (NULL);
-		root = add_ast_node(root, node); // root 에 node를 추가한다. root를 갱신
-		cur = cur -> next; // token list free  추가 
+		root = add_ast_node(root, node);
+		cur = cur -> next;
 	}
 	return (root);
 }
