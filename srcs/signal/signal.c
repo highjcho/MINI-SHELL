@@ -1,4 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/09 12:34:16 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/09 12:37:38 by jonkim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/signal.h"
+
+static void	handle_sigint(pid_t pid)
+{
+	if (pid == -1)
+	{	
+		rl_on_new_line();
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_redisplay();
+		update_exit_code(g_env, "1");
+	}
+	else
+	{
+		update_exit_code(g_env, "130");
+		printf("^C\n");
+	}
+}
+
+static void	handle_sigquit(pid_t pid)
+{
+	if (pid == -1)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
+	else
+	{
+		update_exit_code(g_env, "131");
+		printf("Quit: 3\n");
+	}
+}
 
 void	handle_signal(int signum)
 {
@@ -7,34 +50,9 @@ void	handle_signal(int signum)
 
 	pid = waitpid(-1, &status, WNOHANG);
 	if (signum == SIGINT)
-	{
-		if (pid == -1)
-		{	
-			rl_on_new_line();
-			printf("\n");
-			rl_replace_line("", 0);
-			rl_redisplay();
-			update_exit_code(g_env, "1");
-		}
-		else
-		{
-			update_exit_code(g_env, "130");
-			printf("^C\n");
-		}
-	}
+		handle_sigint(pid);
 	else if (signum == SIGQUIT)
-	{
-		if (pid == -1)
-		{
-			rl_on_new_line();
-			rl_redisplay();
-		}
-		else
-		{
-			update_exit_code(g_env, "131");
-			printf("Quit: 3\n");
-		}
-	}
+		handle_sigquit(pid);
 }
 
 void	handle_signal_heredoc(int signum)
