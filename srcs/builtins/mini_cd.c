@@ -61,9 +61,9 @@ static int	change_dir(t_env *env, char *new_dir)
 		check = chdir(new_dir);
 	if (check == -1)
 	{
-		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(new_dir, 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(new_dir, STDERR_FILENO);
+		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 		return (FALSE);
 	}
 	return (TRUE);

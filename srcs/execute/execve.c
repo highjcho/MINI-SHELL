@@ -40,9 +40,9 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 		execve(ast->path, ast->av, envp);
 		free(ast->path);
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(ast->av[0], STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
 	exit(COMMAND_FAIL);
 }
 
@@ -61,8 +61,9 @@ static int	have_path(t_env *env, t_ast *ast, char **envp)
 			exit(FAIL);
 	}
 	execve(ast->path, ast->av, envp);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found\n", 2);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(ast->av[0], STDERR_FILENO);
+	ft_putendl_fd(": command not found\n", STDERR_FILENO);
 	exit(COMMAND_FAIL);
 }
 
