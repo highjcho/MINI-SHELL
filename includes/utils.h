@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:41:24 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/09 15:41:25 by hyunjcho         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:09:45 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			main_init(char *line, t_info *info);
 int			set_init(t_env *env, char **envp, char **av);
 char		*get_next_line(int fd);
 void		print_art(void);
+int			a(char c);
 
 # define BUFFER_SIZE 4096
 

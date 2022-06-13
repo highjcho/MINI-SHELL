@@ -30,7 +30,7 @@ char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 		return (NULL);
 	while (str[++i])
 	{
-		if (i <= pos2 && i >= pos1)
+		if (i < pos2 && i >= pos1)
 			while (sub[j])
 				ret[idx++] = sub[j++];
 		else
@@ -41,30 +41,32 @@ char	*ret_sub(char *str, char *sub, int pos1, int pos2)
 	return (ret);
 }
 
-char	*substitution(char *str, int pos, t_env *env)
+char	*substitution(char *s, int *p1, int p2, int i)
 {
-	int		tmp;
+	int		j;
+	char	*key;
 	char	*sub;
 
-	sub = NULL;
-	tmp = pos + 1;
-	pos++;
-	if (str[pos] == '?')
+	while (s[++i])
 	{
-		pos++;
-		sub = get_env_value(env, ft_substr(str, tmp, pos - tmp));
-		return (ret_sub(str, sub, tmp - 1, pos - 1));
+		if (s[i] == '$')
+		{
+			j = i + 1;
+			if ((j <= p2) && s[j] == '?')
+				return (ret_sub(s, get_env_value(g_env, "?"), i, j + 1));
+			if ((j <= p2) && s[j] && s[j] != '_' && !a(s[j]) && s[j] != '$')
+				if ((s[j] != '\'' && s[j] != '\"') || !find_c(s + j + 1, s[j]))
+					return (ret_sub(s, NULL, i, j + 1));
+			while (j <= p2 && s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
+				j++;
+			key = ft_substr(s, i + 1, j - i - 1);
+			sub = get_env_value(g_env, key);
+			*p1 += ft_strlen(sub) - 1;
+			free(key);
+			return (ret_sub(s, sub, i, j));
+		}
 	}
-	if (!ft_isalpha(str[pos]) && str[pos] != '_' && str[pos] != '\"' && str[pos] != '\'' && str[pos] != '$')
-	{
-		pos++;
-		sub = get_env_value(env, ft_substr(str, tmp, pos - tmp));
-		return (ret_sub(str, sub, tmp - 1, pos - 1));
-	}
-	while (ft_isalnum(str[pos]) || str[pos] == '_')
-		pos++;
-	sub = get_env_value(env, ft_substr(str, tmp, pos - tmp));
-	return (ret_sub(str, sub, tmp - 1, pos - 1));
+	return (s);
 }
 
 void	single_quote_check(char *str, int *i, int *tmp)
@@ -79,24 +81,27 @@ void	single_quote_check(char *str, int *i, int *tmp)
 
 char	*env_check(char *str, t_env *env)
 {
-	int	i;
-	int	j;
-	int	tmp;
+	int		i;
+	int		tmp;
 
 	i = -1;
-	j = 0;
-	tmp = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
-			single_quote_check(str, &i, &tmp);
-		if (str[i] == '$')
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-			str = substitution(str, i, env);
-			i = j - 1;
-			j++;
-
+			tmp = i + 1;
+			while (str[tmp] && str[tmp] != str[i])
+				tmp++;
+			if (str[tmp] == '\'')
+			{
+				str = quote_trim(str, i, tmp);
+				i = tmp - 2;
+			}
+			else if (str[tmp] == '\"')
+				str = double_quote_trim(str, env, &i, tmp);
 		}
+		else if (str[i] == '$')
+			str = substitution(str, &i, ft_strlen(str), i - 1);
 	}
 	return (str);
 }
@@ -109,10 +114,7 @@ int	env_sub(t_token_list *list, t_env *env)
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)
-		{
 			cur->token.str = env_check(cur->token.str, env);
-			cur->token.str = quote_check(cur->token.str);
-		}
 		cur = cur->next;
 	}
 	return (0);

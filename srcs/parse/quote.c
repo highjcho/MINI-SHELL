@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 12:46:25 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 12:47:39 by jonkim           ###   ########.fr       */
+/*   Created: 2022/06/13 17:01:40 by jonkim            #+#    #+#             */
+/*   Updated: 2022/06/13 17:13:29 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,48 +16,41 @@ char	*quote_trim(char *str, int pos1, int pos2)
 {
 	char	*ret;
 	int		i;
-	int		tmp;
+	int		index;
 
 	i = -1;
-	tmp = 0;
+	index = 0;
 	ret = malloc(ft_strlen(str) - 1);
-	if (!ret)
+	if (!str)
 		return (NULL);
 	while (str[++i])
 	{
 		if (i != pos1 && i != pos2)
 		{
-			ret[tmp] = str[i];
-			tmp++;
+			ret[index] = str[i];
+			index++;
 		}
 	}
-	ret[tmp] = 0;
-	free(str);
+	ret[index] = 0;
 	return (ret);
 }
 
-char	*quote_check(char *str)
+char	*double_quote_trim(char *str, int *pos1, int pos2)
 {
 	int	i;
 	int	tmp;
 
-	if (!str)
-		return (NULL);
-	i = -1;
-	while (str[++i])
+	str = quote_trim(str, *pos1, pos2);
+	tmp = ft_strlen(str);
+	i = *pos1 - 1;
+	while (str[++i] && i < pos2 - 2)
 	{
-		if (str[i] == '\'' || str[i] == '\"')
+		if (str[i] == '$')
 		{
-			tmp = i;
-			while (str[++tmp])
-			{
-				if (str[tmp] == str[i])
-				{
-					str = quote_trim(str, i, tmp);
-					i = -1;
-				}
-			}
+			str = substitution(str, &i, pos2 - 2, i - 1);
+			pos2 -= tmp - ft_strlen(str);
 		}
 	}
+	*pos1 = i - 1;
 	return (str);
 }

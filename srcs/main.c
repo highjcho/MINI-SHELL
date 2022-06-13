@@ -31,6 +31,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 	}
 	if (next_in_fd != STDIN_FILENO)
 		close(next_in_fd);
+
 }
 
 static void	print_cur_directory(char *pwd)
@@ -79,6 +80,7 @@ int main(int ac, char **av, char **envp)
 			free(line);
 			continue;
 		}
+		// test_token_list(info.list);
 		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
 		// all_free(&info);
