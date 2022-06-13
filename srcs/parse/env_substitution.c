@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 20:34:28 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 17:37:47 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	*substitution(char *s, int *p1, int p2, int i)
 		}
 	}
 	return (s);
+<<<<<<< HEAD
+=======
 }
 
 void	single_quote_check(char *str, int *i, int *tmp)
@@ -77,9 +79,10 @@ void	single_quote_check(char *str, int *i, int *tmp)
 		if (str[*tmp] == str[*i])
 			*i = *tmp;
 	}
+>>>>>>> 6a1ead1a21e029718ef2218720d2e25a30b00b07
 }
 
-char	*env_check(char *str, t_env *env)
+char	*env_check(char *str)
 {
 	int		i;
 	int		tmp;
@@ -98,7 +101,7 @@ char	*env_check(char *str, t_env *env)
 				i = tmp - 2;
 			}
 			else if (str[tmp] == '\"')
-				str = double_quote_trim(str, env, &i, tmp);
+				str = double_quote_trim(str, &i, tmp);
 		}
 		else if (str[i] == '$')
 			str = substitution(str, &i, ft_strlen(str), i - 1);
@@ -111,10 +114,11 @@ int	env_sub(t_token_list *list, t_env *env)
 	t_token_list	*cur;
 
 	cur = list;
+	(void)env;
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)
-			cur->token.str = env_check(cur->token.str, env);
+			cur->token.str = env_check(cur->token.str);
 		cur = cur->next;
 	}
 	return (0);
