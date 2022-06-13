@@ -12,9 +12,10 @@
 
 #include "../../includes/builtins.h"
 
-static int	empty_value(char	**export)
+static int	empty_value(char **export)
 {
 	export[1] = ft_strdup("");
+	if (!export[1])
 	{
 		free(export[0]);
 		free(export);
@@ -26,7 +27,7 @@ static int	empty_value(char	**export)
 static int	check_key(char *key)
 {
 	int	i;
-	
+
 	if (!(ft_isalpha(key[0]) || key[0] == '_'))
 		return (FALSE);
 	i = 0;
@@ -51,7 +52,7 @@ int	mini_export(t_env *env, char **cmd)
 			return (FAIL);
 		if (!check_key(export[0]))
 		{
-			printf("minishell: export '%s': not a valid identifier\n", cmd[1]);
+			printf("petitshell: export '%s': not a valid identifier\n", cmd[1]);
 			double_free(export);
 			continue ;
 		}

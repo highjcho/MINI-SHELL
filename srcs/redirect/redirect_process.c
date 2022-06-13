@@ -14,7 +14,7 @@
 
 static void	print_error(char *str)
 {
-	printf("minishell: %s: No such file or directory\n", str);
+	printf("petithell: %s: No such file or directory\n", str);
 }
 
 void	redirect_in(t_ast *pipeline, t_ast *node)
@@ -43,6 +43,8 @@ void	redirect_out(t_ast *pipeline, t_ast *node)
 			close(pipeline->out_fd);
 		pipeline->out_fd = open(node->file_name, O_RDWR \
 		| O_CREAT | O_TRUNC, 0644);
+		if (pipeline->out_fd == -1)
+			print_error(node->file_name);
 	}
 	else if (!ft_strncmp(">>", node->data, ft_strlen(node->data)))
 	{
@@ -50,6 +52,8 @@ void	redirect_out(t_ast *pipeline, t_ast *node)
 			close(pipeline->out_fd);
 		pipeline->out_fd = open(node->file_name, O_RDWR | \
 		O_CREAT | O_APPEND, 0644);
+		if (pipeline->out_fd == -1)
+			print_error(node->file_name);
 	}
 }
 

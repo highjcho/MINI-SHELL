@@ -14,7 +14,7 @@
 
 int	mini_exit(t_env *env, t_ast *ast)
 {
-	if (ast->ac == 2 && !is_long(ast->av[1]))
+	if (ast->ac >= 2 && !is_long(ast->av[1]))
 	{
 		printf("exit: %s: numeric argument required\nexit\n", ast->av[1]);
 		update_exit_code(env, "255");

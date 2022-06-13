@@ -2,11 +2,13 @@
 
 static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 {
-	int	i;
 	int	next_in_fd;
+	int	i;
+	int	flag;
 
-	i = -1;
 	next_in_fd = STDIN_FILENO;
+	i = 0;
+	flag = FALSE;
 	while(list)
 	{
 		list->pipeline->in_fd = next_in_fd;
@@ -14,19 +16,36 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 			list->pipeline->out_fd = 1;
 		ast_redirect_process(list->pipeline);
 		// test_ast(list->pipeline);
-		if (list->pipeline->in_fd == -1)
+		if (list->pipeline->in_fd == -1 || list->pipeline->out_fd == -1)
 		{
 			update_exit_code(env, "1");
 			list = list->next;
 			next_in_fd = fork_process();
 			continue;
 		}
-		next_in_fd = execute_cmd(env, list->pipeline, envp);
+		if (i == 0 && !(list->next))
+			flag = TRUE;
+		next_in_fd = execute_cmd(env, list->pipeline, envp, flag);
 		list = list->next;
+		i++;
 	}
 	if (next_in_fd != STDIN_FILENO)
 		close(next_in_fd);
-	//all_free(); 한 텀 끝내는 로직 필요
+}
+
+static void	print_cur_directory(char *pwd)
+{
+	int	len;
+	int	i;
+
+	len = ft_strlen(pwd);
+	i = len;
+	while (pwd[--i])
+	{
+		if (pwd[i] == '/')
+			break ;
+	}
+	printf("[petitshell] %s ", pwd + i + 1);
 }
 
 int main(int ac, char **av, char **envp)
@@ -39,12 +58,14 @@ int main(int ac, char **av, char **envp)
 		return (0);
 	line = NULL;
 	set_init(&env, envp, av);
+	print_art();
 	while (1)
 	{
-		line = readline("minishell> ");
+		print_cur_directory(get_env_value(&env, "PWD"));
+		line = readline("% ");
 		if (!line)
 		{
-			printf("minishell> exit\n");
+			printf("petitshell> exit\n");
 			exit(1);
 		}
 		else if (!*line)
@@ -57,7 +78,7 @@ int main(int ac, char **av, char **envp)
 		}
 		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
-		all_free(&info);
+		// all_free(&info);
 		free(line);
 	}
 	return (0);
