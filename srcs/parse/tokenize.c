@@ -84,7 +84,7 @@ char	**tokenize(char *str)
 
 	if (token_count(str) == 0)
 		return (NULL);
-	tokens = malloc((sizeof(char *) * (token_count(str) + 1)));
+	tokens = ft_calloc((token_count(str) + 1), sizeof(char *));
 	if (!tokens)
 		return (NULL);
 	tokens = make_token(str, tokens);

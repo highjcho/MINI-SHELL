@@ -15,7 +15,6 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		if (!list->next)
 			list->pipeline->out_fd = 1;
 		ast_redirect_process(list->pipeline);
-		// test_ast(list->pipeline);
 		if (list->pipeline->in_fd == -1 || list->pipeline->out_fd == -1)
 		{
 			update_exit_code(env, "1");
@@ -34,7 +33,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 
 }
 
-static void	print_cur_directory(char *pwd)
+void	print_cur_directory(char *pwd)
 {
 	int	len;
 	int	i;
@@ -67,7 +66,7 @@ int main(int ac, char **av, char **envp)
 		if (!line)
 		{
 			printf("petitshell> exit\n");
-			exit(1);
+			exit(EXIT_SUCCESS);
 		}
 		else if (!*line)
 		{
@@ -83,7 +82,7 @@ int main(int ac, char **av, char **envp)
 		// test_token_list(info.list);
 		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
-		// all_free(&info);
+		all_free(&info);
 		free(line);
 	}
 	return (0);

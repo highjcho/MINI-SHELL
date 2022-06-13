@@ -73,6 +73,7 @@ int	init_env(t_env *env, char **envp)
 	env->pwd = NULL;
 	env->old_pwd = NULL;
 	env->exit_code = NULL;
+	env->path = NULL;
 	if (!set_env(env, envp))
 		return (FAIL);
 	return (SUCCESS);

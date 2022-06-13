@@ -26,9 +26,8 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	int		i;
 
 	i = -1;
-	if (!set_path(env))
-		exit(FAIL);
-	while (env->path[++i])
+	set_path(env);
+	while (env->path && env->path[++i])
 	{
 		tmp = ft_strjoin("/", ast->av[0]);
 		if (!tmp)

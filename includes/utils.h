@@ -34,6 +34,7 @@ int			set_init(t_env *env, char **envp, char **av);
 char		*get_next_line(int fd);
 void		print_art(void);
 int			a(char c);
+void		print_cur_directory(char *pwd);
 
 # define BUFFER_SIZE 4096
 

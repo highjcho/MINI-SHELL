@@ -88,18 +88,12 @@ int	execute_one_builtin(t_env *env, t_ast *ast)
 {
 	if (ast->right)
 	{
-		if (!ft_strcmp(ast->right->av[0], "echo"))
-			return (mini_echo(ast->right->av));
-		else if (!ft_strcmp(ast->right->av[0], "cd"))
+		if (!ft_strcmp(ast->right->av[0], "cd"))
 			return (mini_cd(env, ast->right->av));
-		else if (!ft_strcmp(ast->right->av[0], "pwd"))
-			return (mini_pwd());
 		else if (!ft_strcmp(ast->right->av[0], "export"))
 			return (mini_export(env, ast->right->av));
 		else if (!ft_strcmp(ast->right->av[0], "unset"))
 			return (mini_unset(env, ast->right->av));
-		else if (!ft_strcmp(ast->right->av[0], "env"))
-			return (mini_env(env, ast->right));
 		else if (!ft_strcmp(ast->right->av[0], "exit"))
 			return (mini_exit(env, ast->right));
 	}

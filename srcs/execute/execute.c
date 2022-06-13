@@ -16,9 +16,10 @@ int	execute_cmd(t_env *env, t_ast *ast, char **envp, int flag)
 {
 	int	result;
 
+	result = -1;
 	if (flag == TRUE)
 		result = execute_one_builtin(env, ast);
-	else
+	if (result == -1)
 		result = execute_builtin(env, ast);
 	if (result == -1)
 		return (execute_non_builtin(env, ast, envp));
