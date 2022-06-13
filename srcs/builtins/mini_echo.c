@@ -14,6 +14,8 @@
 
 static int	check_opt(char *s, int *i)
 {
+	if (!s)
+		return (FALSE);
 	if (!ft_strncmp(s, "-n", 2))
 	{
 		(*i)++;

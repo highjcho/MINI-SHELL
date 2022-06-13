@@ -53,7 +53,9 @@ SRCS = main.c \
 		utils/free.c \
 		utils/all_free.c \
 		test/test.c \
-		#utils/art.c 
+		utils/art.c \
+		utils/get_next_line.c \
+
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))
