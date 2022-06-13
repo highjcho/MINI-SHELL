@@ -25,6 +25,19 @@ int	find_c(char *s, char c)
 	return (FALSE);
 }
 
+int	check_key(char *key)
+{
+	int	i;
+
+	if (!(ft_isalpha(key[0]) || key[0] == '_'))
+		return (FALSE);
+	i = 0;
+	while (key[++i])
+		if (!(ft_isalnum(key[i]) || key[i] == '_'))
+			return (FALSE);
+	return (TRUE);
+}
+
 int	is_long(char *s)
 {
 	unsigned long long	ul;
