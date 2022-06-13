@@ -12,11 +12,14 @@
 
 #include "../../includes/execute.h"
 
-int	execute_cmd(t_env *env, t_ast *ast, char **envp)
+int	execute_cmd(t_env *env, t_ast *ast, char **envp, int flag)
 {
 	int	result;
 
-	result = execute_builtin(env, ast);
+	if (flag == TRUE)
+		result = execute_one_builtin(env, ast);
+	else
+		result = execute_builtin(env, ast);
 	if (result == -1)
 		return (execute_non_builtin(env, ast, envp));
 	if (result == FAIL || result == COMMAND_FAIL)

@@ -14,7 +14,7 @@
 
 static int	env_error_print(char *argument)
 {
-	ft_putstr_fd("minishell: env: ", STDERR_FILENO);
+	ft_putstr_fd("petitshell: env: ", STDERR_FILENO);
 	ft_putstr_fd(argument, STDERR_FILENO);
 	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	return (COMMAND_FAIL);
