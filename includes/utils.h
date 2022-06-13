@@ -30,7 +30,10 @@ void		all_free(t_info *info);
 void		setechoctl(int flag);
 int			main_init(char *line, t_info *info);
 int			set_init(t_env *env, char **envp, char **av);
+char		*get_next_line(int fd);
 void		print_art(void);
 int			a(char c);
+
+# define BUFFER_SIZE 4096
 
 #endif

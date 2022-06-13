@@ -40,9 +40,9 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 		execve(ast->path, ast->av, envp);
 		free(ast->path);
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found", 2);
+	ft_putstr_fd("petitshell: ", STDERR_FILENO);
+	ft_putstr_fd(ast->av[0], STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
 	exit(COMMAND_FAIL);
 }
 
@@ -61,9 +61,23 @@ static int	have_path(t_env *env, t_ast *ast, char **envp)
 			exit(FAIL);
 	}
 	execve(ast->path, ast->av, envp);
-	ft_putstr_fd(ast->av[0], 2);
-	ft_putendl_fd(": command not found\n", 2);
+	ft_putstr_fd("petitshell: ", STDERR_FILENO);
+	ft_putstr_fd(ast->av[0], STDERR_FILENO);
+	ft_putendl_fd(": command not found\n", STDERR_FILENO);
 	exit(COMMAND_FAIL);
+}
+
+static void	do_child_proc(t_env *env, t_ast *ast, char **envp, int *fd)
+{
+	close(fd[0]);
+	dup_fd(ast->in_fd, STDIN_FILENO);
+	dup_fd(ast->out_fd, STDOUT_FILENO);
+	if (ast->right->av[0][0] == 0)
+		exit(EXIT_SUCCESS);
+	if (find_c(ast->right->av[0], '/'))
+		have_path(env, ast->right, envp);
+	else
+		need_to_make_path(env, ast->right, envp);
 }
 
 int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
@@ -79,19 +93,12 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	if (pid < 0)
 		return (FALSE);
 	if (pid == 0)
-	{
-		close(fd[0]);
-		dup_fd(ast->in_fd, STDIN_FILENO);
-		dup_fd(ast->out_fd, STDOUT_FILENO);
-		if (ast->right->av[0][0] == 0)
-			exit(EXIT_SUCCESS);
-		if (find_c(ast->right->av[0], '/'))
-			have_path(env, ast->right, envp);
-		else
-			need_to_make_path(env, ast->right, envp);
-	}
+		do_child_proc(env, ast, envp, fd);
 	close(fd[1]);
 	wait(&status);
-	update_exit_code(env, ft_itoa(status >> 8));
+	if ((status & 255) == 0)
+		update_exit_code(env, ft_itoa(status >> 8));
+	else
+		update_exit_code(env, ft_itoa(status + 128));
 	return (fd[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:37 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/13 17:15:33 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 20:34:28 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,16 @@ char	*substitution(char *s, int *p1, int p2, int i)
 		}
 	}
 	return (s);
+}
+
+void	single_quote_check(char *str, int *i, int *tmp)
+{
+	*tmp = *i;
+	while (str[++(*tmp)])
+	{
+		if (str[*tmp] == str[*i])
+			*i = *tmp;
+	}
 }
 
 char	*env_check(char *str, t_env *env)
