@@ -8,13 +8,13 @@ LIBFT = ./libft/libft.a
 
 FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
 
-COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
+# COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
 
-LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
+# LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
 
-# COMPILE_FLAG = -I/goinfre/hyunjcho/homebrew/opt/readline/include
+COMPILE_FLAG = -I/goinfre/hyunjcho/homebrew/opt/readline/include
 
-# LINK_FLAG = -lreadline -L/goinfre/hyunjcho/homebrew/opt/readline/lib
+LINK_FLAG = -lreadline -L/goinfre/hyunjcho/homebrew/opt/readline/lib
 
 
 SRCS_DIR = ./srcs/
@@ -53,7 +53,8 @@ SRCS = main.c \
 		utils/free.c \
 		utils/all_free.c \
 		test/test.c \
-		#utils/art.c 
+		utils/art.c \
+		utils/get_next_line.c
 
 
 MAN_SRCS = $(addprefix $(SRCS_DIR), $(SRCS))

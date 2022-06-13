@@ -32,23 +32,23 @@ static void	disconnect_node(t_env_node *prev, t_env_node *cur)
 	free_env_node(cur);
 }
 
-static int	check_error(char *key)
-{
-	int	flag;
-	int	i;
+// static int	check_error(char *key)
+// {
+// 	int	flag;
+// 	int	i;
 
-	flag = 0;
-	i = -1;
-	while (key[++i])
-	{
-		if (key[i] == '=')
-		{
-			flag = printf("unset: '%s': not a valid identifier\n", key);
-			break ;
-		}
-	}
-	return (flag);
-}
+// 	flag = 0;
+// 	i = -1;
+// 	while (key[++i])
+// 	{
+// 		if (key[i] == '=')
+// 		{
+// 			flag = printf("unset: '%s': not a valid identifier\n", key);
+// 			break ;
+// 		}
+// 	}
+// 	return (flag);
+// }
 
 int	mini_unset(t_env *env, char **cmd)
 {
@@ -60,8 +60,9 @@ int	mini_unset(t_env *env, char **cmd)
 	flag = 0;
 	while (cmd[++i])
 	{
-		if (check_error(cmd[i]))
+		if (!check_key(cmd[i]))
 		{
+			printf("unset: '%s': not a valid identifier\n", cmd[i]);
 			flag = 1;
 			continue ;
 		}

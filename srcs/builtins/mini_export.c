@@ -24,19 +24,6 @@ static int	empty_value(char **export)
 	return (TRUE);
 }
 
-static int	check_key(char *key)
-{
-	int	i;
-
-	if (!(ft_isalpha(key[0]) || key[0] == '_'))
-		return (FALSE);
-	i = 0;
-	while (key[++i])
-		if (!(ft_isalnum(key[i]) || key[i] == '_'))
-			return (FALSE);
-	return (TRUE);
-}
-
 int	mini_export(t_env *env, char **cmd)
 {
 	char	**export;
