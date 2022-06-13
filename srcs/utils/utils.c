@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:12:41 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/09 11:12:42 by hyunjcho         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:09:32 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,9 @@ long long	ft_atol(char *s)
 		s++;
 	}
 	return (ul * sign);
+}
+
+int	a(char c)
+{
+	return (ft_isalpha(c));
 }

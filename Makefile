@@ -29,6 +29,7 @@ SRCS = main.c \
 		parse/ast.c \
 		parse/astnode.c \
 		parse/env_substitution.c \
+		parse/quote.c \
 		parse/syntaxcheck.c \
 		parse/ast_merge.c \
 		parse/pipelinelist.c \
