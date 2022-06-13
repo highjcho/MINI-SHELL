@@ -20,7 +20,7 @@ int	main_init(char *line, t_info *info)
 	info->ast = make_ast(info->list);
 	if (syntax_check(info->ast) == FAIL)
 	{
-		update_exit_code(g_env, "258");
+		update_exit_code(g_env, ft_strdup("258"));
 		return (FAIL);
 	}
 	ast_merge(info->ast);

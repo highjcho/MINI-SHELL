@@ -40,9 +40,9 @@ int	add_env(t_env *env, char **export)
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
-	new->key = export[0];
-	new->value = export[1];
-	free(export);
+	new->key = ft_strdup(export[0]);
+	new->value = ft_strdup(export[1]);
+	double_free(export);
 	new->next = NULL;
 	return (TRUE);
 }
@@ -50,7 +50,7 @@ int	add_env(t_env *env, char **export)
 int	update_exit_code(t_env *env, char *exit_code)
 {
 	free(env->exit_code->value);
-	env->exit_code->value = ft_strdup(exit_code);
+	env->exit_code->value = exit_code;
 	if (!env->exit_code->value)
 		return (FALSE);
 	return (TRUE);

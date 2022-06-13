@@ -26,11 +26,11 @@ int	execute_cmd(t_env *env, t_ast *ast, char **envp, int flag)
 	if (result == FAIL || result == COMMAND_FAIL)
 	{
 		if (result == FAIL)
-			update_exit_code(env, "1");
+			update_exit_code(env, ft_strdup("1"));
 		else
-			update_exit_code(env, "127");
+			update_exit_code(env, ft_strdup("127"));
 		return (STDIN_FILENO);
 	}
-	update_exit_code(env, "0");
+	update_exit_code(env, ft_strdup("0"));
 	return (result);
 }

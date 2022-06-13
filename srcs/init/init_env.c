@@ -17,7 +17,7 @@ static int	init_add_env(t_env *env, char **export)
 	t_env_node	*prev;
 	t_env_node	*new;
 
-	new = malloc(sizeof(t_env_node));
+	new = ft_calloc(1, sizeof(t_env_node));
 	if (!new)
 	{
 		double_free(export);
@@ -27,9 +27,9 @@ static int	init_add_env(t_env *env, char **export)
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
-	new->key = export[0];
-	new->value = export[1];
-	free(export);
+	new->key = ft_strdup(export[0]);
+	new->value = ft_strdup(export[1]);
+	double_free(export);
 	new->next = NULL;
 	if (!ft_strcmp(export[0], "PWD"))
 		env->pwd = new;

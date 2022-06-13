@@ -50,6 +50,7 @@ void	ast_merge(t_ast *ast)
 		if (ast->left)
 		{
 			ast->file_name = ft_strdup(ast->left->data);
+			free_ast(ast->left);
 			ast->left = NULL;
 		}
 	}

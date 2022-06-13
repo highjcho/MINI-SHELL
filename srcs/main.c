@@ -17,7 +17,7 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		ast_redirect_process(list->pipeline);
 		if (list->pipeline->in_fd == -1 || list->pipeline->out_fd == -1)
 		{
-			update_exit_code(env, "1");
+			update_exit_code(env, ft_strdup("1"));
 			list = list->next;
 			next_in_fd = fork_process();
 			continue;
@@ -54,6 +54,10 @@ int main(int ac, char **av, char **envp)
 	char			*line;
 	t_info			info;
 
+	(void)info;
+	(void)av;
+	(void)env;
+	(void)envp;
 	if (ac != 1)
 		return (0);
 	line = NULL;
