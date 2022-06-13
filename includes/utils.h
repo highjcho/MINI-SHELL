@@ -21,6 +21,7 @@ t_env_node	*get_env_node(t_env *env, char *key);
 int			update_exit_code(t_env *env, char *exit_code);
 void		double_free(char **str);
 int			find_c(char *s, char c);
+int			check_key(char *key);
 int			is_long(char *s);
 long long	ft_atol(char *s);
 void		free_env_node(t_env_node *node);
