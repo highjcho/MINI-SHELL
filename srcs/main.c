@@ -58,9 +58,10 @@ int main(int ac, char **av, char **envp)
 			free(line);
 			continue;
 		}
+		// test_token_list(info.list);
 		// test_ast(info.ast);
 		excute_line(&env, info.pl->next, envp);
-		all_free(&info);
+		// all_free(&info);
 		free(line);
 	}
 	return (0);

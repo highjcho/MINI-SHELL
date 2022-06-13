@@ -32,7 +32,6 @@ SRCS = main.c \
 		parse/syntaxcheck.c \
 		parse/ast_merge.c \
 		parse/pipelinelist.c \
-		parse/quote.c \
 		redirect/redirect_process.c \
 		redirect/here_doc.c \
 		redirect/dup_file.c \

@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:40:23 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 17:53:44 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 14:20:13 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,9 @@ void			quote(char *str, int *i, char c);
 void			word(char *str, int *i);
 void			redirection(char *str, int *i);
 int				token_count(char *str);
+char	*env_check(char *str, t_env *env);
+
+char	*substitution(char *str, int *pos1, int pos2, t_env *env);
+
 
 #endif
