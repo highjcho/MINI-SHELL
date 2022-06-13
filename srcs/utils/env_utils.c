@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:12:22 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/09 11:12:26 by hyunjcho         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:27:51 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_env_value(t_env *env, char *key)
 	t_env_node	*ret;
 
 	if (!key)
-		return (NULL);
+		return ("$");
 	ret = env->h_node.next;
 	while (ret)
 	{

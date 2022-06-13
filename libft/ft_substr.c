@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 15:12:31 by hyunjcho          #+#    #+#             */
-/*   Updated: 2022/06/01 14:37:05 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/09 20:27:24 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	s_len;
 	size_t	i;
 
-	if (!s)
+	if (!s || len <= 0)
 		return (NULL);
 	s_len = ft_strlen(s);
 	if (len > s_len)
