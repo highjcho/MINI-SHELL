@@ -6,7 +6,7 @@
 /*   By: jonkim <jonkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:58 by jonkim            #+#    #+#             */
-/*   Updated: 2022/06/09 12:49:42 by jonkim           ###   ########.fr       */
+/*   Updated: 2022/06/13 18:53:47 by jonkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	recur_syntax_check(t_ast *ast)
 int	syntax_check(t_ast *ast)
 {
 	if (ast->type == PIPE && ast->right == NULL)
-		return (FAIL);
+		return (syntax_error_print(ast->data));
 	if (recur_syntax_check(ast->left))
 		return (FAIL);
 	else if (recur_syntax_check(ast->right))
