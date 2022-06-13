@@ -49,12 +49,12 @@ char	*substitution(char *s, int *p1, int p2, int i)
 
 	while (s[++i])
 	{
-		if (s[i] == '$')
+		j = i + 1;
+		if (s[i] == '$' && j <= p2)
 		{
-			j = i + 1;
-			if ((j <= p2) && s[j] == '?')
+			if (s[j] == '?')
 				return (ret_sub(s, get_env_value(g_env, "?"), i, j + 1));
-			if ((j <= p2) && s[j] && s[j] != '_' && !a(s[j]) && s[j] != '$')
+			if (s[j] && s[j] != '_' && !a(s[j]) && s[j] != '$' && s[j] != ' ')
 				if ((s[j] != '\'' && s[j] != '\"') || !find_c(s + j + 1, s[j]))
 					return (ret_sub(s, NULL, i, j + 1));
 			while (j <= p2 && s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
@@ -67,19 +67,6 @@ char	*substitution(char *s, int *p1, int p2, int i)
 		}
 	}
 	return (s);
-<<<<<<< HEAD
-=======
-}
-
-void	single_quote_check(char *str, int *i, int *tmp)
-{
-	*tmp = *i;
-	while (str[++(*tmp)])
-	{
-		if (str[*tmp] == str[*i])
-			*i = *tmp;
-	}
->>>>>>> 6a1ead1a21e029718ef2218720d2e25a30b00b07
 }
 
 char	*env_check(char *str)
