@@ -29,12 +29,12 @@ void	free_env_node(t_env_node *node)
 	free(node);
 }
 
-void	free_env(t_env *env)
+void	free_env(void)
 {
 	t_env_node	*cur;
 	t_env_node	*tmp;
 
-	cur = env->h_node.next;
+	cur = g_env->h_node.next;
 	while (cur)
 	{
 		tmp = cur->next;

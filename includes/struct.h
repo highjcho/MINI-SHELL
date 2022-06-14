@@ -77,6 +77,7 @@ typedef struct s_info
 	struct s_env		*env;
 	struct s_ast		*ast;
 	struct s_pl_list	*pl;
+	int					pipe_count;
 }	t_info;
 
 t_env	*g_env;

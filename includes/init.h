@@ -15,6 +15,8 @@
 
 # include "minishell.h"
 
-int	init_env(t_env *env, char **envp);
+int	init_env(char **envp);
+int	set_init(char **envp, char **av);
+int	main_init(char *line, t_info *info);
 
 #endif

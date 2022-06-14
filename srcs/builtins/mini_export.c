@@ -24,7 +24,7 @@ static int	empty_value(char **export)
 	return (TRUE);
 }
 
-int	mini_export(t_env *env, char **cmd)
+int	mini_export(char **cmd)
 {
 	char	**export;
 	int		i;
@@ -46,7 +46,7 @@ int	mini_export(t_env *env, char **cmd)
 		if (export[1] == NULL)
 			if (!empty_value(export))
 				return (FAIL);
-		if (!add_env(env, export))
+		if (!add_env(export))
 			return (FAIL);
 	}
 	return (SUCCESS);

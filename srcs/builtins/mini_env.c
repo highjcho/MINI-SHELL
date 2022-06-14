@@ -20,16 +20,16 @@ static int	env_error_print(char *argument)
 	return (COMMAND_FAIL);
 }
 
-int	mini_env(t_env *env, t_ast *ast)
+int	mini_env(t_ast *ast)
 {
 	t_env_node	*cur;
 
 	if (ast->ac != 1)
 		return (env_error_print(ast->av[1]));
-	cur = env->h_node.next;
+	cur = g_env->h_node.next;
 	while (cur)
 	{
-		if (cur->value == env->exit_code->value)
+		if (cur->value == g_env->exit_code->value)
 		{
 			cur = cur->next;
 			continue ;

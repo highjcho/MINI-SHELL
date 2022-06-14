@@ -24,7 +24,7 @@ t_ast			*add_cmd_node(t_ast *parent, t_ast *child);
 t_ast			*add_ast_node(t_ast *parent, t_ast *child);
 t_ast			*make_ast(t_token_list *list);
 t_ast			*make_ast_node(t_token_list *list);
-int				env_sub(t_token_list *list, t_env *env);
+int				env_sub(t_token_list *list);
 int				syntax_check(t_ast *ast);
 void			ast_merge(t_ast *ast);
 t_pl_list		*pl_list(t_ast *ast);

@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/06/14 12:10:20 by hyunjcho          #+#    #+#              #
+#    Updated: 2022/06/14 12:10:21 by hyunjcho         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 INCLUDE_DIR = ./includes/
@@ -6,11 +18,7 @@ RM = rm -rf
 
 LIBFT = ./libft/libft.a
 
-FLAG = -Wall -Wextra -Werror -g3 -I $(INCLUDE_DIR)
-
-# COMPILE_FLAG = -I${HOME}/.brew/opt/readline/include
-
-# LINK_FLAG = -lreadline -L${HOME}/.brew/opt/readline/lib
+FLAG = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 COMPILE_FLAG = -I/goinfre/hyunjcho/homebrew/opt/readline/include
 
@@ -52,7 +60,6 @@ SRCS = main.c \
 		utils/utils.c \
 		utils/free.c \
 		utils/all_free.c \
-		test/test.c \
 		utils/art.c \
 		utils/get_next_line.c
 
@@ -87,4 +94,4 @@ re:
 	make fclean
 	make all
 
-.PHONY: all re clean fclean bonus
+.PHONY: all re clean fclean

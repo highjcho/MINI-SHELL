@@ -12,7 +12,7 @@
 
 #include "../../includes/init.h"
 
-static int	init_add_env(t_env *env, char **export)
+static int	init_add_env(char **export)
 {
 	t_env_node	*prev;
 	t_env_node	*new;
@@ -23,7 +23,7 @@ static int	init_add_env(t_env *env, char **export)
 		double_free(export);
 		return (FALSE);
 	}
-	prev = &(env->h_node);
+	prev = &(g_env->h_node);
 	while (prev->next)
 		prev = prev->next;
 	prev->next = new;
@@ -31,14 +31,14 @@ static int	init_add_env(t_env *env, char **export)
 	new->value = ft_strdup(export[1]);
 	double_free(export);
 	new->next = NULL;
-	if (!ft_strcmp(export[0], "PWD"))
-		env->pwd = new;
-	if (!ft_strcmp(export[0], "OLDPWD"))
-		env->old_pwd = new;
+	if (!ft_strcmp(new->key, "PWD"))
+		g_env->pwd = new;
+	if (!ft_strcmp(new->key, "OLDPWD"))
+		g_env->old_pwd = new;
 	return (TRUE);
 }
 
-static int	set_env(t_env *env, char **envp)
+static int	set_env(char **envp)
 {
 	char		**export;
 	int			i;
@@ -49,32 +49,28 @@ static int	set_env(t_env *env, char **envp)
 		export = ft_split(envp[i], '=');
 		if (!export)
 			return (FALSE);
-		if (!init_add_env(env, export))
+		if (!init_add_env(export))
 		{
-			free_env(env);
+			free_env();
 			return (FALSE);
 		}
 	}
 	export = ft_split("?=0", '=');
 	if (!export)
 		return (FALSE);
-	if (!add_env(env, export))
+	if (!add_env(export))
 	{
-		free_env(env);
+		free_env();
 		return (FALSE);
 	}
-	env->exit_code = get_env_node(env, "?");
+	g_env->exit_code = get_env_node("?");
 	return (TRUE);
 }
 
-int	init_env(t_env *env, char **envp)
+int	init_env(char **envp)
 {
-	env->h_node.next = NULL;
-	env->pwd = NULL;
-	env->old_pwd = NULL;
-	env->exit_code = NULL;
-	env->path = NULL;
-	if (!set_env(env, envp))
+	g_env = ft_calloc(1, sizeof(t_env));
+	if (!set_env(envp))
 		return (FAIL);
 	return (SUCCESS);
 }

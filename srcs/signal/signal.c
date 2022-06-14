@@ -18,14 +18,13 @@ static void	handle_sigint(pid_t pid)
 	{	
 		rl_on_new_line();
 		printf("\n");
-		print_cur_directory(get_env_value(g_env, "PWD"));
 		rl_replace_line("", 0);
 		rl_redisplay();
-		update_exit_code(g_env, ft_strdup("1"));
+		update_exit_code(ft_strdup("1"));
 	}
 	else
 	{
-		update_exit_code(g_env, ft_strdup("130"));
+		update_exit_code(ft_strdup("130"));
 		printf("^C\n");
 	}
 }
@@ -35,12 +34,11 @@ static void	handle_sigquit(pid_t pid)
 	if (pid == -1)
 	{
 		rl_on_new_line();
-		print_cur_directory(get_env_value(g_env, "PWD"));
 		rl_redisplay();
 	}
 	else
 	{
-		update_exit_code(g_env, ft_strdup("131"));
+		update_exit_code(ft_strdup("131"));
 		printf("^\\Quit: 3\n");
 	}
 }
@@ -67,7 +65,7 @@ void	handle_signal_heredoc(int signum)
 	{
 		if (signum == SIGINT)
 		{
-			update_exit_code(g_env, ft_strdup("1"));
+			update_exit_code(ft_strdup("1"));
 			exit(EXIT_FAILURE);
 		}
 		else if (signum == SIGQUIT)

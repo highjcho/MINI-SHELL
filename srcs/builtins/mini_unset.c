@@ -32,7 +32,7 @@ static void	disconnect_node(t_env_node *prev, t_env_node *cur)
 	free_env_node(cur);
 }
 
-int	mini_unset(t_env *env, char **cmd)
+int	mini_unset(char **cmd)
 {
 	t_env_node	*prev;
 	int			i;
@@ -48,7 +48,7 @@ int	mini_unset(t_env *env, char **cmd)
 			flag = 1;
 			continue ;
 		}
-		prev = find_prev_env(env->h_node.next, cmd[i]);
+		prev = find_prev_env(g_env->h_node.next, cmd[i]);
 		if (!prev)
 			continue ;
 		disconnect_node(prev, prev->next);

@@ -12,27 +12,29 @@
 
 #include "../../includes/execute.h"
 
-static int	set_path(t_env *env)
+static int	set_path(void)
 {
-	env->path = ft_split(get_env_value(env, "PATH"), ':');
-	if (!env->path)
+	if (g_env->path)
+		free(g_env->path);
+	g_env->path = ft_split(get_env_value("PATH"), ':');
+	if (!g_env->path)
 		return (FALSE);
 	return (TRUE);
 }
 
-static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
+static int	need_to_make_path(t_ast *ast, char **envp)
 {
 	char	*tmp;
 	int		i;
 
 	i = -1;
-	set_path(env);
-	while (env->path && env->path[++i])
+	set_path();
+	while (g_env->path && g_env->path[++i])
 	{
 		tmp = ft_strjoin("/", ast->av[0]);
 		if (!tmp)
 			exit(FAIL);
-		ast->path = ft_strjoin(env->path[i], tmp);
+		ast->path = ft_strjoin(g_env->path[i], tmp);
 		if (!ast->path)
 			exit(FAIL);
 		free(tmp);
@@ -45,11 +47,11 @@ static int	need_to_make_path(t_env *env, t_ast *ast, char **envp)
 	exit(COMMAND_FAIL);
 }
 
-static int	have_path(t_env *env, t_ast *ast, char **envp)
+static int	have_path(t_ast *ast, char **envp)
 {
 	if (!ft_strncmp("~/", ast->av[0], 2))
 	{
-		ast->path = ft_strjoin(get_env_value(env, "HOME"), &ast->av[0][1]);
+		ast->path = ft_strjoin(get_env_value("HOME"), &ast->av[0][1]);
 		if (!ast->path)
 			exit(FAIL);
 	}
@@ -66,7 +68,7 @@ static int	have_path(t_env *env, t_ast *ast, char **envp)
 	exit(COMMAND_FAIL);
 }
 
-static void	do_child_proc(t_env *env, t_ast *ast, char **envp, int *fd)
+static void	do_child_proc(t_ast *ast, char **envp, int *fd)
 {
 	close(fd[0]);
 	dup_fd(ast->in_fd, STDIN_FILENO);
@@ -74,12 +76,12 @@ static void	do_child_proc(t_env *env, t_ast *ast, char **envp, int *fd)
 	if (ast->right->av[0][0] == 0)
 		exit(EXIT_SUCCESS);
 	if (find_c(ast->right->av[0], '/'))
-		have_path(env, ast->right, envp);
+		have_path(ast->right, envp);
 	else
-		need_to_make_path(env, ast->right, envp);
+		need_to_make_path(ast->right, envp);
 }
 
-int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
+int	execute_non_builtin(t_ast *ast, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -92,12 +94,12 @@ int	execute_non_builtin(t_env *env, t_ast *ast, char **envp)
 	if (pid < 0)
 		return (FALSE);
 	if (pid == 0)
-		do_child_proc(env, ast, envp, fd);
+		do_child_proc(ast, envp, fd);
 	close(fd[1]);
 	wait(&status);
 	if ((status & 255) == 0)
-		update_exit_code(env, ft_itoa(status >> 8));
+		update_exit_code(ft_itoa(status >> 8));
 	else
-		update_exit_code(env, ft_itoa(status + 128));
+		update_exit_code(ft_itoa(status + 128));
 	return (fd[0]);
 }

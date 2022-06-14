@@ -53,14 +53,14 @@ char	*substitution(char *s, int *p1, int p2, int i)
 		if (s[i] == '$' && j <= p2)
 		{
 			if (s[j] == '?')
-				return (ret_sub(s, get_env_value(g_env, "?"), i, j + 1));
+				return (ret_sub(s, get_env_value("?"), i, j + 1));
 			if (s[j] && s[j] != '_' && !a(s[j]) && s[j] != '$' && s[j] != ' ')
 				if ((s[j] != '\'' && s[j] != '\"') || !find_c(s + j + 1, s[j]))
 					return (ret_sub(s, NULL, i, j + 1));
 			while (j <= p2 && s[j] && (ft_isalnum(s[j]) || s[j] == '_'))
 				j++;
 			key = ft_substr(s, i + 1, j - i - 1);
-			sub = get_env_value(g_env, key);
+			sub = get_env_value(key);
 			*p1 += ft_strlen(sub) - 1;
 			free(key);
 			return (ret_sub(s, sub, i, j));
@@ -96,12 +96,11 @@ char	*env_check(char *str)
 	return (str);
 }
 
-int	env_sub(t_token_list *list, t_env *env)
+int	env_sub(t_token_list *list)
 {
 	t_token_list	*cur;
 
 	cur = list;
-	(void)env;
 	while (cur)
 	{
 		if (cur->token.type == WORD && cur->token.str)

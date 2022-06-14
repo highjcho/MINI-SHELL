@@ -12,25 +12,25 @@
 
 #include "../../includes/execute.h"
 
-int	execute_cmd(t_env *env, t_ast *ast, char **envp, int flag)
+int	execute_cmd(t_ast *ast, char **envp, int flag)
 {
 	int	result;
 
 	result = -1;
-	if (flag == TRUE)
-		result = execute_one_builtin(env, ast);
+	if (flag == FALSE)
+		result = execute_one_builtin(ast);
 	if (result == -1)
-		result = execute_builtin(env, ast);
+		result = execute_builtin(ast);
 	if (result == -1)
-		return (execute_non_builtin(env, ast, envp));
+		return (execute_non_builtin(ast, envp));
 	if (result == FAIL || result == COMMAND_FAIL)
 	{
 		if (result == FAIL)
-			update_exit_code(env, ft_strdup("1"));
+			update_exit_code(ft_strdup("1"));
 		else
-			update_exit_code(env, ft_strdup("127"));
+			update_exit_code(ft_strdup("127"));
 		return (STDIN_FILENO);
 	}
-	update_exit_code(env, ft_strdup("0"));
+	update_exit_code(ft_strdup("0"));
 	return (result);
 }

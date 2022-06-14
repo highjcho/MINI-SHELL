@@ -1,15 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyunjcho <hyunjcho@student.42seoul.>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/14 12:59:15 by hyunjcho          #+#    #+#             */
+/*   Updated: 2022/06/14 12:59:18 by hyunjcho         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-static void	excute_line(t_env *env, t_pl_list *list, char **envp)
+static void	execute_line(t_pl_list *list, char **envp, int count)
 {
 	int	next_in_fd;
-	int	i;
 	int	flag;
 
 	next_in_fd = STDIN_FILENO;
-	i = 0;
 	flag = FALSE;
-	while(list)
+	while (list)
 	{
 		list->pipeline->in_fd = next_in_fd;
 		if (!list->next)
@@ -17,75 +27,40 @@ static void	excute_line(t_env *env, t_pl_list *list, char **envp)
 		ast_redirect_process(list->pipeline);
 		if (list->pipeline->in_fd == -1 || list->pipeline->out_fd == -1)
 		{
-			update_exit_code(env, ft_strdup("1"));
+			update_exit_code(ft_strdup("1"));
 			list = list->next;
 			next_in_fd = fork_process();
-			continue;
+			continue ;
 		}
-		if (i == 0 && !(list->next))
-			flag = TRUE;
-		next_in_fd = execute_cmd(env, list->pipeline, envp, flag);
+		next_in_fd = execute_cmd(list->pipeline, envp, count);
 		list = list->next;
-		i++;
 	}
 	if (next_in_fd != STDIN_FILENO)
 		close(next_in_fd);
-
 }
 
-void	print_cur_directory(char *pwd)
+int	main(int ac, char **av, char **envp)
 {
-	int	len;
-	int	i;
-
-	len = ft_strlen(pwd);
-	i = len;
-	while (pwd[--i])
-	{
-		if (pwd[i] == '/')
-			break ;
-	}
-	printf("[petitshell] %s ", pwd + i + 1);
-}
-
-int main(int ac, char **av, char **envp)
-{
-	t_env			env;
 	char			*line;
 	t_info			info;
 
-	(void)info;
-	(void)av;
-	(void)env;
-	(void)envp;
 	if (ac != 1)
 		return (0);
-	line = NULL;
-	set_init(&env, envp, av);
-	print_art();
+	set_init(envp, av);
 	while (1)
 	{
-		print_cur_directory(get_env_value(&env, "PWD"));
-		line = readline("% ");
+		line = readline("petitshell> ");
 		if (!line)
 		{
 			printf("petitshell> exit\n");
 			exit(EXIT_SUCCESS);
 		}
-		else if (!*line)
+		else if (!*line || main_init(line, &info) == FAIL)
 		{
 			free(line);
 			continue ;
 		}
-		add_history(line);
-		if (main_init(line, &info) == FAIL)
-		{
-			free(line);
-			continue;
-		}
-		// test_token_list(info.list);
-		// test_ast(info.ast);
-		excute_line(&env, info.pl->next, envp);
+		execute_line(info.pl->next, envp, info.pipe_count);
 		all_free(&info);
 		free(line);
 	}
